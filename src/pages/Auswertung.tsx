@@ -145,7 +145,7 @@ const Auswertung = () => {
     meta.setAttribute("content", desc);
   }, []);
 
-  // ── Sortierte Brennpunkte (nur aktive Bereiche) ──
+  // ── Sortierte Brennpunkte (nur kritische Bereiche: HIGH RISK + GAME OVER) ──
   const brennpunkte = useMemo(() => {
     if (!data) return [];
     const skipped = new Set(data.skipped_levels ?? []);
@@ -155,6 +155,7 @@ const Auswertung = () => {
         const ls = data.level_scores?.[key];
         if (!ls || (ls as LevelScoreSkipped).risiko === "NICHT RELEVANT") return null;
         const active = ls as LevelScoreActive;
+        if (active.risiko !== "HIGH RISK" && active.risiko !== "GAME OVER") return null;
         return {
           key,
           ...active,
@@ -240,6 +241,8 @@ const Auswertung = () => {
             </p>
           )}
 
+          <p className="font-pixel text-xs text-muted-foreground mb-4 tracking-widest">RESILIENZ-SCORE</p>
+
           <p
             className={`font-pixel text-5xl md:text-7xl mb-4 ${overallColors.text} ${
               data.gesamt_risiko === "GAME OVER" ? "animate-pulse" : ""
@@ -251,11 +254,11 @@ const Auswertung = () => {
                   : undefined,
             }}
           >
-            {data.max_score - data.gesamtscore}/{data.max_score}
+            {data.gesamtscore}/{data.max_score}
           </p>
 
           <div className="max-w-md mx-auto mb-4">
-            <HealthBar value={data.max_score - data.gesamtscore} max={data.max_score} risk={data.gesamt_risiko} />
+            <HealthBar value={data.gesamtscore} max={data.max_score} risk={data.gesamt_risiko} />
           </div>
 
           <p className={`font-pixel text-lg md:text-2xl mt-4 ${overallColors.text}`}>
@@ -300,7 +303,7 @@ const Auswertung = () => {
                     </div>
 
                     <div className="mb-4">
-                      <HealthBar value={b.max - b.score} max={b.max} risk={b.risiko} />
+                      <HealthBar value={b.score} max={b.max} risk={b.risiko} />
                     </div>
 
                     {content && (

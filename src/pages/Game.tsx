@@ -207,31 +207,37 @@ const LEVELS: Level[] = [
 
 const SOLUTIONS: Record<string, Record<string, string>> = {
   buchhaltung: {
+    STABIL: "Buchhaltung läuft sauber dokumentiert mit redundanten Zugängen. Bleibt bei der Doku-Pflege dran.",
     "MEDIUM RISK": "Grundstruktur vorhanden. Ein dokumentierter Notfallplan und Vier-Augen-Prinzip bei Zugängen würden euch absichern.",
     "HIGH RISK": "Wissensinsel in der Buchhaltung. Prozessdokumentation und ein digitales Belegmanagement reduzieren eure Abhängigkeit sofort.",
     "GAME OVER": "Eure Finanzbuchhaltung hängt an einer Person. Keine Doku, keine Redundanz. Ein Ausfall bedeutet: keine Rechnungen, keine Bilanz, kein Überblick.",
   },
   vertrieb: {
+    STABIL: "CRM ist gepflegt, Beziehungen liegen im System statt im Kopf. Solide aufgestellt.",
     "MEDIUM RISK": "CRM wird genutzt, aber lückenhaft. Konsequente Kontaktpflege im System statt im Kopf macht euch unabhängiger.",
     "HIGH RISK": "Kundenbeziehungen sind personengebunden. Ohne strukturiertes CRM und dokumentierte Kundenhistorie baut ihr auf Sand.",
     "GAME OVER": "Eure Kundenbeziehungen existieren nur im Kopf einer Person. Wenn sie geht, gehen eure Kunden mit. Euer Vertrieb startet bei null.",
   },
   it: {
+    STABIL: "Zugänge, Lizenzen und Backups sind redundant abgesichert. Eure IT ist nicht mehr Single Point of Failure.",
     "MEDIUM RISK": "Teilweise dokumentiert. Ein zentraler Passwort-Manager und regelmäßige Backup-Tests schließen die größten Lücken.",
     "HIGH RISK": "Kritisches IT-Wissen liegt bei einer Person. Zugangsdaten, Backup-Routinen und Lizenzen gehören zentral und redundant dokumentiert.",
     "GAME OVER": "Euer IT-Admin ist euer Single Point of Failure. Kein dokumentiertes Backup, keine geteilten Zugänge. Wenn er ausfällt, steht alles.",
   },
   assistenz: {
+    STABIL: "Verträge, Fristen und organisatorisches Wissen liegen im System statt im Kopf einer Person. Stark.",
     "MEDIUM RISK": "Basisstruktur vorhanden. Ein zentrales Vertrags- und Fristenmanagement würde das organisatorische Wissen vom Kopf ins System bringen.",
     "HIGH RISK": "Das organisatorische Gedächtnis steckt in einer Person. Fristen, Verträge und Abläufe gehören in ein digitales System mit geteiltem Zugang.",
     "GAME OVER": "Verträge, Fristen, Zugangscodes — alles im Kopf einer Person. Fällt sie aus, verpasst ihr Fristen, von denen ihr nicht mal wisst.",
   },
   technik: {
+    STABIL: "QM und Wissensmanagement sind etabliert. Produktionsqualität bleibt auch bei Personalwechsel stabil.",
     "MEDIUM RISK": "QM-Grundlagen vorhanden. Ein aktuelles Wissensmanagement-System und konsequente Prozessdokumentation würden euch absichern.",
     "HIGH RISK": "Produktionswissen und Qualitätsstandards sind personengebunden. Ohne systematisches Wissensmanagement riskiert ihr Qualitätsverlust bei jedem Personalwechsel.",
     "GAME OVER": "Kein dokumentiertes QM, kein Wissensmanagement. Eure Produktionsqualität hängt an einzelnen Köpfen. Fällt jemand aus, fehlt das Know-how.",
   },
   geschaeftsfuehrung: {
+    STABIL: "Notfallplan, Prokura und Strategien sind dokumentiert. Euer Unternehmen bleibt handlungsfähig, auch wenn ihr ausfallt.",
     "MEDIUM RISK": "Teilweise geregelt, aber nicht vollständig. Prokura, Notfallplan und dokumentierte Partnerschaften machen euch resilient.",
     "HIGH RISK": "Strategische Entscheidungen und Schlüsselbeziehungen liegen bei einer Person. Ohne Notfallplan ist euer Unternehmen führungslos.",
     "GAME OVER": "Kein Notfallplan, keine geteilte Prokura, keine dokumentierten Strategien. Euer Unternehmen ist führungslos ab Tag 1.",
@@ -241,9 +247,11 @@ const SOLUTIONS: Record<string, Record<string, string>> = {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function getDeptRisk(score: number, maxScore: number): string {
+  if (maxScore === 0) return "STABIL";
   const pct = score / maxScore;
-  if (pct >= 0.75) return "MEDIUM RISK";
-  if (pct >= 0.4) return "HIGH RISK";
+  if (pct >= 0.8) return "STABIL";
+  if (pct >= 0.55) return "MEDIUM RISK";
+  if (pct >= 0.3) return "HIGH RISK";
   return "GAME OVER";
 }
 
@@ -563,17 +571,17 @@ const Game = () => {
           <section className="max-w-4xl mx-auto px-6 py-8">
             {/* Overall Score */}
             <div className="text-center mb-12">
-              <p className="font-pixel text-xs text-muted-foreground mb-4 tracking-widest">ERGEBNIS</p>
+              <p className="font-pixel text-xs text-muted-foreground mb-4 tracking-widest">RESILIENZ-SCORE</p>
               <p className={`font-pixel text-5xl md:text-7xl mb-4 ${riskColor(overallRisk).text} ${overallRisk === "GAME OVER" ? "animate-pulse" : ""}`}
                 style={{ textShadow: overallRisk === "GAME OVER" ? "0 0 20px hsl(0 70% 50% / 0.8), 0 0 40px hsl(0 70% 50% / 0.4)" : undefined }}
               >
-                {maxScore - totalScore}/{maxScore}
+                {totalScore}/{maxScore}
               </p>
               <p className={`font-pixel text-lg md:text-2xl mb-3 ${riskColor(overallRisk).text}`}>
                 {overallRisk}
               </p>
               <div className="max-w-md mx-auto mb-4">
-                <HealthBar value={maxScore - totalScore} max={maxScore} risk={overallRisk} />
+                <HealthBar value={totalScore} max={maxScore} risk={overallRisk} />
               </div>
               <p className="text-foreground/70 max-w-lg mx-auto">
                 {overallRisk === "STABIL" && "Euer Unternehmen ist gut abgesichert. Ihr gehört zur Minderheit."}
@@ -607,7 +615,7 @@ const Game = () => {
                       </>
                     ) : (
                       <>
-                        <HealthBar value={lMax - score} max={lMax} risk={risk} />
+                        <HealthBar value={score} max={lMax} risk={risk} />
                         <p className={`font-pixel text-[9px] mt-2 ${colors.text}`}>{risk}</p>
                         <p className="text-foreground/60 text-xs mt-2 leading-relaxed">{solution}</p>
                       </>
