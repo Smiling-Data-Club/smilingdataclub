@@ -9,7 +9,6 @@ import pixelTechnik from "@/assets/pixel-technik.png";
 import pixelGf from "@/assets/pixel-gf.png";
 
 const WEBHOOK_URL = "https://flow.zoho.eu/20106110113/flow/webhook/incoming?zapikey=1001.b5cb68984b6d8bf9b189137ca336b48e.990d3eef8c8cfdb48f7532cf01674854&isdebug=false";
-const BOOKING_URL = "https://PLATZHALTER.zohobookings.eu/...";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -325,7 +324,6 @@ const Game = () => {
 
   // Form state
   const [formData, setFormData] = useState({ vorname: "", nachname: "", email: "", unternehmen: "", rolle: "", mitarbeiter: "", newsletter: false });
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -469,7 +467,6 @@ const Game = () => {
     setAnswers([]);
     setSkippedLevels(new Set());
     setFormData({ vorname: "", nachname: "", email: "", unternehmen: "", rolle: "", mitarbeiter: "", newsletter: false });
-    setFormSubmitted(false);
   };
 
   // ── Render ──
@@ -627,93 +624,80 @@ const Game = () => {
 
             {/* ── Detail Gate ── */}
             <div className="border-t border-primary/30 pt-12">
-              {!formSubmitted ? (
-                <div className="max-w-lg mx-auto">
-                  <h2 className="font-pixel text-sm md:text-base text-primary text-center mb-3 text-glow-cyan">
-                    Ihr wisst jetzt WO es brennt.
-                  </h2>
-                  <p className="font-pixel text-sm md:text-base text-secondary text-center mb-2 text-glow-pink">
-                    Wir zeigen euch WIE ihr löscht.
-                  </p>
-                  <p className="text-muted-foreground text-sm text-center mb-8">
-                    Detailanalyse mit konkreten Maßnahmen pro Abteilung — individuell auf euer Ergebnis abgestimmt. Kostenlos.
-                  </p>
+              <div className="max-w-lg mx-auto">
+                <h2 className="font-pixel text-sm md:text-base text-primary text-center mb-3 text-glow-cyan">
+                  Ihr wisst jetzt WO es brennt.
+                </h2>
+                <p className="font-pixel text-sm md:text-base text-secondary text-center mb-2 text-glow-pink">
+                  Wir zeigen euch WIE ihr löscht.
+                </p>
+                <p className="text-muted-foreground text-sm text-center mb-8">
+                  Detailanalyse mit konkreten Maßnahmen pro Abteilung — individuell auf euer Ergebnis abgestimmt. Kostenlos.
+                </p>
 
-                  <form onSubmit={handleFormSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <input required placeholder="Vorname *" value={formData.vorname}
-                        onChange={e => setFormData(p => ({ ...p, vorname: e.target.value }))}
-                        className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
-                      />
-                      <input required placeholder="Nachname *" value={formData.nachname}
-                        onChange={e => setFormData(p => ({ ...p, nachname: e.target.value }))}
-                        className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
-                      />
-                    </div>
-                    <input required type="email" placeholder="E-Mail *" value={formData.email}
-                      onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
-                      className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                <form onSubmit={handleFormSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input required placeholder="Vorname *" value={formData.vorname}
+                      onChange={e => setFormData(p => ({ ...p, vorname: e.target.value }))}
+                      className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                     />
-                    <input required placeholder="Unternehmen *" value={formData.unternehmen}
-                      onChange={e => setFormData(p => ({ ...p, unternehmen: e.target.value }))}
-                      className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                    <input required placeholder="Nachname *" value={formData.nachname}
+                      onChange={e => setFormData(p => ({ ...p, nachname: e.target.value }))}
+                      className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                     />
-                    <select required value={formData.rolle}
-                      onChange={e => setFormData(p => ({ ...p, rolle: e.target.value }))}
-                      className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
-                    >
-                      <option value="">Rolle im Unternehmen *</option>
-                      <option value="Geschäftsführung">Geschäftsführung</option>
-                      <option value="Abteilungsleitung">Abteilungsleitung</option>
-                      <option value="Teamleitung">Teamleitung</option>
-                      <option value="Mitarbeiter:in">Mitarbeiter:in</option>
-                      <option value="Sonstiges">Sonstiges</option>
-                    </select>
-                    <select required value={formData.mitarbeiter}
-                      onChange={e => setFormData(p => ({ ...p, mitarbeiter: e.target.value }))}
-                      className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
-                    >
-                      <option value="">Anzahl Mitarbeiter *</option>
-                      <option value="1-10">1-10</option>
-                      <option value="11-50">11-50</option>
-                      <option value="51-200">51-200</option>
-                      <option value="200+">200+</option>
-                    </select>
+                  </div>
+                  <input required type="email" placeholder="E-Mail *" value={formData.email}
+                    onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
+                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                  />
+                  <input required placeholder="Unternehmen *" value={formData.unternehmen}
+                    onChange={e => setFormData(p => ({ ...p, unternehmen: e.target.value }))}
+                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                  />
+                  <select required value={formData.rolle}
+                    onChange={e => setFormData(p => ({ ...p, rolle: e.target.value }))}
+                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
+                  >
+                    <option value="">Rolle im Unternehmen *</option>
+                    <option value="Geschäftsführung">Geschäftsführung</option>
+                    <option value="Abteilungsleitung">Abteilungsleitung</option>
+                    <option value="Teamleitung">Teamleitung</option>
+                    <option value="Mitarbeiter:in">Mitarbeiter:in</option>
+                    <option value="Sonstiges">Sonstiges</option>
+                  </select>
+                  <select required value={formData.mitarbeiter}
+                    onChange={e => setFormData(p => ({ ...p, mitarbeiter: e.target.value }))}
+                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
+                  >
+                    <option value="">Anzahl Mitarbeiter *</option>
+                    <option value="1-10">1-10</option>
+                    <option value="11-50">11-50</option>
+                    <option value="51-200">51-200</option>
+                    <option value="200+">200+</option>
+                  </select>
 
-                    <button type="submit" disabled={submitting} className="neon-btn rounded-md w-full py-4 text-xs">
-                      {submitting ? "WIRD GESENDET..." : "DETAILANALYSE ANFORDERN"}
-                    </button>
+                  <button type="submit" disabled={submitting} className="neon-btn rounded-md w-full py-4 text-xs">
+                    {submitting ? "WIRD GESENDET..." : "DETAILANALYSE ANFORDERN"}
+                  </button>
 
-                    <p className="text-muted-foreground/60 text-[10px] text-center">
-                      Mit dem Absenden stimmst du unserer{" "}
-                      <Link to="/datenschutz" className="underline hover:text-primary">Datenschutzerklärung</Link> zu.
-                    </p>
-
-                    <label className="flex items-start gap-2 text-[10px] text-muted-foreground/80 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={formData.newsletter}
-                        onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
-                        className="mt-0.5 h-3 w-3 accent-primary cursor-pointer"
-                      />
-                      <span>
-                        Ja, schickt mir gerne weitere Tipps zu Wissensmanagement, Digitalisierung und KI im Mittelstand. Abmeldung jederzeit per Klick.
-                      </span>
-                    </label>
-                  </form>
-                </div>
-              ) : (
-                <div className="text-center max-w-lg mx-auto">
-                  <p className="font-pixel text-sm text-primary mb-4 text-glow-cyan">
-                    ✓ EURE ANALYSE IST UNTERWEGS
+                  <p className="text-muted-foreground/60 text-[10px] text-center">
+                    Mit dem Absenden stimmst du unserer{" "}
+                    <Link to="/datenschutz" className="underline hover:text-primary">Datenschutzerklärung</Link> zu.
                   </p>
-                  <p className="text-foreground/70 mb-2">Check eure Inbox.</p>
-                  <p className="text-foreground/70 mb-6">Und wenn ihr nicht warten wollt:</p>
-                  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="neon-btn rounded-md inline-block px-8 py-3 text-xs">
-                    TERMIN BUCHEN
-                  </a>
-                </div>
-              )}
+
+                  <label className="flex items-start gap-2 text-[10px] text-muted-foreground/80 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.newsletter}
+                      onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
+                      className="mt-0.5 h-3 w-3 accent-primary cursor-pointer"
+                    />
+                    <span>
+                      Ja, schickt mir gerne weitere Tipps zu Wissensmanagement, Digitalisierung und KI im Mittelstand. Abmeldung jederzeit per Klick.
+                    </span>
+                  </label>
+                </form>
+              </div>
             </div>
 
             {/* Restart */}
