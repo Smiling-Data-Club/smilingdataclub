@@ -12,7 +12,7 @@ import pixelAssistenz from "@/assets/pixel-assistenz.png";
 import pixelTechnik from "@/assets/pixel-technik.png";
 import pixelGf from "@/assets/pixel-gf.png";
 
-const BOOKING_URL = "https://sirius-gmbh.zohobookings.eu/#/240927000000441095";
+const BOOKING_URL = "https://sirius-gmbh.zohobookings.eu/240927000000441095";
 const ZOHO_TRIAL_URL =
   "https://store.zoho.eu/ResellerCustomerSignUp.do?id=536878a40c51f2a6885a71b6eb727e960c97d34582565f2f7afa0f72e49ccbbe";
 
@@ -145,8 +145,8 @@ const Auswertung = () => {
     meta.setAttribute("content", desc);
   }, []);
 
-  // ── Sortierte Brennpunkte (nur aktive Bereiche) ──
-  const brennpunkte = useMemo(() => {
+  // ── Alle nicht-stabilen Bereiche, sortiert nach Risiko (Basis für Brennpunkte + Quick Wins) ──
+  const improvableAreas = useMemo(() => {
     if (!data) return [];
     const skipped = new Set(data.skipped_levels ?? []);
     const entries = BEREICH_ORDER
@@ -155,6 +155,7 @@ const Auswertung = () => {
         const ls = data.level_scores?.[key];
         if (!ls || (ls as LevelScoreSkipped).risiko === "NICHT RELEVANT") return null;
         const active = ls as LevelScoreActive;
+        if (active.risiko === "STABIL") return null;
         return {
           key,
           ...active,
@@ -171,7 +172,14 @@ const Auswertung = () => {
     });
   }, [data]);
 
-  const top3Keys = useMemo(() => brennpunkte.slice(0, 3).map((b) => b.key), [brennpunkte]);
+  // Brennpunkte = nur kritische Bereiche (HIGH RISK + GAME OVER)
+  const brennpunkte = useMemo(
+    () => improvableAreas.filter((b) => b.risiko === "HIGH RISK" || b.risiko === "GAME OVER"),
+    [improvableAreas],
+  );
+
+  // Quick Wins auch für MEDIUM-Bereiche, falls keine Brennpunkte vorhanden sind
+  const top3Keys = useMemo(() => improvableAreas.slice(0, 3).map((b) => b.key), [improvableAreas]);
 
   const copyShareLink = async () => {
     try {
@@ -240,6 +248,8 @@ const Auswertung = () => {
             </p>
           )}
 
+          <p className="font-pixel text-xs text-muted-foreground mb-4 tracking-widest">RESILIENZ-SCORE</p>
+
           <p
             className={`font-pixel text-5xl md:text-7xl mb-4 ${overallColors.text} ${
               data.gesamt_risiko === "GAME OVER" ? "animate-pulse" : ""
@@ -251,11 +261,11 @@ const Auswertung = () => {
                   : undefined,
             }}
           >
-            {data.max_score - data.gesamtscore}/{data.max_score}
+            {data.gesamtscore}/{data.max_score}
           </p>
 
           <div className="max-w-md mx-auto mb-4">
-            <HealthBar value={data.max_score - data.gesamtscore} max={data.max_score} risk={data.gesamt_risiko} />
+            <HealthBar value={data.gesamtscore} max={data.max_score} risk={data.gesamt_risiko} />
           </div>
 
           <p className={`font-pixel text-lg md:text-2xl mt-4 ${overallColors.text}`}>
@@ -270,9 +280,15 @@ const Auswertung = () => {
           </h2>
 
           {brennpunkte.length === 0 ? (
-            <p className="text-center text-foreground/70">
-              Keine kritischen Brennpunkte erkannt — euer Setup ist solide.
-            </p>
+            improvableAreas.length === 0 ? (
+              <p className="text-center text-foreground/70">
+                Keine Brennpunkte erkannt — euer Setup ist solide.
+              </p>
+            ) : (
+              <p className="text-center text-foreground/70 max-w-xl mx-auto">
+                Kein Bereich brennt akut — aber euer Gesamtbild zeigt Lücken. Die Quick Wins unten setzen genau da an.
+              </p>
+            )
           ) : (
             <div className="space-y-6">
               {brennpunkte.map((b) => {
@@ -300,7 +316,7 @@ const Auswertung = () => {
                     </div>
 
                     <div className="mb-4">
-                      <HealthBar value={b.max - b.score} max={b.max} risk={b.risiko} />
+                      <HealthBar value={b.score} max={b.max} risk={b.risiko} />
                     </div>
 
                     {content && (

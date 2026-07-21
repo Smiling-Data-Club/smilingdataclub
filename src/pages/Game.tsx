@@ -9,7 +9,6 @@ import pixelTechnik from "@/assets/pixel-technik.png";
 import pixelGf from "@/assets/pixel-gf.png";
 
 const WEBHOOK_URL = "https://flow.zoho.eu/20106110113/flow/webhook/incoming?zapikey=1001.b5cb68984b6d8bf9b189137ca336b48e.990d3eef8c8cfdb48f7532cf01674854&isdebug=false";
-const BOOKING_URL = "https://PLATZHALTER.zohobookings.eu/...";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -207,31 +206,37 @@ const LEVELS: Level[] = [
 
 const SOLUTIONS: Record<string, Record<string, string>> = {
   buchhaltung: {
+    STABIL: "Buchhaltung läuft sauber dokumentiert mit redundanten Zugängen. Bleibt bei der Doku-Pflege dran.",
     "MEDIUM RISK": "Grundstruktur vorhanden. Ein dokumentierter Notfallplan und Vier-Augen-Prinzip bei Zugängen würden euch absichern.",
     "HIGH RISK": "Wissensinsel in der Buchhaltung. Prozessdokumentation und ein digitales Belegmanagement reduzieren eure Abhängigkeit sofort.",
     "GAME OVER": "Eure Finanzbuchhaltung hängt an einer Person. Keine Doku, keine Redundanz. Ein Ausfall bedeutet: keine Rechnungen, keine Bilanz, kein Überblick.",
   },
   vertrieb: {
+    STABIL: "CRM ist gepflegt, Beziehungen liegen im System statt im Kopf. Solide aufgestellt.",
     "MEDIUM RISK": "CRM wird genutzt, aber lückenhaft. Konsequente Kontaktpflege im System statt im Kopf macht euch unabhängiger.",
     "HIGH RISK": "Kundenbeziehungen sind personengebunden. Ohne strukturiertes CRM und dokumentierte Kundenhistorie baut ihr auf Sand.",
     "GAME OVER": "Eure Kundenbeziehungen existieren nur im Kopf einer Person. Wenn sie geht, gehen eure Kunden mit. Euer Vertrieb startet bei null.",
   },
   it: {
+    STABIL: "Zugänge, Lizenzen und Backups sind redundant abgesichert. Eure IT ist nicht mehr Single Point of Failure.",
     "MEDIUM RISK": "Teilweise dokumentiert. Ein zentraler Passwort-Manager und regelmäßige Backup-Tests schließen die größten Lücken.",
     "HIGH RISK": "Kritisches IT-Wissen liegt bei einer Person. Zugangsdaten, Backup-Routinen und Lizenzen gehören zentral und redundant dokumentiert.",
     "GAME OVER": "Euer IT-Admin ist euer Single Point of Failure. Kein dokumentiertes Backup, keine geteilten Zugänge. Wenn er ausfällt, steht alles.",
   },
   assistenz: {
+    STABIL: "Verträge, Fristen und organisatorisches Wissen liegen im System statt im Kopf einer Person. Stark.",
     "MEDIUM RISK": "Basisstruktur vorhanden. Ein zentrales Vertrags- und Fristenmanagement würde das organisatorische Wissen vom Kopf ins System bringen.",
     "HIGH RISK": "Das organisatorische Gedächtnis steckt in einer Person. Fristen, Verträge und Abläufe gehören in ein digitales System mit geteiltem Zugang.",
     "GAME OVER": "Verträge, Fristen, Zugangscodes — alles im Kopf einer Person. Fällt sie aus, verpasst ihr Fristen, von denen ihr nicht mal wisst.",
   },
   technik: {
+    STABIL: "QM und Wissensmanagement sind etabliert. Produktionsqualität bleibt auch bei Personalwechsel stabil.",
     "MEDIUM RISK": "QM-Grundlagen vorhanden. Ein aktuelles Wissensmanagement-System und konsequente Prozessdokumentation würden euch absichern.",
     "HIGH RISK": "Produktionswissen und Qualitätsstandards sind personengebunden. Ohne systematisches Wissensmanagement riskiert ihr Qualitätsverlust bei jedem Personalwechsel.",
     "GAME OVER": "Kein dokumentiertes QM, kein Wissensmanagement. Eure Produktionsqualität hängt an einzelnen Köpfen. Fällt jemand aus, fehlt das Know-how.",
   },
   geschaeftsfuehrung: {
+    STABIL: "Notfallplan, Prokura und Strategien sind dokumentiert. Euer Unternehmen bleibt handlungsfähig, auch wenn ihr ausfallt.",
     "MEDIUM RISK": "Teilweise geregelt, aber nicht vollständig. Prokura, Notfallplan und dokumentierte Partnerschaften machen euch resilient.",
     "HIGH RISK": "Strategische Entscheidungen und Schlüsselbeziehungen liegen bei einer Person. Ohne Notfallplan ist euer Unternehmen führungslos.",
     "GAME OVER": "Kein Notfallplan, keine geteilte Prokura, keine dokumentierten Strategien. Euer Unternehmen ist führungslos ab Tag 1.",
@@ -241,9 +246,11 @@ const SOLUTIONS: Record<string, Record<string, string>> = {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function getDeptRisk(score: number, maxScore: number): string {
+  if (maxScore === 0) return "STABIL";
   const pct = score / maxScore;
-  if (pct >= 0.75) return "MEDIUM RISK";
-  if (pct >= 0.4) return "HIGH RISK";
+  if (pct >= 0.8) return "STABIL";
+  if (pct >= 0.55) return "MEDIUM RISK";
+  if (pct >= 0.3) return "HIGH RISK";
   return "GAME OVER";
 }
 
@@ -317,7 +324,6 @@ const Game = () => {
 
   // Form state
   const [formData, setFormData] = useState({ vorname: "", nachname: "", email: "", unternehmen: "", rolle: "", mitarbeiter: "", newsletter: false });
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -461,7 +467,6 @@ const Game = () => {
     setAnswers([]);
     setSkippedLevels(new Set());
     setFormData({ vorname: "", nachname: "", email: "", unternehmen: "", rolle: "", mitarbeiter: "", newsletter: false });
-    setFormSubmitted(false);
   };
 
   // ── Render ──
@@ -563,17 +568,17 @@ const Game = () => {
           <section className="max-w-4xl mx-auto px-6 py-8">
             {/* Overall Score */}
             <div className="text-center mb-12">
-              <p className="font-pixel text-xs text-muted-foreground mb-4 tracking-widest">ERGEBNIS</p>
+              <p className="font-pixel text-xs text-muted-foreground mb-4 tracking-widest">RESILIENZ-SCORE</p>
               <p className={`font-pixel text-5xl md:text-7xl mb-4 ${riskColor(overallRisk).text} ${overallRisk === "GAME OVER" ? "animate-pulse" : ""}`}
                 style={{ textShadow: overallRisk === "GAME OVER" ? "0 0 20px hsl(0 70% 50% / 0.8), 0 0 40px hsl(0 70% 50% / 0.4)" : undefined }}
               >
-                {maxScore - totalScore}/{maxScore}
+                {totalScore}/{maxScore}
               </p>
               <p className={`font-pixel text-lg md:text-2xl mb-3 ${riskColor(overallRisk).text}`}>
                 {overallRisk}
               </p>
               <div className="max-w-md mx-auto mb-4">
-                <HealthBar value={maxScore - totalScore} max={maxScore} risk={overallRisk} />
+                <HealthBar value={totalScore} max={maxScore} risk={overallRisk} />
               </div>
               <p className="text-foreground/70 max-w-lg mx-auto">
                 {overallRisk === "STABIL" && "Euer Unternehmen ist gut abgesichert. Ihr gehört zur Minderheit."}
@@ -607,7 +612,7 @@ const Game = () => {
                       </>
                     ) : (
                       <>
-                        <HealthBar value={lMax - score} max={lMax} risk={risk} />
+                        <HealthBar value={score} max={lMax} risk={risk} />
                         <p className={`font-pixel text-[9px] mt-2 ${colors.text}`}>{risk}</p>
                         <p className="text-foreground/60 text-xs mt-2 leading-relaxed">{solution}</p>
                       </>
@@ -619,93 +624,80 @@ const Game = () => {
 
             {/* ── Detail Gate ── */}
             <div className="border-t border-primary/30 pt-12">
-              {!formSubmitted ? (
-                <div className="max-w-lg mx-auto">
-                  <h2 className="font-pixel text-sm md:text-base text-primary text-center mb-3 text-glow-cyan">
-                    Ihr wisst jetzt WO es brennt.
-                  </h2>
-                  <p className="font-pixel text-sm md:text-base text-secondary text-center mb-2 text-glow-pink">
-                    Wir zeigen euch WIE ihr löscht.
-                  </p>
-                  <p className="text-muted-foreground text-sm text-center mb-8">
-                    Detailanalyse mit konkreten Maßnahmen pro Abteilung — individuell auf euer Ergebnis abgestimmt. Kostenlos.
-                  </p>
+              <div className="max-w-lg mx-auto">
+                <h2 className="font-pixel text-sm md:text-base text-primary text-center mb-3 text-glow-cyan">
+                  Ihr wisst jetzt WO es brennt.
+                </h2>
+                <p className="font-pixel text-sm md:text-base text-secondary text-center mb-2 text-glow-pink">
+                  Wir zeigen euch WIE ihr löscht.
+                </p>
+                <p className="text-muted-foreground text-sm text-center mb-8">
+                  Detailanalyse mit konkreten Maßnahmen pro Abteilung — individuell auf euer Ergebnis abgestimmt. Kostenlos.
+                </p>
 
-                  <form onSubmit={handleFormSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <input required placeholder="Vorname *" value={formData.vorname}
-                        onChange={e => setFormData(p => ({ ...p, vorname: e.target.value }))}
-                        className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
-                      />
-                      <input required placeholder="Nachname *" value={formData.nachname}
-                        onChange={e => setFormData(p => ({ ...p, nachname: e.target.value }))}
-                        className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
-                      />
-                    </div>
-                    <input required type="email" placeholder="E-Mail *" value={formData.email}
-                      onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
-                      className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                <form onSubmit={handleFormSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input required placeholder="Vorname *" value={formData.vorname}
+                      onChange={e => setFormData(p => ({ ...p, vorname: e.target.value }))}
+                      className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                     />
-                    <input required placeholder="Unternehmen *" value={formData.unternehmen}
-                      onChange={e => setFormData(p => ({ ...p, unternehmen: e.target.value }))}
-                      className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                    <input required placeholder="Nachname *" value={formData.nachname}
+                      onChange={e => setFormData(p => ({ ...p, nachname: e.target.value }))}
+                      className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                     />
-                    <select required value={formData.rolle}
-                      onChange={e => setFormData(p => ({ ...p, rolle: e.target.value }))}
-                      className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
-                    >
-                      <option value="">Rolle im Unternehmen *</option>
-                      <option value="Geschäftsführung">Geschäftsführung</option>
-                      <option value="Abteilungsleitung">Abteilungsleitung</option>
-                      <option value="Teamleitung">Teamleitung</option>
-                      <option value="Mitarbeiter:in">Mitarbeiter:in</option>
-                      <option value="Sonstiges">Sonstiges</option>
-                    </select>
-                    <select required value={formData.mitarbeiter}
-                      onChange={e => setFormData(p => ({ ...p, mitarbeiter: e.target.value }))}
-                      className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
-                    >
-                      <option value="">Anzahl Mitarbeiter *</option>
-                      <option value="1-10">1-10</option>
-                      <option value="11-50">11-50</option>
-                      <option value="51-200">51-200</option>
-                      <option value="200+">200+</option>
-                    </select>
+                  </div>
+                  <input required type="email" placeholder="E-Mail *" value={formData.email}
+                    onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
+                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                  />
+                  <input required placeholder="Unternehmen *" value={formData.unternehmen}
+                    onChange={e => setFormData(p => ({ ...p, unternehmen: e.target.value }))}
+                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                  />
+                  <select required value={formData.rolle}
+                    onChange={e => setFormData(p => ({ ...p, rolle: e.target.value }))}
+                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
+                  >
+                    <option value="">Rolle im Unternehmen *</option>
+                    <option value="Geschäftsführung">Geschäftsführung</option>
+                    <option value="Abteilungsleitung">Abteilungsleitung</option>
+                    <option value="Teamleitung">Teamleitung</option>
+                    <option value="Mitarbeiter:in">Mitarbeiter:in</option>
+                    <option value="Sonstiges">Sonstiges</option>
+                  </select>
+                  <select required value={formData.mitarbeiter}
+                    onChange={e => setFormData(p => ({ ...p, mitarbeiter: e.target.value }))}
+                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
+                  >
+                    <option value="">Anzahl Mitarbeiter *</option>
+                    <option value="1-10">1-10</option>
+                    <option value="11-50">11-50</option>
+                    <option value="51-200">51-200</option>
+                    <option value="200+">200+</option>
+                  </select>
 
-                    <button type="submit" disabled={submitting} className="neon-btn rounded-md w-full py-4 text-xs">
-                      {submitting ? "WIRD GESENDET..." : "DETAILANALYSE ANFORDERN"}
-                    </button>
+                  <button type="submit" disabled={submitting} className="neon-btn rounded-md w-full py-4 text-xs">
+                    {submitting ? "WIRD GESENDET..." : "DETAILANALYSE ANFORDERN"}
+                  </button>
 
-                    <p className="text-muted-foreground/60 text-[10px] text-center">
-                      Mit dem Absenden stimmst du unserer{" "}
-                      <Link to="/datenschutz" className="underline hover:text-primary">Datenschutzerklärung</Link> zu.
-                    </p>
-
-                    <label className="flex items-start gap-2 text-[10px] text-muted-foreground/80 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={formData.newsletter}
-                        onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
-                        className="mt-0.5 h-3 w-3 accent-primary cursor-pointer"
-                      />
-                      <span>
-                        Ja, schickt mir gerne weitere Tipps zu Wissensmanagement, Digitalisierung und KI im Mittelstand. Abmeldung jederzeit per Klick.
-                      </span>
-                    </label>
-                  </form>
-                </div>
-              ) : (
-                <div className="text-center max-w-lg mx-auto">
-                  <p className="font-pixel text-sm text-primary mb-4 text-glow-cyan">
-                    ✓ EURE ANALYSE IST UNTERWEGS
+                  <p className="text-muted-foreground/60 text-[10px] text-center">
+                    Mit dem Absenden stimmst du unserer{" "}
+                    <Link to="/datenschutz" className="underline hover:text-primary">Datenschutzerklärung</Link> zu.
                   </p>
-                  <p className="text-foreground/70 mb-2">Check eure Inbox.</p>
-                  <p className="text-foreground/70 mb-6">Und wenn ihr nicht warten wollt:</p>
-                  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="neon-btn rounded-md inline-block px-8 py-3 text-xs">
-                    TERMIN BUCHEN
-                  </a>
-                </div>
-              )}
+
+                  <label className="flex items-start gap-2 text-[10px] text-muted-foreground/80 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.newsletter}
+                      onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
+                      className="mt-0.5 h-3 w-3 accent-primary cursor-pointer"
+                    />
+                    <span>
+                      Ja, schickt mir gerne weitere Tipps zu Wissensmanagement, Digitalisierung und KI im Mittelstand. Abmeldung jederzeit per Klick.
+                    </span>
+                  </label>
+                </form>
+              </div>
             </div>
 
             {/* Restart */}
