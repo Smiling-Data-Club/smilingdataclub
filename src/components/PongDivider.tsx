@@ -1,29 +1,35 @@
 import { useEffect, useRef, useState } from "react";
 
-const HEIGHT = 100;
-const MAX_WIDTH = 900;
+const HEIGHT = 110;
+const FIELD_W = 520;
 const P = 3; // pixel block size
 const BALL = 10;
 
 const PongDivider = () => {
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseY = useRef<number | null>(null);
   const [hover, setHover] = useState(false);
+  const [canHover, setCanHover] = useState(false);
+
+  useEffect(() => {
+    setCanHover(window.matchMedia("(hover: hover)").matches);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const wrap = wrapRef.current;
-    if (!canvas || !wrap) return;
+    const field = fieldRef.current;
+    if (!canvas || !field) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let width = Math.min(wrap.clientWidth, MAX_WIDTH);
+    let width = field.clientWidth || FIELD_W;
     const setSize = () => {
-      width = Math.min(wrap.clientWidth, MAX_WIDTH);
+      width = field.clientWidth || FIELD_W;
       canvas.width = width;
       canvas.height = HEIGHT;
       canvas.style.width = `${width}px`;
+      canvas.style.height = `${HEIGHT}px`;
     };
     setSize();
 
@@ -31,7 +37,7 @@ const PongDivider = () => {
     const PADDLE_W = 5;
     const LEFT_X = 12;
     const state = {
-      ball: { x: width / 2, y: HEIGHT / 2, vx: 0.75, vy: 0.4 },
+      ball: { x: width / 2, y: HEIGHT / 2, vx: 0.6, vy: 0.4 },
       left: HEIGHT / 2 - paddleH / 2,
       right: HEIGHT / 2 - paddleH / 2,
       scoreL: 0,
@@ -50,7 +56,6 @@ const PongDivider = () => {
       const bright = "hsl(172 100% 75%)";
       const rightX = width - LEFT_X - PADDLE_W;
 
-      // dashed center line (behind everything)
       ctx.fillStyle = "hsl(172 100% 45% / 0.35)";
       const cx = Math.round(width / 2) - 1;
       for (let y = 4; y < HEIGHT - 4; y += 12) {
@@ -71,7 +76,7 @@ const PongDivider = () => {
       ctx.fillStyle = "hsl(172 100% 45% / 0.65)";
       ctx.font = "12px 'Space Mono', monospace";
       ctx.textAlign = "center";
-      ctx.fillText(`${state.scoreL} : ${state.scoreR}`, width / 2, 16);
+      ctx.fillText(`${state.scoreL} : ${state.scoreR}`, width / 2, 20);
     };
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -118,13 +123,13 @@ const PongDivider = () => {
         state.scoreR = (state.scoreR + 1) % 10;
         b.x = width / 2;
         b.y = HEIGHT / 2;
-        b.vx = 0.75;
+        b.vx = 0.6;
       }
       if (b.x > width + 10) {
         state.scoreL = (state.scoreL + 1) % 10;
         b.x = width / 2;
         b.y = HEIGHT / 2;
-        b.vx = -0.75;
+        b.vx = -0.6;
       }
 
       const target = b.y + BALL / 2 - paddleH / 2;
@@ -168,7 +173,7 @@ const PongDivider = () => {
       ([entry]) => (entry.isIntersecting ? start() : stop()),
       { threshold: 0 }
     );
-    io.observe(wrap);
+    io.observe(field);
 
     const onResize = () => setSize();
     window.addEventListener("resize", onResize);
@@ -182,67 +187,78 @@ const PongDivider = () => {
 
   return (
     <div
-      ref={wrapRef}
-      onPointerMove={(e) => {
-        if (e.pointerType === "touch") return;
-        const rect = e.currentTarget.getBoundingClientRect();
-        mouseY.current = e.clientY - rect.top;
-        setHover(true);
-      }}
-      onPointerLeave={() => {
-        mouseY.current = null;
-        setHover(false);
-      }}
       style={{
         width: "100%",
-        height: HEIGHT,
-        position: "relative",
-        overflow: "hidden",
-        background: "var(--sw-bg-deep)",
+        background: "transparent",
+        padding: "56px 24px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 1,
-          background: "hsl(var(--neon-cyan) / 0.25)",
+        ref={fieldRef}
+        onPointerMove={(e) => {
+          if (e.pointerType === "touch") return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          mouseY.current = e.clientY - rect.top;
+          setHover(true);
         }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 1,
-          background: "hsl(var(--neon-cyan) / 0.25)",
+        onPointerLeave={() => {
+          mouseY.current = null;
+          setHover(false);
         }}
-      />
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
         style={{
-          display: "block",
-          margin: "0 auto",
-          maxWidth: MAX_WIDTH,
+          width: FIELD_W,
+          maxWidth: "100%",
           height: HEIGHT,
-          imageRendering: "pixelated",
-          opacity: hover ? 0.9 : 0.7,
-          transition: "opacity 300ms",
+          position: "relative",
+          overflow: "hidden",
+          border: "1px solid hsl(var(--neon-cyan) / 0.45)",
+          borderRadius: 10,
+          background: "hsl(var(--neon-cyan) / 0.05)",
+          boxShadow: hover
+            ? "0 0 30px hsl(var(--neon-cyan) / 0.3)"
+            : "0 0 22px hsl(var(--neon-cyan) / 0.14), inset 0 0 18px hsl(var(--neon-cyan) / 0.05)",
+          transition: "box-shadow 300ms",
         }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          background:
-            "repeating-linear-gradient(0deg, rgba(0,0,0,0.11) 0, rgba(0,0,0,0.11) 1px, transparent 1px, transparent 4px)",
-        }}
-      />
+      >
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          style={{
+            display: "block",
+            imageRendering: "pixelated",
+            opacity: hover ? 1 : 0.85,
+            transition: "opacity 300ms",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            borderRadius: 10,
+            background:
+              "repeating-linear-gradient(0deg, rgba(0,0,0,0.11) 0, rgba(0,0,0,0.11) 1px, transparent 1px, transparent 4px)",
+          }}
+        />
+      </div>
+      {canHover && (
+        <div
+          style={{
+            fontFamily: "var(--font-mono-sw)",
+            fontSize: 11,
+            letterSpacing: ".04em",
+            color: hover ? "var(--sw-cyan)" : "var(--sw-text-4)",
+            marginTop: 14,
+            transition: "color 300ms",
+            textAlign: "center",
+          }}
+        >
+          Maus ins Feld — dann spielst du mit
+        </div>
+      )}
     </div>
   );
 };
