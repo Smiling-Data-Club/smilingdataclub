@@ -388,9 +388,8 @@ const HeroSection = () => {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <span className="flex-shrink-0 w-8 flex justify-center"><PixelBomb /></span>
-          <span className="mx-1">KRISEN SIMULATOR</span>
-          <span className="flex-shrink-0 w-8 flex justify-center"><PixelBomb /></span>
+          <span style={{ marginRight: 10 }}>💣</span>
+          <span>KRISEN SIMULATOR</span>
         </a>
         </div>
       </div>
