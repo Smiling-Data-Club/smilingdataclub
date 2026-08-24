@@ -134,6 +134,13 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
         b.x = width / 2;
         b.y = HEIGHT / 2;
         b.vx = 0.6;
+        if (mouseY.current !== null && !unlockedRef.current) {
+          unlockedRef.current = true;
+          setUnlocked(true);
+          setFlashUnlock(true);
+          setTimeout(() => setFlashUnlock(false), 700);
+          onScoreRef.current?.();
+        }
       }
       if (b.x > width + 10) {
         state.scoreL = (state.scoreL + 1) % 10;
