@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-const HEIGHT = 80;
+const HEIGHT = 100;
+const MAX_WIDTH = 900;
 const P = 3; // pixel block size
+const BALL = 10;
 
 const PongDivider = () => {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -16,17 +18,20 @@ const PongDivider = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let width = wrap.clientWidth;
+    let width = Math.min(wrap.clientWidth, MAX_WIDTH);
     const setSize = () => {
-      width = wrap.clientWidth;
+      width = Math.min(wrap.clientWidth, MAX_WIDTH);
       canvas.width = width;
       canvas.height = HEIGHT;
+      canvas.style.width = `${width}px`;
     };
     setSize();
 
-    const paddleH = Math.round(HEIGHT * 0.6);
+    const paddleH = Math.round(HEIGHT * 0.45);
+    const PADDLE_W = 5;
+    const LEFT_X = 12;
     const state = {
-      ball: { x: width / 2, y: HEIGHT / 2, vx: 0.6, vy: 0.35 },
+      ball: { x: width / 2, y: HEIGHT / 2, vx: 0.75, vy: 0.4 },
       left: HEIGHT / 2 - paddleH / 2,
       right: HEIGHT / 2 - paddleH / 2,
       scoreL: 0,
@@ -43,19 +48,30 @@ const PongDivider = () => {
       ctx.clearRect(0, 0, width, HEIGHT);
       const cyan = "hsl(172 100% 45%)";
       const bright = "hsl(172 100% 75%)";
+      const rightX = width - LEFT_X - PADDLE_W;
+
+      // dashed center line (behind everything)
+      ctx.fillStyle = "hsl(172 100% 45% / 0.35)";
+      const cx = Math.round(width / 2) - 1;
+      for (let y = 4; y < HEIGHT - 4; y += 12) {
+        ctx.fillRect(cx, y, 3, 6);
+      }
 
       ctx.fillStyle = state.flashL > 0 ? bright : cyan;
-      px(12, state.left, 4, paddleH);
+      px(LEFT_X, state.left, PADDLE_W, paddleH);
       ctx.fillStyle = state.flashR > 0 ? bright : cyan;
-      px(width - 16, state.right, 4, paddleH);
+      px(rightX, state.right, PADDLE_W, paddleH);
 
       ctx.fillStyle = cyan;
-      px(state.ball.x, state.ball.y, 6, 6);
+      ctx.shadowColor = "hsl(172 100% 45%)";
+      ctx.shadowBlur = 12;
+      px(state.ball.x, state.ball.y, BALL, BALL);
+      ctx.shadowBlur = 0;
 
-      ctx.fillStyle = "hsl(172 100% 45% / 0.5)";
-      ctx.font = "10px 'Space Mono', monospace";
+      ctx.fillStyle = "hsl(172 100% 45% / 0.65)";
+      ctx.font = "12px 'Space Mono', monospace";
       ctx.textAlign = "center";
-      ctx.fillText(`${state.scoreL} : ${state.scoreR}`, width / 2, 14);
+      ctx.fillText(`${state.scoreL} : ${state.scoreR}`, width / 2, 16);
     };
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -71,44 +87,47 @@ const PongDivider = () => {
 
     const step = () => {
       const b = state.ball;
+      const rightX = width - LEFT_X - PADDLE_W;
       b.x += b.vx;
       b.y += b.vy;
       if (b.y <= 0) {
         b.y = 0;
         b.vy *= -1;
       }
-      if (b.y >= HEIGHT - 6) {
-        b.y = HEIGHT - 6;
+      if (b.y >= HEIGHT - BALL) {
+        b.y = HEIGHT - BALL;
         b.vy *= -1;
       }
 
-      if (b.x <= 16 && b.vx < 0) {
-        if (b.y + 6 >= state.left && b.y <= state.left + paddleH) {
+      if (b.x <= LEFT_X + PADDLE_W && b.vx < 0) {
+        if (b.y + BALL >= state.left && b.y <= state.left + paddleH) {
+          b.x = LEFT_X + PADDLE_W;
           b.vx *= -1;
           state.flashL = 2;
         }
       }
-      if (b.x + 6 >= width - 16 && b.vx > 0) {
-        if (b.y + 6 >= state.right && b.y <= state.right + paddleH) {
+      if (b.x + BALL >= rightX && b.vx > 0) {
+        if (b.y + BALL >= state.right && b.y <= state.right + paddleH) {
+          b.x = rightX - BALL;
           b.vx *= -1;
           state.flashR = 2;
         }
       }
 
-      if (b.x < -10) {
+      if (b.x < -BALL - 10) {
         state.scoreR = (state.scoreR + 1) % 10;
         b.x = width / 2;
         b.y = HEIGHT / 2;
-        b.vx = 0.6;
+        b.vx = 0.75;
       }
       if (b.x > width + 10) {
         state.scoreL = (state.scoreL + 1) % 10;
         b.x = width / 2;
         b.y = HEIGHT / 2;
-        b.vx = -0.6;
+        b.vx = -0.75;
       }
 
-      const target = b.y + 3 - paddleH / 2;
+      const target = b.y + BALL / 2 - paddleH / 2;
       const my = mouseY.current;
       const humanIsLeft = my !== null && b.x < width / 2;
       const humanIsRight = my !== null && b.x >= width / 2;
@@ -207,10 +226,11 @@ const PongDivider = () => {
         aria-hidden="true"
         style={{
           display: "block",
-          width: "100%",
+          margin: "0 auto",
+          maxWidth: MAX_WIDTH,
           height: HEIGHT,
           imageRendering: "pixelated",
-          opacity: hover ? 0.65 : 0.4,
+          opacity: hover ? 0.9 : 0.7,
           transition: "opacity 300ms",
         }}
       />
