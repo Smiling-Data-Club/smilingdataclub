@@ -9,6 +9,7 @@ import Datenschutz from "./pages/Datenschutz.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Game from "./pages/Game.tsx";
 import Auswertung from "./pages/Auswertung.tsx";
+import Styleguide from "./pages/Styleguide.tsx";
 
 const queryClient = new QueryClient();
 
