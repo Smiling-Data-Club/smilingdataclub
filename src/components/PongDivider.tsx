@@ -230,13 +230,17 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
           height: HEIGHT,
           position: "relative",
           overflow: "hidden",
-          border: "1px solid hsl(var(--neon-cyan) / 0.45)",
+          border: flashUnlock
+            ? "1px solid hsl(var(--neon-cyan) / .9)"
+            : "1px solid hsl(var(--neon-cyan) / 0.45)",
           borderRadius: 10,
           background: "hsl(var(--neon-cyan) / 0.05)",
-          boxShadow: hover
+          boxShadow: flashUnlock
+            ? "0 0 46px hsl(var(--neon-cyan) / .55)"
+            : hover
             ? "0 0 30px hsl(var(--neon-cyan) / 0.3)"
             : "0 0 22px hsl(var(--neon-cyan) / 0.14), inset 0 0 18px hsl(var(--neon-cyan) / 0.05)",
-          transition: "box-shadow 300ms",
+          transition: "box-shadow 300ms, border-color 300ms",
         }}
       >
         <canvas
