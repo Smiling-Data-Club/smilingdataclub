@@ -346,6 +346,10 @@ const HeroSection = () => {
           </div>
         </div>
 
+        <div
+          className="flex-1 flex flex-col items-center px-6 text-center max-w-4xl mx-auto w-full"
+          style={{ paddingTop: 'clamp(16px, 3.5vh, 44px)' }}
+        >
         <h1
           className="font-pixel text-xl md:text-3xl lg:text-4xl mb-6 leading-relaxed sw-animate-up"
           style={{
