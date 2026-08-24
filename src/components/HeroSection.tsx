@@ -392,7 +392,9 @@ const HeroSection = () => {
           <span className="mx-1">KRISEN SIMULATOR</span>
           <span className="flex-shrink-0 w-8 flex justify-center"><PixelBomb /></span>
         </a>
+        </div>
       </div>
+
 
     </section>
   );
