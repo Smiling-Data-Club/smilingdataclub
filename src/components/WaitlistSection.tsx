@@ -47,6 +47,27 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
           Sei dabei wenn es losgeht.
         </p>
 
+        {bonusActive && (
+          <div
+            className="sw-animate-pop"
+            style={{
+              fontFamily: "var(--font-mono-sw)",
+              fontSize: 12,
+              color: "var(--sw-cyan)",
+              border: "1px solid hsl(var(--neon-cyan) / .45)",
+              borderRadius: 10,
+              background: "hsl(var(--neon-cyan) / .05)",
+              padding: "10px 16px",
+              marginBottom: 24,
+              display: "inline-block",
+              textAlign: "center",
+            }}
+          >
+            Bonus-Code PONG1UP aktiv — wird mit deiner Anmeldung übermittelt.
+          </div>
+        )}
+
+
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center">
           <input
             type="email"
