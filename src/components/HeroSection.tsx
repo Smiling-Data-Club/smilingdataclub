@@ -314,11 +314,11 @@ const HeroSection = () => {
   }, [triggerDrift]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
       <SynthwaveBackground variant="full" />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingBottom: 'clamp(48px, 11vh, 150px)' }}>
-        <div className="mb-6">
+      <div className="relative z-10 h-screen flex flex-col">
+        <div className="flex items-center justify-center px-6" style={{ flex: '0 0 60%' }}>
           <div
             className={`inline-block relative ${glitching ? 'glitch-active' : ''}`}
             onMouseEnter={triggerGlitch}
@@ -346,6 +346,10 @@ const HeroSection = () => {
           </div>
         </div>
 
+        <div
+          className="flex-1 flex flex-col items-center px-6 text-center max-w-4xl mx-auto w-full"
+          style={{ paddingTop: 'clamp(16px, 3.5vh, 44px)' }}
+        >
         <h1
           className="font-pixel text-xl md:text-3xl lg:text-4xl mb-6 leading-relaxed sw-animate-up"
           style={{
@@ -359,8 +363,8 @@ const HeroSection = () => {
         </h1>
 
         <p
-          className="sw-lead text-base md:text-xl mb-12 tracking-wider sw-animate-up"
-          style={{ animationDelay: '0.2s' }}
+          className="sw-lead text-base md:text-xl tracking-wider sw-animate-up"
+          style={{ animationDelay: '0.2s', marginBottom: 'clamp(24px, 4vh, 48px)' }}
         >
           <FlickerTagline text="Today's complexity. Retro simplicity." />
         </p>
@@ -388,7 +392,9 @@ const HeroSection = () => {
           <span className="mx-1">KRISEN SIMULATOR</span>
           <span className="flex-shrink-0 w-8 flex justify-center"><PixelBomb /></span>
         </a>
+        </div>
       </div>
+
 
     </section>
   );
