@@ -151,13 +151,12 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
 
       const target = b.y + BALL / 2 - paddleH / 2;
       const my = mouseY.current;
-      const humanIsLeft = my !== null && b.x < width / 2;
-      const humanIsRight = my !== null && b.x >= width / 2;
+      const playerActive = my !== null;
 
-      const leftTarget = humanIsLeft && my !== null ? my - paddleH / 2 : target;
-      const rightTarget = humanIsRight && my !== null ? my - paddleH / 2 : target;
-      const leftLerp = humanIsLeft ? 0.12 : 0.03;
-      const rightLerp = humanIsRight ? 0.12 : 0.03;
+      const leftTarget = target;
+      const rightTarget = playerActive && my !== null ? my - paddleH / 2 : target;
+      const leftLerp = 0.03;
+      const rightLerp = playerActive ? 0.12 : 0.03;
 
       state.left += (leftTarget - state.left) * leftLerp;
       state.right += (rightTarget - state.right) * rightLerp;
