@@ -264,20 +264,63 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
           }}
         />
       </div>
-      {canHover && (
-        <div
-          style={{
-            fontFamily: "var(--font-mono-sw)",
-            fontSize: 11,
-            letterSpacing: ".04em",
-            color: hover ? "var(--sw-cyan)" : "var(--sw-text-4)",
-            marginTop: 14,
-            transition: "color 300ms",
-            textAlign: "center",
-          }}
-        >
-          Maus ins Feld — dann spielst du mit
+      {unlocked ? (
+        <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div
+            className="sw-animate-pop"
+            style={{
+              fontFamily: "var(--font-mono-sw)",
+              fontSize: 12,
+              color: "var(--sw-cyan)",
+              textShadow: "0 0 12px hsl(var(--neon-cyan) / .6)",
+              marginTop: 14,
+            }}
+          >
+            1 UP — Code PONG1UP freigeschaltet
+          </div>
+          <button
+            type="button"
+            className="sw-animate-pop font-pixel"
+            onMouseEnter={() => setRedeemHover(true)}
+            onMouseLeave={() => setRedeemHover(false)}
+            onClick={() =>
+              document
+                .getElementById("waitlist")
+                ?.scrollIntoView({ behavior: "smooth", block: "center" })
+            }
+            style={{
+              fontSize: 10,
+              marginTop: 10,
+              border: "1px solid hsl(var(--neon-pink) / .55)",
+              borderRadius: 8,
+              padding: "8px 14px",
+              background: redeemHover
+                ? "hsl(var(--neon-pink) / .16)"
+                : "hsl(var(--neon-pink) / .08)",
+              color: "var(--sw-pink)",
+              boxShadow: "0 0 18px hsl(var(--neon-pink) / .2)",
+              transition: "background 300ms",
+            }}
+          >
+            Code einlösen
+          </button>
         </div>
+      ) : (
+        canHover && (
+          <div
+            style={{
+              fontFamily: "var(--font-mono-sw)",
+              fontSize: 11,
+              letterSpacing: ".04em",
+              color: hover ? "var(--sw-cyan)" : "var(--sw-text-4)",
+              marginTop: 14,
+              transition: "color 300ms",
+              textAlign: "center",
+            }}
+          >
+            Maus ins Feld — dann spielst du mit
+          </div>
+        )
       )}
     </div>
   );
