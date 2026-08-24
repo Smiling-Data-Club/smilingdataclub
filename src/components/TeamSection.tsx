@@ -18,18 +18,26 @@ const TeamSection = () => {
   return (
     <section className="py-24 px-6 relative">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="font-pixel text-lg md:text-xl text-secondary text-glow-pink mb-4">
+        <p
+          className="sw-eyebrow"
+          style={{
+            color: "var(--sw-purple)",
+            textShadow: "0 0 12px hsl(var(--neon-purple) / .7)",
+            marginBottom: 16,
+          }}
+        >
           DAS TEAM
-        </h2>
-        <p className="text-muted-foreground mb-16 text-sm md:text-base">
+        </p>
+        <p className="sw-lead mb-16 text-sm md:text-base">
           It's dangerous to go alone! Take these.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {team.map((member) => (
+          {team.map((member, i) => (
             <div
               key={member.name}
-              className="rounded-lg bg-card neon-border-cyan p-5 text-left transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_24px_hsl(var(--primary)/0.45)]"
+              className="sw-card sw-animate-up text-left transition-all duration-300 hover:scale-[1.03]"
+              style={{ animationDelay: `${i * 0.06}s` }}
             >
               <div className="aspect-square overflow-hidden rounded mb-4 w-[60%] mx-auto">
                 <img
@@ -39,8 +47,17 @@ const TeamSection = () => {
                   loading="lazy"
                 />
               </div>
-              <h3 className="font-pixel text-xs text-foreground mb-1">{member.name}</h3>
-              <p className="text-secondary italic text-sm">{member.title}</p>
+              <h3 className="font-pixel text-xs mb-1" style={{ color: "var(--sw-text)" }}>{member.name}</h3>
+              <p
+                style={{
+                  fontFamily: "var(--font-mono-sw)",
+                  fontSize: 13,
+                  color: "var(--sw-pink)",
+                  lineHeight: 1.5,
+                }}
+              >
+                {member.title}
+              </p>
             </div>
           ))}
         </div>
