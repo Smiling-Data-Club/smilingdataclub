@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import sdcLogo from "@/assets/sdc-logo.png";
+import SynthwaveBackground from "@/components/SynthwaveBackground";
 
 const FlickerTagline = ({ text }: { text: string }) => {
   const [flickerIndices, setFlickerIndices] = useState<Set<number>>(new Set());
@@ -35,115 +36,6 @@ const FlickerTagline = ({ text }: { text: string }) => {
         </span>
       ))}
     </span>
-  );
-};
-
-const PongBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameRef = useRef(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d')!;
-    const W = canvas.width;
-    const H = canvas.height;
-    const P = 3; // pixel size
-
-    const paddleW = P * 2;
-    const paddleH = P * 8;
-    const ballSize = P * 2;
-
-    // State
-    let ballX = W / 2, ballY = H / 2;
-    let bvx = 1.5, bvy = 1;
-    let leftY = H / 2 - paddleH / 2;
-    let rightY = H / 2 - paddleH / 2;
-    let leftScore = 0, rightScore = 0;
-
-    const resetBall = () => {
-      ballX = W / 2;
-      ballY = H / 2;
-      bvx = (Math.random() > 0.5 ? 1 : -1) * 1.5;
-      bvy = (Math.random() - 0.5) * 2;
-    };
-
-    const drawPixelRect = (x: number, y: number, w: number, h: number) => {
-      // Draw as blocky pixels
-      for (let py = 0; py < h; py += P) {
-        for (let px = 0; px < w; px += P) {
-          ctx.fillRect(Math.floor(x + px), Math.floor(y + py), P, P);
-        }
-      }
-    };
-
-    const drawScore = (score: number, cx: number) => {
-      const s = score.toString();
-      ctx.font = `${P * 5}px monospace`;
-      ctx.textAlign = 'center';
-      ctx.fillText(s, cx, P * 8);
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = 'hsl(172, 100%, 45%)';
-
-
-      // AI paddles (simple tracking)
-      const leftTarget = ballY - paddleH / 2;
-      const rightTarget = ballY - paddleH / 2;
-      leftY += (leftTarget - leftY) * 0.04;
-      rightY += (rightTarget - rightY) * 0.045;
-      leftY = Math.max(0, Math.min(H - paddleH, leftY));
-      rightY = Math.max(0, Math.min(H - paddleH, rightY));
-
-      // Move ball
-      ballX += bvx;
-      ballY += bvy;
-
-      // Top/bottom bounce
-      if (ballY <= 0 || ballY >= H - ballSize) bvy *= -1;
-
-      // Paddle collisions
-      if (ballX <= P * 4 + paddleW && ballY + ballSize >= leftY && ballY <= leftY + paddleH && bvx < 0) {
-        bvx *= -1;
-        bvy += (Math.random() - 0.5) * 0.5;
-      }
-      if (ballX >= W - P * 4 - paddleW - ballSize && ballY + ballSize >= rightY && ballY <= rightY + paddleH && bvx > 0) {
-        bvx *= -1;
-        bvy += (Math.random() - 0.5) * 0.5;
-      }
-
-      // Scoring
-      if (ballX < 0) { rightScore = (rightScore + 1) % 10; resetBall(); }
-      if (ballX > W) { leftScore = (leftScore + 1) % 10; resetBall(); }
-
-      // Draw paddles
-      drawPixelRect(P * 3, leftY, paddleW, paddleH);
-      drawPixelRect(W - P * 3 - paddleW, rightY, paddleW, paddleH);
-
-      // Draw ball
-      drawPixelRect(ballX, ballY, ballSize, ballSize);
-
-      // Draw scores
-      drawScore(leftScore, W / 4);
-      drawScore(rightScore, (W / 4) * 3);
-
-      frameRef.current = requestAnimationFrame(animate);
-    };
-
-    frameRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frameRef.current);
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      width={600}
-      height={600}
-      className="absolute inset-0 w-full h-full pointer-events-none z-[5]"
-      style={{ imageRendering: 'pixelated', opacity: 0.25 }}
-    />
   );
 };
 
@@ -385,6 +277,7 @@ const HeroSection = () => {
   const [glitchKey, setGlitchKey] = useState(0);
   const [glitching, setGlitching] = useState(false);
   const [drifting, setDrifting] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const timeoutRef = useRef<number | null>(null);
   const isMd = typeof window !== 'undefined' && window.innerWidth >= 768;
   const logoSize = isMd ? 256 : 192;
