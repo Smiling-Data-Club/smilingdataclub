@@ -16,7 +16,7 @@ const team = [
 
 const TeamSection = () => {
   return (
-    <section className="py-24 px-6 relative">
+    <section className="sw-section relative">
       <div className="max-w-5xl mx-auto text-center">
         <p
           className="sw-section-title"
@@ -28,7 +28,7 @@ const TeamSection = () => {
         >
           DAS TEAM
         </p>
-        <p className="sw-lead mb-16 text-sm md:text-base">
+        <p className="sw-lead mb-12 text-sm md:text-base">
           It's dangerous to go alone! Take these.
         </p>
 

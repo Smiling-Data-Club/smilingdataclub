@@ -32,12 +32,12 @@ const topics = [
 
 const TopicsSection = () => {
   return (
-    <section className="py-24 px-6 relative">
+    <section className="sw-section relative">
       <div className="max-w-5xl mx-auto text-center">
         <p
           className="sw-section-title"
           style={{
-            marginBottom: 64,
+            marginBottom: 48,
             color: "var(--sw-pink)",
             textShadow: "0 0 18px hsl(var(--neon-pink) / .75)",
           }}

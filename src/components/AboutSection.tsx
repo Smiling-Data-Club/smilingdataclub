@@ -25,7 +25,7 @@ const cards = [
 
 const AboutSection = () => {
   return (
-    <section className="py-24 px-6 relative">
+    <section className="sw-section relative">
       <div className="max-w-5xl mx-auto text-center">
         <p className="sw-section-title" style={{ marginBottom: 24 }}>
           ÜBER UNS
@@ -34,7 +34,7 @@ const AboutSection = () => {
           Technik soll dem Menschen nutzen — nicht umgekehrt.
         </h2>
         <p
-          className="text-lg max-w-2xl mx-auto mb-16 leading-relaxed"
+          className="text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
           style={{ color: "var(--sw-text-2)" }}
         >
           Wir glauben an Systeme, die lächeln machen. An Prozesse, die fließen. An Daten,
