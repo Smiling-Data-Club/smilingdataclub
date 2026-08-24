@@ -11,12 +11,12 @@ const Index = () => {
   return (
     <div className="min-h-screen scanlines relative">
       <HeroSection />
-      <PongDivider />
       <AboutSection />
       <TopicsSection />
       <TeamSection />
       <CodeSection />
       <WaitlistSection />
+      <PongDivider />
       <FooterSection />
     </div>
   );
