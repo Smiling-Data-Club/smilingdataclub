@@ -314,11 +314,11 @@ const HeroSection = () => {
   }, [triggerDrift]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
       <SynthwaveBackground variant="full" />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingBottom: 'clamp(48px, 11vh, 150px)' }}>
-        <div className="mb-6">
+      <div className="relative z-10 h-screen flex flex-col">
+        <div className="flex items-center justify-center px-6" style={{ flex: '0 0 60%' }}>
           <div
             className={`inline-block relative ${glitching ? 'glitch-active' : ''}`}
             onMouseEnter={triggerGlitch}
