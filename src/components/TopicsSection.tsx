@@ -35,11 +35,11 @@ const TopicsSection = () => {
     <section className="py-24 px-6 relative">
       <div className="max-w-5xl mx-auto text-center">
         <p
-          className="sw-eyebrow"
+          className="sw-section-title"
           style={{
             marginBottom: 64,
             color: "var(--sw-pink)",
-            textShadow: "0 0 12px hsl(var(--neon-pink) / .7)",
+            textShadow: "0 0 18px hsl(var(--neon-pink) / .75)",
           }}
         >
           THEMEN

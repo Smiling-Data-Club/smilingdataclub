@@ -19,11 +19,11 @@ const TeamSection = () => {
     <section className="py-24 px-6 relative">
       <div className="max-w-5xl mx-auto text-center">
         <p
-          className="sw-eyebrow"
+          className="sw-section-title"
           style={{
             color: "var(--sw-purple)",
-            textShadow: "0 0 12px hsl(var(--neon-purple) / .7)",
-            marginBottom: 16,
+            textShadow: "0 0 18px hsl(var(--neon-purple) / .75)",
+            marginBottom: 20,
           }}
         >
           DAS TEAM

@@ -27,7 +27,7 @@ const AboutSection = () => {
   return (
     <section className="py-24 px-6 relative">
       <div className="max-w-5xl mx-auto text-center">
-        <p className="sw-eyebrow" style={{ marginBottom: 20 }}>
+        <p className="sw-section-title" style={{ marginBottom: 24 }}>
           ÜBER UNS
         </p>
         <h2 className="sw-headline text-2xl md:text-4xl mb-6 max-w-3xl mx-auto">
