@@ -40,7 +40,7 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
   return (
     <section id="waitlist" className="py-24 px-6 relative">
       <div className="max-w-xl mx-auto text-center">
-        <h2 className="font-pixel text-lg md:text-xl text-primary text-glow-cyan mb-4">
+        <h2 className="sw-section-title mb-4">
           JOIN THE CLUB
         </h2>
         <p className="text-foreground/80 text-lg mb-10">

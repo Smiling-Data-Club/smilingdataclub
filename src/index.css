@@ -493,6 +493,18 @@
     text-shadow: 0 0 12px hsl(var(--neon-cyan) / 0.7);
   }
 
+  .sw-section-title {
+    font-family: var(--font-pixel);
+    font-size: clamp(15px, 2.4vw, 26px);
+    line-height: 1.6;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sw-cyan);
+    text-shadow: 0 0 18px hsl(var(--neon-cyan) / 0.75);
+  }
+
+
+
   .sw-headline {
     font-family: var(--font-body);
     font-weight: 300;

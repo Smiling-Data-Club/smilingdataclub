@@ -14,6 +14,7 @@ const Styleguide = () => {
 
       <section className="mx-auto max-w-4xl space-y-8 px-6 py-16">
         <p className="sw-eyebrow">sw-eyebrow</p>
+        <p className="sw-section-title">sw-section-title</p>
         <h1 className="sw-headline text-5xl">sw-headline</h1>
         <p className="sw-lead text-lg">sw-lead — Space Mono lead text.</p>
 
