@@ -38,7 +38,7 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
   };
 
   return (
-    <section id="waitlist" className="py-24 px-6 relative">
+    <section id="waitlist" className="sw-section relative">
       <div className="max-w-xl mx-auto text-center">
         <h2 className="sw-section-title mb-4">
           JOIN THE CLUB

@@ -1,6 +1,6 @@
 const CodeSection = () => {
   return (
-    <section className="py-24 px-6">
+    <section className="sw-section">
       <div className="max-w-2xl mx-auto">
         <div
           className="overflow-hidden sw-animate-up"

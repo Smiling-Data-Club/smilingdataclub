@@ -206,7 +206,7 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
       style={{
         width: "100%",
         background: "transparent",
-        padding: "56px 24px",
+        padding: "40px 24px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
