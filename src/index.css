@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -42,6 +42,18 @@
 
     --font-pixel: 'Press Start 2P', monospace;
     --font-body: 'Inter', sans-serif;
+
+    --sw-bg-deep: #050510;
+    --sw-bg-mid: #0c0820;
+    --sw-bg-top: #1a0b2e;
+    --sw-cyan: #00E6C7;
+    --sw-pink: #F25A94;
+    --sw-purple: #b79cff;
+    --sw-text: #eafffb;
+    --sw-text-2: #b9c6e8;
+    --sw-text-3: #7d8bbf;
+    --sw-text-4: #5b6795;
+    --font-mono-sw: 'Space Mono', monospace;
   }
 }
 
