@@ -422,13 +422,7 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* No top-right button anymore */}
-      <div className="absolute inset-0 synthwave-grid" />
-      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-accent/20 via-secondary/5 to-transparent" />
-      <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-background to-transparent" />
-
-      {/* Pong background animation */}
-      <PongBackground />
+      <SynthwaveBackground variant="full" />
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <div className="mb-8">
@@ -438,7 +432,14 @@ const HeroSection = () => {
             style={{ width: logoSize, height: logoSize }}
           >
             <div
-              className={`drop-shadow-[0_0_40px_hsl(172,100%,45%,0.4)] ${
+              className="absolute pointer-events-none"
+              style={{
+                inset: '-30%',
+                background: 'radial-gradient(circle, rgba(5,5,16,.55) 0%, transparent 70%)',
+              }}
+            />
+            <div
+              className={`relative drop-shadow-[0_0_40px_hsl(172,100%,45%,0.55)] ${
                 loaded ? 'animate-fade-in' : 'opacity-0'
               }`}
             >
@@ -452,17 +453,42 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <h1 className="font-pixel text-2xl md:text-4xl lg:text-5xl text-glow-cyan text-primary mb-6 leading-relaxed">
+        <h1
+          className="font-pixel text-xl md:text-3xl lg:text-4xl mb-6 leading-relaxed sw-animate-up"
+          style={{
+            color: 'var(--sw-text)',
+            textShadow:
+              '0 0 28px hsl(var(--neon-cyan) / .85), 5px 5px 0 hsl(var(--neon-pink) / .42)',
+            animationDelay: '0.1s',
+          }}
+        >
           SMILING DATA CLUB
         </h1>
 
-        <p className="font-pixel text-xs md:text-sm text-secondary mb-12 text-glow-pink tracking-wider">
+        <p
+          className="sw-lead text-base md:text-xl mb-12 tracking-wider sw-animate-up"
+          style={{ animationDelay: '0.2s' }}
+        >
           <FlickerTagline text="Today's complexity. Retro simplicity." />
         </p>
 
         <a
           href="/game"
-          className="font-pixel text-[10px] md:text-xs py-2 px-3 border border-accent rounded bg-background/80 text-primary hover:bg-accent/20 hover:shadow-[0_0_15px_hsl(var(--accent)/0.4)] transition-all duration-300 backdrop-blur-sm inline-flex items-center justify-center"
+          className="font-pixel text-[10px] md:text-xs py-2 px-3 transition-all duration-300 backdrop-blur-sm inline-flex items-center justify-center sw-animate-up"
+          style={{
+            animationDelay: '0.32s',
+            border: '1px solid hsl(var(--neon-cyan) / .45)',
+            background: hovered
+              ? 'hsl(var(--neon-cyan) / .12)'
+              : 'hsl(var(--neon-cyan) / .05)',
+            boxShadow: hovered
+              ? '0 0 30px hsl(var(--neon-cyan) / .3)'
+              : '0 0 22px hsl(var(--neon-cyan) / .14), inset 0 0 18px hsl(var(--neon-cyan) / .05)',
+            borderRadius: '10px',
+            color: 'var(--sw-cyan)',
+          }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
         >
           <span className="flex-shrink-0 w-8 flex justify-center"><PixelBomb /></span>
           <span className="mx-1">KRISEN SIMULATOR</span>
@@ -470,7 +496,6 @@ const HeroSection = () => {
         </a>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
