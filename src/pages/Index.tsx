@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import PongDivider from "@/components/PongDivider";
 import AboutSection from "@/components/AboutSection";
 import TopicsSection from "@/components/TopicsSection";
 import TeamSection from "@/components/TeamSection";
