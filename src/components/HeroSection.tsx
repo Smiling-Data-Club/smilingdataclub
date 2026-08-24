@@ -261,9 +261,35 @@ const HeroSection = () => {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <span style={{ marginRight: 10 }}>💣</span>
           <span>KRISEN SIMULATOR</span>
+          <span
+            style={{
+              marginLeft: 10,
+              fontFamily: 'var(--font-mono-sw)',
+              fontSize: '1.1em',
+              lineHeight: 1,
+              display: 'inline-block',
+              transform: hovered ? 'translateX(4px)' : 'translateX(0)',
+              transition: 'transform 300ms',
+            }}
+          >
+            →
+          </span>
         </a>
+
+        <p
+          className="sw-animate-up"
+          style={{
+            fontFamily: 'var(--font-mono-sw)',
+            fontSize: 13,
+            color: 'var(--sw-text-3)',
+            marginTop: 16,
+            textAlign: 'center',
+            animationDelay: '0.4s',
+          }}
+        >
+          Mach den Krisentest für dein Unternehmen
+        </p>
         </div>
       </div>
 
