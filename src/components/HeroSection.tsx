@@ -363,8 +363,8 @@ const HeroSection = () => {
         </h1>
 
         <p
-          className="sw-lead text-base md:text-xl mb-12 tracking-wider sw-animate-up"
-          style={{ animationDelay: '0.2s' }}
+          className="sw-lead text-base md:text-xl tracking-wider sw-animate-up"
+          style={{ animationDelay: '0.2s', marginBottom: 'clamp(24px, 4vh, 48px)' }}
         >
           <FlickerTagline text="Today's complexity. Retro simplicity." />
         </p>
