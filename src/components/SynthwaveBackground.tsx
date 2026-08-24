@@ -120,12 +120,10 @@ const SynthwaveBackground = ({ variant = "full" }: SynthwaveBackgroundProps) => 
               filter: "drop-shadow(0 0 12px hsl(var(--neon-cyan) / 0.45))",
             }}
           >
-            <polygon points={`${MOUNTAIN_POINTS} 3840,420`} fill="#0a0618" opacity="0.92" />
+            <polygon points={`${MOUNTAIN_POINTS} 3840,420`} style={{ fill: "#0a0618", opacity: 0.92 }} />
             <polyline
               points={MOUNTAIN_POINTS}
-              fill="none"
-              stroke="hsl(var(--neon-cyan) / 0.55)"
-              strokeWidth="4"
+              style={{ stroke: "hsl(var(--neon-cyan) / 0.55)", strokeWidth: 6, fill: "none" }}
             />
           </svg>
 
