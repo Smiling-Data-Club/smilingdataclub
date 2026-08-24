@@ -44,7 +44,7 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
           JOIN THE CLUB
         </h2>
         <p className="sw-lead text-base md:text-lg mb-10">
-          Sei dabei wenn es losgeht.
+          Newsletter, Event-Einladungen und exklusive Inhalte zu KI und Automatisierung.
         </p>
 
         {bonusActive && (
