@@ -11,6 +11,7 @@ const Index = () => {
   return (
     <div className="min-h-screen scanlines relative">
       <HeroSection />
+      <PongDivider />
       <AboutSection />
       <TopicsSection />
       <TeamSection />
