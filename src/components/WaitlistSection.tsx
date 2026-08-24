@@ -4,7 +4,11 @@ import { toast } from "sonner";
 const WEBHOOK_URL =
   "https://flow.zoho.eu/20106110113/flow/webhook/incoming?zapikey=1001.0ccd122c2824a51d4309ea2b4ef7c7e5.e8e31339336bcce2a43b9785fc2ed8a4&isdebug=false";
 
-const WaitlistSection = () => {
+interface WaitlistSectionProps {
+  bonusActive?: boolean;
+}
+
+const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -16,6 +20,7 @@ const WaitlistSection = () => {
     try {
       const formData = new URLSearchParams();
       formData.append("email", email);
+      if (bonusActive) formData.append("bonus", "PONG1UP");
 
       await fetch(WEBHOOK_URL, {
         method: "POST",
@@ -41,6 +46,27 @@ const WaitlistSection = () => {
         <p className="text-foreground/80 text-lg mb-10">
           Sei dabei wenn es losgeht.
         </p>
+
+        {bonusActive && (
+          <div
+            className="sw-animate-pop"
+            style={{
+              fontFamily: "var(--font-mono-sw)",
+              fontSize: 12,
+              color: "var(--sw-cyan)",
+              border: "1px solid hsl(var(--neon-cyan) / .45)",
+              borderRadius: 10,
+              background: "hsl(var(--neon-cyan) / .05)",
+              padding: "10px 16px",
+              marginBottom: 24,
+              display: "inline-block",
+              textAlign: "center",
+            }}
+          >
+            Bonus-Code PONG1UP aktiv — wird mit deiner Anmeldung übermittelt.
+          </div>
+        )}
+
 
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center">
           <input

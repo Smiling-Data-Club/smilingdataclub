@@ -5,12 +5,22 @@ const FIELD_W = 520;
 const P = 3; // pixel block size
 const BALL = 10;
 
-const PongDivider = () => {
+interface PongDividerProps {
+  onScore?: () => void;
+}
+
+const PongDivider = ({ onScore }: PongDividerProps) => {
   const fieldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseY = useRef<number | null>(null);
   const [hover, setHover] = useState(false);
   const [canHover, setCanHover] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const unlockedRef = useRef(false);
+  const [flashUnlock, setFlashUnlock] = useState(false);
+  const [redeemHover, setRedeemHover] = useState(false);
+  const onScoreRef = useRef(onScore);
+  onScoreRef.current = onScore;
 
   useEffect(() => {
     setCanHover(window.matchMedia("(hover: hover)").matches);
@@ -124,6 +134,13 @@ const PongDivider = () => {
         b.x = width / 2;
         b.y = HEIGHT / 2;
         b.vx = 0.6;
+        if (mouseY.current !== null && !unlockedRef.current) {
+          unlockedRef.current = true;
+          setUnlocked(true);
+          setFlashUnlock(true);
+          setTimeout(() => setFlashUnlock(false), 700);
+          onScoreRef.current?.();
+        }
       }
       if (b.x > width + 10) {
         state.scoreL = (state.scoreL + 1) % 10;
@@ -134,13 +151,12 @@ const PongDivider = () => {
 
       const target = b.y + BALL / 2 - paddleH / 2;
       const my = mouseY.current;
-      const humanIsLeft = my !== null && b.x < width / 2;
-      const humanIsRight = my !== null && b.x >= width / 2;
+      const playerActive = my !== null;
 
-      const leftTarget = humanIsLeft && my !== null ? my - paddleH / 2 : target;
-      const rightTarget = humanIsRight && my !== null ? my - paddleH / 2 : target;
-      const leftLerp = humanIsLeft ? 0.12 : 0.03;
-      const rightLerp = humanIsRight ? 0.12 : 0.03;
+      const leftTarget = target;
+      const rightTarget = playerActive && my !== null ? my - paddleH / 2 : target;
+      const leftLerp = 0.03;
+      const rightLerp = playerActive ? 0.12 : 0.03;
 
       state.left += (leftTarget - state.left) * leftLerp;
       state.right += (rightTarget - state.right) * rightLerp;
@@ -214,13 +230,17 @@ const PongDivider = () => {
           height: HEIGHT,
           position: "relative",
           overflow: "hidden",
-          border: "1px solid hsl(var(--neon-cyan) / 0.45)",
+          border: flashUnlock
+            ? "1px solid hsl(var(--neon-cyan) / .9)"
+            : "1px solid hsl(var(--neon-cyan) / 0.45)",
           borderRadius: 10,
           background: "hsl(var(--neon-cyan) / 0.05)",
-          boxShadow: hover
+          boxShadow: flashUnlock
+            ? "0 0 46px hsl(var(--neon-cyan) / .55)"
+            : hover
             ? "0 0 30px hsl(var(--neon-cyan) / 0.3)"
             : "0 0 22px hsl(var(--neon-cyan) / 0.14), inset 0 0 18px hsl(var(--neon-cyan) / 0.05)",
-          transition: "box-shadow 300ms",
+          transition: "box-shadow 300ms, border-color 300ms",
         }}
       >
         <canvas
@@ -244,20 +264,63 @@ const PongDivider = () => {
           }}
         />
       </div>
-      {canHover && (
-        <div
-          style={{
-            fontFamily: "var(--font-mono-sw)",
-            fontSize: 11,
-            letterSpacing: ".04em",
-            color: hover ? "var(--sw-cyan)" : "var(--sw-text-4)",
-            marginTop: 14,
-            transition: "color 300ms",
-            textAlign: "center",
-          }}
-        >
-          Maus ins Feld — dann spielst du mit
+      {unlocked ? (
+        <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div
+            className="sw-animate-pop"
+            style={{
+              fontFamily: "var(--font-mono-sw)",
+              fontSize: 12,
+              color: "var(--sw-cyan)",
+              textShadow: "0 0 12px hsl(var(--neon-cyan) / .6)",
+              marginTop: 14,
+            }}
+          >
+            1 UP — Code PONG1UP freigeschaltet
+          </div>
+          <button
+            type="button"
+            className="sw-animate-pop font-pixel"
+            onMouseEnter={() => setRedeemHover(true)}
+            onMouseLeave={() => setRedeemHover(false)}
+            onClick={() =>
+              document
+                .getElementById("waitlist")
+                ?.scrollIntoView({ behavior: "smooth", block: "center" })
+            }
+            style={{
+              fontSize: 10,
+              marginTop: 10,
+              border: "1px solid hsl(var(--neon-pink) / .55)",
+              borderRadius: 8,
+              padding: "8px 14px",
+              background: redeemHover
+                ? "hsl(var(--neon-pink) / .16)"
+                : "hsl(var(--neon-pink) / .08)",
+              color: "var(--sw-pink)",
+              boxShadow: "0 0 18px hsl(var(--neon-pink) / .2)",
+              transition: "background 300ms",
+            }}
+          >
+            Code einlösen
+          </button>
         </div>
+      ) : (
+        canHover && (
+          <div
+            style={{
+              fontFamily: "var(--font-mono-sw)",
+              fontSize: 11,
+              letterSpacing: ".04em",
+              color: hover ? "var(--sw-cyan)" : "var(--sw-text-4)",
+              marginTop: 14,
+              transition: "color 300ms",
+              textAlign: "center",
+            }}
+          >
+            Maus ins Feld — dann spielst du mit
+          </div>
+        )
       )}
     </div>
   );
