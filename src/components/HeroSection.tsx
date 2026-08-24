@@ -317,8 +317,8 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <SynthwaveBackground variant="full" />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <div className="mb-8">
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto" style={{ paddingBottom: 'clamp(48px, 11vh, 150px)' }}>
+        <div className="mb-6">
           <div
             className={`inline-block relative ${glitching ? 'glitch-active' : ''}`}
             onMouseEnter={triggerGlitch}
