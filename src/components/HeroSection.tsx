@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import sdcLogo from "@/assets/sdc-logo.png";
+import SynthwaveBackground from "@/components/SynthwaveBackground";
 
 const FlickerTagline = ({ text }: { text: string }) => {
   const [flickerIndices, setFlickerIndices] = useState<Set<number>>(new Set());
@@ -35,115 +36,6 @@ const FlickerTagline = ({ text }: { text: string }) => {
         </span>
       ))}
     </span>
-  );
-};
-
-const PongBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameRef = useRef(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d')!;
-    const W = canvas.width;
-    const H = canvas.height;
-    const P = 3; // pixel size
-
-    const paddleW = P * 2;
-    const paddleH = P * 8;
-    const ballSize = P * 2;
-
-    // State
-    let ballX = W / 2, ballY = H / 2;
-    let bvx = 1.5, bvy = 1;
-    let leftY = H / 2 - paddleH / 2;
-    let rightY = H / 2 - paddleH / 2;
-    let leftScore = 0, rightScore = 0;
-
-    const resetBall = () => {
-      ballX = W / 2;
-      ballY = H / 2;
-      bvx = (Math.random() > 0.5 ? 1 : -1) * 1.5;
-      bvy = (Math.random() - 0.5) * 2;
-    };
-
-    const drawPixelRect = (x: number, y: number, w: number, h: number) => {
-      // Draw as blocky pixels
-      for (let py = 0; py < h; py += P) {
-        for (let px = 0; px < w; px += P) {
-          ctx.fillRect(Math.floor(x + px), Math.floor(y + py), P, P);
-        }
-      }
-    };
-
-    const drawScore = (score: number, cx: number) => {
-      const s = score.toString();
-      ctx.font = `${P * 5}px monospace`;
-      ctx.textAlign = 'center';
-      ctx.fillText(s, cx, P * 8);
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = 'hsl(172, 100%, 45%)';
-
-
-      // AI paddles (simple tracking)
-      const leftTarget = ballY - paddleH / 2;
-      const rightTarget = ballY - paddleH / 2;
-      leftY += (leftTarget - leftY) * 0.04;
-      rightY += (rightTarget - rightY) * 0.045;
-      leftY = Math.max(0, Math.min(H - paddleH, leftY));
-      rightY = Math.max(0, Math.min(H - paddleH, rightY));
-
-      // Move ball
-      ballX += bvx;
-      ballY += bvy;
-
-      // Top/bottom bounce
-      if (ballY <= 0 || ballY >= H - ballSize) bvy *= -1;
-
-      // Paddle collisions
-      if (ballX <= P * 4 + paddleW && ballY + ballSize >= leftY && ballY <= leftY + paddleH && bvx < 0) {
-        bvx *= -1;
-        bvy += (Math.random() - 0.5) * 0.5;
-      }
-      if (ballX >= W - P * 4 - paddleW - ballSize && ballY + ballSize >= rightY && ballY <= rightY + paddleH && bvx > 0) {
-        bvx *= -1;
-        bvy += (Math.random() - 0.5) * 0.5;
-      }
-
-      // Scoring
-      if (ballX < 0) { rightScore = (rightScore + 1) % 10; resetBall(); }
-      if (ballX > W) { leftScore = (leftScore + 1) % 10; resetBall(); }
-
-      // Draw paddles
-      drawPixelRect(P * 3, leftY, paddleW, paddleH);
-      drawPixelRect(W - P * 3 - paddleW, rightY, paddleW, paddleH);
-
-      // Draw ball
-      drawPixelRect(ballX, ballY, ballSize, ballSize);
-
-      // Draw scores
-      drawScore(leftScore, W / 4);
-      drawScore(rightScore, (W / 4) * 3);
-
-      frameRef.current = requestAnimationFrame(animate);
-    };
-
-    frameRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frameRef.current);
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      width={600}
-      height={600}
-      className="absolute inset-0 w-full h-full pointer-events-none z-[5]"
-      style={{ imageRendering: 'pixelated', opacity: 0.25 }}
-    />
   );
 };
 
@@ -385,6 +277,7 @@ const HeroSection = () => {
   const [glitchKey, setGlitchKey] = useState(0);
   const [glitching, setGlitching] = useState(false);
   const [drifting, setDrifting] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const timeoutRef = useRef<number | null>(null);
   const isMd = typeof window !== 'undefined' && window.innerWidth >= 768;
   const logoSize = isMd ? 256 : 192;
@@ -422,13 +315,7 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* No top-right button anymore */}
-      <div className="absolute inset-0 synthwave-grid" />
-      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-accent/20 via-secondary/5 to-transparent" />
-      <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-background to-transparent" />
-
-      {/* Pong background animation */}
-      <PongBackground />
+      <SynthwaveBackground variant="full" />
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <div className="mb-8">
@@ -438,7 +325,14 @@ const HeroSection = () => {
             style={{ width: logoSize, height: logoSize }}
           >
             <div
-              className={`drop-shadow-[0_0_40px_hsl(172,100%,45%,0.4)] ${
+              className="absolute pointer-events-none"
+              style={{
+                inset: '-30%',
+                background: 'radial-gradient(circle, rgba(5,5,16,.55) 0%, transparent 70%)',
+              }}
+            />
+            <div
+              className={`relative drop-shadow-[0_0_40px_hsl(172,100%,45%,0.55)] ${
                 loaded ? 'animate-fade-in' : 'opacity-0'
               }`}
             >
@@ -452,17 +346,42 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <h1 className="font-pixel text-2xl md:text-4xl lg:text-5xl text-glow-cyan text-primary mb-6 leading-relaxed">
+        <h1
+          className="font-pixel text-xl md:text-3xl lg:text-4xl mb-6 leading-relaxed sw-animate-up"
+          style={{
+            color: 'var(--sw-text)',
+            textShadow:
+              '0 0 28px hsl(var(--neon-cyan) / .85), 5px 5px 0 hsl(var(--neon-pink) / .42)',
+            animationDelay: '0.1s',
+          }}
+        >
           SMILING DATA CLUB
         </h1>
 
-        <p className="font-pixel text-xs md:text-sm text-secondary mb-12 text-glow-pink tracking-wider">
+        <p
+          className="sw-lead text-base md:text-xl mb-12 tracking-wider sw-animate-up"
+          style={{ animationDelay: '0.2s' }}
+        >
           <FlickerTagline text="Today's complexity. Retro simplicity." />
         </p>
 
         <a
           href="/game"
-          className="font-pixel text-[10px] md:text-xs py-2 px-3 border border-accent rounded bg-background/80 text-primary hover:bg-accent/20 hover:shadow-[0_0_15px_hsl(var(--accent)/0.4)] transition-all duration-300 backdrop-blur-sm inline-flex items-center justify-center"
+          className="font-pixel text-[10px] md:text-xs py-2 px-3 transition-all duration-300 backdrop-blur-sm inline-flex items-center justify-center sw-animate-up"
+          style={{
+            animationDelay: '0.32s',
+            border: '1px solid hsl(var(--neon-cyan) / .45)',
+            background: hovered
+              ? 'hsl(var(--neon-cyan) / .12)'
+              : 'hsl(var(--neon-cyan) / .05)',
+            boxShadow: hovered
+              ? '0 0 30px hsl(var(--neon-cyan) / .3)'
+              : '0 0 22px hsl(var(--neon-cyan) / .14), inset 0 0 18px hsl(var(--neon-cyan) / .05)',
+            borderRadius: '10px',
+            color: 'var(--sw-cyan)',
+          }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
         >
           <span className="flex-shrink-0 w-8 flex justify-center"><PixelBomb /></span>
           <span className="mx-1">KRISEN SIMULATOR</span>
@@ -470,7 +389,6 @@ const HeroSection = () => {
         </a>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
