@@ -20,6 +20,7 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
     try {
       const formData = new URLSearchParams();
       formData.append("email", email);
+      if (bonusActive) formData.append("bonus", "PONG1UP");
 
       await fetch(WEBHOOK_URL, {
         method: "POST",
