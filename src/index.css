@@ -452,6 +452,13 @@
 }
 
 @layer utilities {
+  .sw-section {
+    padding-top: clamp(56px, 6vw, 80px);
+    padding-bottom: clamp(56px, 6vw, 80px);
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   .sw-card {
     border: 1px solid hsl(var(--neon-cyan) / 0.45);
     border-radius: 10px;
