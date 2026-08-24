@@ -39,133 +39,6 @@ const FlickerTagline = ({ text }: { text: string }) => {
   );
 };
 
-const PixelBomb = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameRef = useRef(0);
-  const explodingRef = useRef(false);
-  const timerRef = useRef(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d')!;
-    const S = 48; // canvas size
-    const P = 3;  // pixel size for that chunky look
-
-    // Draw a pixel-art bomb centered in canvas (16x16 grid at P=3)
-    const OX = 4; // offset to center the 8-wide bomb in 16-wide canvas
-    const OY = 4;
-    const drawBomb = () => {
-      ctx.clearRect(0, 0, S, S);
-      const bombPixels = [
-        // fuse spark (yellow)
-        { x: 5, y: 0, c: '#ffff00' }, { x: 6, y: 1, c: '#ffaa00' },
-        // fuse
-        { x: 5, y: 2, c: '#888' }, { x: 4, y: 1, c: '#888' },
-        // body (dark)
-        { x: 3, y: 3, c: '#333' }, { x: 4, y: 3, c: '#333' }, { x: 5, y: 3, c: '#333' },
-        { x: 2, y: 4, c: '#333' }, { x: 3, y: 4, c: '#222' }, { x: 4, y: 4, c: '#222' }, { x: 5, y: 4, c: '#222' }, { x: 6, y: 4, c: '#333' },
-        { x: 2, y: 5, c: '#333' }, { x: 3, y: 5, c: '#222' }, { x: 4, y: 5, c: '#222' }, { x: 5, y: 5, c: '#222' }, { x: 6, y: 5, c: '#333' },
-        { x: 2, y: 6, c: '#333' }, { x: 3, y: 6, c: '#222' }, { x: 4, y: 6, c: '#222' }, { x: 5, y: 6, c: '#222' }, { x: 6, y: 6, c: '#333' },
-        { x: 3, y: 7, c: '#333' }, { x: 4, y: 7, c: '#333' }, { x: 5, y: 7, c: '#333' },
-        // highlight
-        { x: 3, y: 4, c: '#555' },
-      ];
-      for (const p of bombPixels) {
-        ctx.fillStyle = p.c;
-        ctx.fillRect((p.x + OX) * P, (p.y + OY) * P, P, P);
-      }
-    };
-
-    // Explosion: blocky expanding squares
-    const drawExplosion = (t: number) => {
-      ctx.clearRect(0, 0, S, S);
-      const colors = ['#ff0000', '#ff4400', '#ffaa00', '#ffff00', '#ff6600', '#ffffff'];
-      // Frame-based blocky explosion
-      const frame = Math.floor(t * 5); // 0-4 frames
-      const rng = (seed: number) => ((seed * 9301 + 49297) % 233280) / 233280;
-
-      if (frame === 0) {
-        // small center flash
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(6, 6, 4, 4);
-        ctx.fillStyle = '#ffff00';
-        ctx.fillRect(5, 5, 6, 6);
-      } else if (frame <= 2) {
-        // expanding pixel blocks
-        for (let i = 0; i < 20; i++) {
-          const angle = (i / 20) * Math.PI * 2;
-          const dist = frame * 3 + rng(i * 7) * 3;
-          const bx = Math.floor(8 + Math.cos(angle) * dist) * P;
-          const by = Math.floor(8 + Math.sin(angle) * dist) * P;
-          ctx.fillStyle = colors[Math.floor(rng(i * 13) * colors.length)];
-          ctx.fillRect(bx, by, P, P);
-        }
-        // center glow
-        ctx.fillStyle = '#ffaa00';
-        ctx.fillRect(6, 6, 4, 4);
-      } else {
-        // fading debris pixels
-        for (let i = 0; i < 16; i++) {
-          const angle = (i / 16) * Math.PI * 2;
-          const dist = frame * 4 + rng(i * 11) * 4;
-          const bx = Math.floor(8 + Math.cos(angle) * dist) * P;
-          const by = Math.floor(8 + Math.sin(angle) * dist) * P;
-          ctx.globalAlpha = Math.max(0, 1 - t);
-          ctx.fillStyle = colors[Math.floor(rng(i * 17) * 3)];
-          ctx.fillRect(bx, by, P, P);
-        }
-        ctx.globalAlpha = 1;
-      }
-    };
-
-    let explodeStart = 0;
-    const EXPLODE_DURATION = 1000;
-
-    const animate = () => {
-      const now = performance.now();
-
-      if (explodingRef.current) {
-        const t = Math.min((now - explodeStart) / EXPLODE_DURATION, 1);
-        drawExplosion(t);
-        if (t >= 1) {
-          explodingRef.current = false;
-          drawBomb();
-        }
-      }
-
-      frameRef.current = requestAnimationFrame(animate);
-    };
-
-    drawBomb();
-    frameRef.current = requestAnimationFrame(animate);
-
-    const startExplode = () => {
-      explodingRef.current = true;
-      explodeStart = performance.now();
-    };
-
-    const initial = setTimeout(startExplode, 3000);
-    const interval = setInterval(startExplode, 10000);
-    timerRef.current = interval as unknown as number;
-
-    return () => {
-      cancelAnimationFrame(frameRef.current);
-      clearTimeout(initial);
-      clearInterval(interval);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      width={48}
-      height={48}
-      className="inline-block align-middle mx-auto"
-      style={{ imageRendering: 'pixelated', width: 32, height: 32 }}
-    />
-  );
-};
 
 const PixelateCanvas = ({
   imageSrc,
@@ -388,9 +261,8 @@ const HeroSection = () => {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <span className="flex-shrink-0 w-8 flex justify-center"><PixelBomb /></span>
-          <span className="mx-1">KRISEN SIMULATOR</span>
-          <span className="flex-shrink-0 w-8 flex justify-center"><PixelBomb /></span>
+          <span style={{ marginRight: 10 }}>💣</span>
+          <span>KRISEN SIMULATOR</span>
         </a>
         </div>
       </div>
