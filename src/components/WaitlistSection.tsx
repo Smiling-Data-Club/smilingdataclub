@@ -4,7 +4,11 @@ import { toast } from "sonner";
 const WEBHOOK_URL =
   "https://flow.zoho.eu/20106110113/flow/webhook/incoming?zapikey=1001.0ccd122c2824a51d4309ea2b4ef7c7e5.e8e31339336bcce2a43b9785fc2ed8a4&isdebug=false";
 
-const WaitlistSection = () => {
+interface WaitlistSectionProps {
+  bonusActive?: boolean;
+}
+
+const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
