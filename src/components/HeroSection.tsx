@@ -367,18 +367,19 @@ const HeroSection = () => {
 
         <a
           href="/game"
-          className="font-pixel text-[10px] md:text-xs py-2 px-3 transition-all duration-300 backdrop-blur-sm inline-flex items-center justify-center sw-animate-up"
+          className="font-pixel text-[11px] md:text-sm py-3 px-5 transition-all duration-300 inline-flex items-center justify-center sw-animate-up"
           style={{
             animationDelay: '0.32s',
-            border: '1px solid hsl(var(--neon-cyan) / .45)',
+            border: '2px solid hsl(var(--neon-pink) / .75)',
             background: hovered
-              ? 'hsl(var(--neon-cyan) / .12)'
-              : 'hsl(var(--neon-cyan) / .05)',
+              ? 'linear-gradient(160deg, rgba(5,5,16,.92), hsl(var(--neon-pink) / .22))'
+              : 'linear-gradient(160deg, rgba(5,5,16,.88), hsl(var(--neon-pink) / .12))',
             boxShadow: hovered
-              ? '0 0 30px hsl(var(--neon-cyan) / .3)'
-              : '0 0 22px hsl(var(--neon-cyan) / .14), inset 0 0 18px hsl(var(--neon-cyan) / .05)',
+              ? '0 0 40px hsl(var(--neon-pink) / .5), inset 0 0 22px hsl(var(--neon-pink) / .1)'
+              : '0 0 26px hsl(var(--neon-pink) / .28), inset 0 0 18px hsl(var(--neon-pink) / .06)',
             borderRadius: '10px',
-            color: 'var(--sw-cyan)',
+            color: 'var(--sw-text)',
+            textShadow: '0 0 12px hsl(var(--neon-pink) / .8)',
           }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}

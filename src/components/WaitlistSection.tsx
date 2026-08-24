@@ -43,7 +43,7 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
         <h2 className="sw-section-title mb-4">
           JOIN THE CLUB
         </h2>
-        <p className="text-foreground/80 text-lg mb-10">
+        <p className="sw-lead text-base md:text-lg mb-10">
           Sei dabei wenn es losgeht.
         </p>
 
@@ -76,9 +76,26 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="deine@email.de"
             required
-            className="flex-1 px-5 py-3 rounded-md bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono text-sm"
+            className="flex-1 px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
+            style={{
+              background: 'rgba(5,5,16,.6)',
+              border: '1px solid hsl(var(--neon-cyan) / .35)',
+              borderRadius: 10,
+              fontFamily: 'var(--font-mono-sw)',
+              color: 'var(--sw-text)',
+            }}
           />
-          <button type="submit" disabled={isSubmitting} className="neon-btn rounded-md whitespace-nowrap">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="neon-btn whitespace-nowrap"
+            style={{
+              borderRadius: 10,
+              boxShadow: '0 0 26px hsl(var(--neon-cyan) / .3)',
+              fontFamily: 'var(--font-pixel)',
+              fontSize: 11,
+            }}
+          >
             {isSubmitting ? "Wird gesendet..." : "Jetzt beitreten"}
           </button>
         </form>

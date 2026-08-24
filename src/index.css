@@ -527,6 +527,11 @@
     text-shadow: 0 0 16px hsl(var(--neon-cyan) / 0.4);
   }
 
+  #waitlist input::placeholder {
+    color: var(--sw-text-4);
+  }
+
+
   .sw-animate-up {
     animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
