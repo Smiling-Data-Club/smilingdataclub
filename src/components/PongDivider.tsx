@@ -5,12 +5,22 @@ const FIELD_W = 520;
 const P = 3; // pixel block size
 const BALL = 10;
 
-const PongDivider = () => {
+interface PongDividerProps {
+  onScore?: () => void;
+}
+
+const PongDivider = ({ onScore }: PongDividerProps) => {
   const fieldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseY = useRef<number | null>(null);
   const [hover, setHover] = useState(false);
   const [canHover, setCanHover] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const unlockedRef = useRef(false);
+  const [flashUnlock, setFlashUnlock] = useState(false);
+  const [redeemHover, setRedeemHover] = useState(false);
+  const onScoreRef = useRef(onScore);
+  onScoreRef.current = onScore;
 
   useEffect(() => {
     setCanHover(window.matchMedia("(hover: hover)").matches);
