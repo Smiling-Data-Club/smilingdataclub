@@ -7,19 +7,19 @@ const cards = [
     icon: pixelSmile,
     title: "Happy Employee",
     description: "Technologie, die den Alltag erleichtert — nicht verkompliziert.",
-    glowClass: "box-glow-cyan neon-border-cyan",
+    cardClass: "sw-card",
   },
   {
     icon: pixelTrophy,
     title: "Happy Boss",
     description: "Messbare Ergebnisse durch smarte Prozesse und klare Datenströme.",
-    glowClass: "box-glow-pink neon-border-pink",
+    cardClass: "sw-card-pink",
   },
   {
     icon: pixelCpu,
     title: "Smart Tools",
     description: "Zoho, KI und DocuWare — intelligent verknüpft, einfach bedient.",
-    glowClass: "neon-border-purple",
+    cardClass: "sw-card-purple",
   },
 ];
 
@@ -27,23 +27,30 @@ const AboutSection = () => {
   return (
     <section className="py-24 px-6 relative">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="font-pixel text-lg md:text-xl text-primary text-glow-cyan mb-6">
+        <p className="sw-eyebrow" style={{ marginBottom: 20 }}>
           ÜBER UNS
+        </p>
+        <h2 className="sw-headline text-2xl md:text-4xl mb-6 max-w-3xl mx-auto">
+          Technik soll dem Menschen nutzen — nicht umgekehrt.
         </h2>
-        <p className="text-foreground/80 text-lg md:text-xl max-w-2xl mx-auto mb-16 leading-relaxed">
-          Technik soll dem Menschen nutzen — nicht umgekehrt. Wir glauben an Systeme,
-          die lächeln machen. An Prozesse, die fließen. An Daten, die Sinn ergeben.
+        <p
+          className="text-lg max-w-2xl mx-auto mb-16 leading-relaxed"
+          style={{ color: "var(--sw-text-2)" }}
+        >
+          Wir glauben an Systeme, die lächeln machen. An Prozesse, die fließen. An Daten,
+          die Sinn ergeben.
         </p>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {cards.map((card) => (
+          {cards.map((card, i) => (
             <div
               key={card.title}
-              className={`rounded-lg p-8 bg-card transition-transform duration-300 hover:-translate-y-2 ${card.glowClass}`}
+              className={`${card.cardClass} sw-animate-up transition-transform duration-300 hover:-translate-y-2`}
+              style={{ animationDelay: `${i * 0.1}s` }}
             >
               <img src={card.icon} alt={card.title} className="w-10 h-10 mx-auto mb-5" style={{ imageRendering: "pixelated" }} loading="lazy" />
-              <h3 className="font-pixel text-xs text-foreground mb-3">{card.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{card.description}</p>
+              <h3 className="font-pixel text-xs mb-3" style={{ color: "var(--sw-text)" }}>{card.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--sw-text-3)" }}>{card.description}</p>
             </div>
           ))}
         </div>

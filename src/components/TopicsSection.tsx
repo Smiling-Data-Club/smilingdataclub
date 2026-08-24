@@ -8,25 +8,25 @@ const topics = [
     icon: pixelGlobe,
     title: "Zoho One",
     description: "40+ Apps. Ein Ökosystem. Alles verbunden — CRM, Finanzen, HR, Support.",
-    border: "neon-border-cyan",
+    cardClass: "sw-card",
   },
   {
     icon: pixelBot,
     title: "KI & Automatisierung",
     description: "Von Chatbots bis Workflow-Automation — KI, die wirklich hilft.",
-    border: "neon-border-pink",
+    cardClass: "sw-card-pink",
   },
   {
     icon: pixelDocument,
     title: "DocuWare & IDP",
     description: "Intelligente Dokumentenverarbeitung. Vom Scan zum strukturierten Datensatz.",
-    border: "neon-border-purple",
+    cardClass: "sw-card-purple",
   },
   {
     icon: pixelNetwork,
     title: "MCP",
     description: "Model Context Protocol — die Brücke zwischen KI-Modellen und Ihren Systemen.",
-    border: "neon-border-cyan",
+    cardClass: "sw-card",
   },
 ];
 
@@ -34,19 +34,27 @@ const TopicsSection = () => {
   return (
     <section className="py-24 px-6 relative">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="font-pixel text-lg md:text-xl text-secondary text-glow-pink mb-16">
+        <p
+          className="sw-eyebrow"
+          style={{
+            marginBottom: 64,
+            color: "var(--sw-pink)",
+            textShadow: "0 0 12px hsl(var(--neon-pink) / .7)",
+          }}
+        >
           THEMEN
-        </h2>
+        </p>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {topics.map((topic) => (
+          {topics.map((topic, i) => (
             <div
               key={topic.title}
-              className={`rounded-lg p-8 bg-card ${topic.border} transition-all duration-300 hover:scale-[1.02] text-left`}
+              className={`${topic.cardClass} sw-animate-up transition-all duration-300 hover:scale-[1.02] text-left`}
+              style={{ animationDelay: `${i * 0.08}s` }}
             >
               <img src={topic.icon} alt={topic.title} className="w-8 h-8 mb-4" style={{ imageRendering: "pixelated" }} loading="lazy" />
-              <h3 className="font-pixel text-xs text-foreground mb-3">{topic.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{topic.description}</p>
+              <h3 className="font-pixel text-xs mb-3" style={{ color: "var(--sw-text)" }}>{topic.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--sw-text-3)" }}>{topic.description}</p>
             </div>
           ))}
         </div>

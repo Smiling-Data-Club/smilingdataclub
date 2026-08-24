@@ -7,19 +7,25 @@ import TeamSection from "@/components/TeamSection";
 import CodeSection from "@/components/CodeSection";
 import WaitlistSection from "@/components/WaitlistSection";
 import FooterSection from "@/components/FooterSection";
+import SynthwaveBackground from "@/components/SynthwaveBackground";
 
 const Index = () => {
   const [pongBonus, setPongBonus] = useState(false);
 
   return (
-    <div className="min-h-screen scanlines relative">
+    <div className="min-h-screen relative">
       <HeroSection />
-      <AboutSection />
-      <TopicsSection />
-      <TeamSection />
-      <CodeSection />
-      <WaitlistSection bonusActive={pongBonus} />
-      <PongDivider onScore={() => setPongBonus(true)} />
+      <div className="relative">
+        <SynthwaveBackground variant="calm" />
+        <div className="relative z-10">
+          <AboutSection />
+          <TopicsSection />
+          <TeamSection />
+          <CodeSection />
+          <WaitlistSection bonusActive={pongBonus} />
+          <PongDivider onScore={() => setPongBonus(true)} />
+        </div>
+      </div>
       <FooterSection />
     </div>
   );
