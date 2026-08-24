@@ -213,6 +213,17 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
       }}
     >
       <div
+        className="sw-eyebrow"
+        style={{
+          color: "var(--sw-pink)",
+          textShadow: "0 0 12px hsl(var(--neon-pink) / .7)",
+          marginBottom: 18,
+          textAlign: "center",
+        }}
+      >
+        BONUS LEVEL
+      </div>
+      <div
         ref={fieldRef}
         onPointerMove={(e) => {
           if (e.pointerType === "touch") return;
