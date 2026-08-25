@@ -281,10 +281,12 @@ const HeroSection = () => {
           className="sw-animate-up"
           style={{
             fontFamily: 'var(--font-mono-sw)',
-            fontSize: 13,
-            color: 'var(--sw-text-3)',
-            marginTop: 16,
+            fontSize: 15,
+            color: 'var(--sw-text-2)',
+            marginTop: 18,
             textAlign: 'center',
+            letterSpacing: '.02em',
+            textShadow: '0 0 14px hsl(var(--neon-cyan) / .3), 0 1px 6px rgba(5,5,16,.9)',
             animationDelay: '0.4s',
           }}
         >
