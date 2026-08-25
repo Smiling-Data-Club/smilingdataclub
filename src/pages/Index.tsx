@@ -4,6 +4,7 @@ import PongDivider from "@/components/PongDivider";
 import AboutSection from "@/components/AboutSection";
 import TopicsSection from "@/components/TopicsSection";
 import TeamSection from "@/components/TeamSection";
+import EventFilmSection from "@/components/EventFilmSection";
 import CodeSection from "@/components/CodeSection";
 import WaitlistSection from "@/components/WaitlistSection";
 import FooterSection from "@/components/FooterSection";
@@ -21,6 +22,7 @@ const Index = () => {
           <AboutSection />
           <TopicsSection />
           <TeamSection />
+          <EventFilmSection />
           <CodeSection />
           <WaitlistSection bonusActive={pongBonus} />
           <PongDivider onScore={() => setPongBonus(true)} />
