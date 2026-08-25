@@ -8,6 +8,7 @@ const VIDEO_URL =
 const EventFilmSection = () => {
   const [started, setStarted] = useState(false);
   const [hover, setHover] = useState(false);
+  const [hoverLink, setHoverLink] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleStart = () => {
@@ -22,14 +23,14 @@ const EventFilmSection = () => {
           className="sw-section-title sw-animate-up"
           style={{ marginBottom: 20, animationDelay: "0s" }}
         >
-          EVENTFILM
+          CULTURE &amp; CODE
         </div>
 
         <p
           className="sw-lead text-base sw-animate-up"
           style={{ marginBottom: 40, animationDelay: "0.1s" }}
         >
-          Ein Blick auf unser letztes Event.
+          Der Abend, auf den wir hingearbeitet haben. Kick-off am 1. Juli in Freiburg.
         </p>
 
         <div
@@ -107,6 +108,40 @@ const EventFilmSection = () => {
             </button>
           )}
         </div>
+
+        <a
+          href="https://www.sirius-gmbh.de/smiling-data-club"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="sw-animate-up"
+          onMouseEnter={() => setHoverLink(true)}
+          onMouseLeave={() => setHoverLink(false)}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            marginTop: 22,
+            fontFamily: "var(--font-mono-sw)",
+            fontSize: 13,
+            color: hoverLink ? "var(--sw-cyan)" : "var(--sw-text-3)",
+            textDecoration: "none",
+            transition: "color 300ms",
+            animationDelay: "0.3s",
+          }}
+        >
+          Alle Eindrücke vom Abend
+          <span
+            style={{
+              fontSize: "1.1em",
+              lineHeight: 1,
+              display: "inline-block",
+              transform: hoverLink ? "translateX(4px)" : "translateX(0)",
+              transition: "transform 300ms",
+            }}
+          >
+            →
+          </span>
+        </a>
       </div>
     </section>
   );
