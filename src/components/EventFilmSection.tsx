@@ -108,6 +108,40 @@ const EventFilmSection = () => {
             </button>
           )}
         </div>
+
+        <a
+          href="https://www.sirius-gmbh.de/smiling-data-club"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="sw-animate-up"
+          onMouseEnter={() => setHoverLink(true)}
+          onMouseLeave={() => setHoverLink(false)}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            marginTop: 22,
+            fontFamily: "var(--font-mono-sw)",
+            fontSize: 13,
+            color: hoverLink ? "var(--sw-cyan)" : "var(--sw-text-3)",
+            textDecoration: "none",
+            transition: "color 300ms",
+            animationDelay: "0.3s",
+          }}
+        >
+          Alle Eindrücke vom Abend
+          <span
+            style={{
+              fontSize: "1.1em",
+              lineHeight: 1,
+              display: "inline-block",
+              transform: hoverLink ? "translateX(4px)" : "translateX(0)",
+              transition: "transform 300ms",
+            }}
+          >
+            →
+          </span>
+        </a>
       </div>
     </section>
   );
