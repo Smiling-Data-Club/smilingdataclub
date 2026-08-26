@@ -147,7 +147,8 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
         state.scoreL = (state.scoreL + 1) % 10;
         b.x = width / 2;
         b.y = HEIGHT / 2;
-        b.vx = -0.6;
+        b.vx = -1.0;
+        b.vy = b.vy < 0 ? -0.55 : 0.55;
       }
 
       const target = b.y + BALL / 2 - paddleH / 2;
