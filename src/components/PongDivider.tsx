@@ -47,7 +47,7 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
     const PADDLE_W = 5;
     const LEFT_X = 12;
     const state = {
-      ball: { x: width / 2, y: HEIGHT / 2, vx: 0.6, vy: 0.4 },
+      ball: { x: width / 2, y: HEIGHT / 2, vx: 1.0, vy: 0.55 },
       left: HEIGHT / 2 - paddleH / 2,
       right: HEIGHT / 2 - paddleH / 2,
       scoreL: 0,
@@ -133,7 +133,8 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
         state.scoreR = (state.scoreR + 1) % 10;
         b.x = width / 2;
         b.y = HEIGHT / 2;
-        b.vx = 0.6;
+        b.vx = 1.0;
+        b.vy = b.vy < 0 ? -0.55 : 0.55;
         if (mouseY.current !== null && !unlockedRef.current) {
           unlockedRef.current = true;
           setUnlocked(true);
@@ -146,7 +147,8 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
         state.scoreL = (state.scoreL + 1) % 10;
         b.x = width / 2;
         b.y = HEIGHT / 2;
-        b.vx = -0.6;
+        b.vx = -1.0;
+        b.vy = b.vy < 0 ? -0.55 : 0.55;
       }
 
       const target = b.y + BALL / 2 - paddleH / 2;
@@ -155,8 +157,8 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
 
       const leftTarget = target;
       const rightTarget = playerActive && my !== null ? my - paddleH / 2 : target;
-      const leftLerp = 0.03;
-      const rightLerp = playerActive ? 0.12 : 0.03;
+      const leftLerp = 0.05;
+      const rightLerp = playerActive ? 0.15 : 0.05;
 
       state.left += (leftTarget - state.left) * leftLerp;
       state.right += (rightTarget - state.right) * rightLerp;
