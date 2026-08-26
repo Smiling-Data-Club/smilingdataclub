@@ -133,7 +133,8 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
         state.scoreR = (state.scoreR + 1) % 10;
         b.x = width / 2;
         b.y = HEIGHT / 2;
-        b.vx = 0.6;
+        b.vx = 1.0;
+        b.vy = b.vy < 0 ? -0.55 : 0.55;
         if (mouseY.current !== null && !unlockedRef.current) {
           unlockedRef.current = true;
           setUnlocked(true);
