@@ -47,7 +47,7 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
     const PADDLE_W = 5;
     const LEFT_X = 12;
     const state = {
-      ball: { x: width / 2, y: HEIGHT / 2, vx: 0.6, vy: 0.4 },
+      ball: { x: width / 2, y: HEIGHT / 2, vx: 1.0, vy: 0.55 },
       left: HEIGHT / 2 - paddleH / 2,
       right: HEIGHT / 2 - paddleH / 2,
       scoreL: 0,
