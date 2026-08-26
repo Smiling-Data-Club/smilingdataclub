@@ -157,8 +157,8 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
 
       const leftTarget = target;
       const rightTarget = playerActive && my !== null ? my - paddleH / 2 : target;
-      const leftLerp = 0.03;
-      const rightLerp = playerActive ? 0.12 : 0.03;
+      const leftLerp = 0.05;
+      const rightLerp = playerActive ? 0.15 : 0.05;
 
       state.left += (leftTarget - state.left) * leftLerp;
       state.right += (rightTarget - state.right) * rightLerp;
