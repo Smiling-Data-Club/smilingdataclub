@@ -120,12 +120,20 @@ const EventFilmSection = () => {
             display: "inline-flex",
             alignItems: "center",
             gap: 8,
-            marginTop: 22,
+            marginTop: 26,
             fontFamily: "var(--font-mono-sw)",
-            fontSize: 13,
-            color: hoverLink ? "var(--sw-cyan)" : "var(--sw-text-3)",
+            fontSize: 15,
+            letterSpacing: ".02em",
+            color: hoverLink ? "var(--sw-text)" : "var(--sw-pink)",
+            textShadow: hoverLink
+              ? "0 0 18px hsl(var(--neon-pink) / .85)"
+              : "0 0 14px hsl(var(--neon-pink) / .55)",
+            paddingBottom: 3,
+            borderBottom: hoverLink
+              ? "1px solid hsl(var(--neon-pink) / .8)"
+              : "1px solid hsl(var(--neon-pink) / .35)",
             textDecoration: "none",
-            transition: "color 300ms",
+            transition: "color 300ms, border-color 300ms, text-shadow 300ms",
             animationDelay: "0.3s",
           }}
         >
