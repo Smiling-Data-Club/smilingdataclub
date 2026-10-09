@@ -1,0 +1,4 @@
+/check
+  X-Robots-Tag: noindex, nofollow
+/check/*
+  X-Robots-Tag: noindex, nofollow
