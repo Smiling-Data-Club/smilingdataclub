@@ -144,7 +144,49 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="6. Webanalyse">
+          <Section title="6. Anzeigen mit Kontaktformular auf LinkedIn">
+            <p>
+              Wir schalten Anzeigen im Netzwerk LinkedIn. Einige dieser Anzeigen enthalten ein
+              Kontaktformular (LinkedIn Lead Gen Form), über das Sie uns Ihre Kontaktdaten
+              übermitteln können, etwa um ein Auswertungsgespräch zu Ihrem Angebots-Check zu
+              vereinbaren. Anbieter der Plattform ist die LinkedIn Ireland Unlimited Company,
+              Wilton Plaza, Wilton Place, Dublin 2, Irland.
+            </p>
+            <p className="mt-2">
+              Verarbeitet werden die Angaben, die Sie im Formular absenden, in der Regel Vorname,
+              Nachname, geschäftliche E-Mail-Adresse und Unternehmen sowie gegebenenfalls Ihre
+              Antwort auf eine Zusatzfrage. LinkedIn kann Felder aus Ihrem Profil vorausfüllen; an
+              uns übermittelt werden die Daten erst, wenn Sie das Formular absenden.
+            </p>
+            <p className="mt-2">
+              Wir verwenden die Daten, um mit Ihnen Kontakt aufzunehmen und das gewünschte Gespräch
+              zu vereinbaren und durchzuführen. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1
+              lit. a DSGVO), die Sie beim Absenden des Formulars erteilen, sowie die Durchführung
+              vorvertraglicher Maßnahmen auf Ihre Anfrage hin (Art. 6 Abs. 1 lit. b DSGVO). Sie
+              können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen, z. B. per
+              E-Mail an info@sirius-gmbh.de.
+            </p>
+            <p className="mt-2">
+              Die Daten übernehmen wir in unser CRM-System Zoho CRM (siehe Abschnitt 4). Wir löschen
+              sie, sobald Sie Ihre Einwilligung widerrufen oder sie für den Zweck nicht mehr
+              erforderlich sind, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.
+            </p>
+            <p className="mt-2">
+              Für die Verarbeitung Ihrer Daten durch LinkedIn selbst, etwa im Rahmen Ihrer Nutzung
+              der Plattform, gilt die Datenschutzrichtlinie von LinkedIn. LinkedIn kann Daten auch
+              an die LinkedIn Corporation in den USA übermitteln. Weitere Informationen:{" "}
+              <a
+                href="https://www.linkedin.com/legal/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                https://www.linkedin.com/legal/privacy-policy
+              </a>
+            </p>
+          </Section>
+
+          <Section title="7. Webanalyse">
             <p>
               Zur Analyse des Nutzungsverhaltens setzen wir Zoho Marketing Automation (Websitetracking) ein. Dabei können folgende Daten erhoben werden:
             </p>
@@ -165,7 +207,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="7. Cookies">
+          <Section title="8. Cookies">
             <p>
               Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von
               Art. 6 Abs. 1 lit. f DSGVO gesetzt. Für das Websitetracking setzt Zoho Marketing
@@ -182,7 +224,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="8. SSL-/TLS-Verschlüsselung">
+          <Section title="9. SSL-/TLS-Verschlüsselung">
             <p>
               Diese Seite nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung. Eine
               verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von
@@ -190,7 +232,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="9. Ihre Rechte als betroffene Person">
+          <Section title="10. Ihre Rechte als betroffene Person">
             <p>Ihnen stehen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
             <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground">
               <li>
@@ -222,7 +264,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="10. Beschwerderecht bei einer Aufsichtsbehörde">
+          <Section title="11. Beschwerderecht bei einer Aufsichtsbehörde">
             <p>
               Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten gegen
               die DSGVO verstößt, haben Sie das Recht, sich bei einer Datenschutz-Aufsichtsbehörde
@@ -248,7 +290,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="11. Änderung dieser Datenschutzerklärung">
+          <Section title="12. Änderung dieser Datenschutzerklärung">
             <p>
               Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den
               aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen
