@@ -8,8 +8,8 @@
 <meta name="description" content="Fünf Fragen zu Ihrem Angebotsprozess, etwa 2 Minuten, ohne Anmeldung. Danach wissen Sie, wo Sie stehen und welche Hebel sich lohnen.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://smiling-data-club.de/check">
-<meta property="og:title" content="Wie viel Risiko steckt in Ihrer Kalkulation?">
-<meta property="og:description" content="Der Angebots-Check: 5 Fragen, etwa 2 Minuten, keine Anmeldung. Ihre Antworten bleiben in Ihrem Browser.">
+<meta property="og:title" content="Angebots-Check: Wie viel Risiko steckt in Ihrer Kalkulation?">
+<meta property="og:description" content="5 Fragen, 2 Minuten, Ergebnis sofort. Keine Anmeldung nötig.">
 <meta property="og:image" content="https://smiling-data-club.de/check/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -53,7 +53,7 @@ p{margin:0 0 1rem;max-width:62ch}
 .lead{font-size:1.2rem;color:var(--muted)}
 .small{font-size:.9rem;color:var(--muted)}
 .btn{appearance:none;border:0;border-radius:999px;padding:.95rem 1.6rem;font:inherit;font-weight:700;cursor:pointer;min-height:48px;
-  background:linear-gradient(90deg,var(--pink),#6B3FA0);color:#fff;text-decoration:none;display:inline-flex;align-items:center}
+  background:linear-gradient(90deg,var(--pink),#6B3FA0);color:#fff;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
 .btn:hover{filter:brightness(1.08)}
 .btn[disabled]{opacity:.45;cursor:not-allowed;filter:none}
 .btn.sec{background:transparent;border:2px solid var(--cyan);color:var(--ink)}
@@ -143,9 +143,10 @@ details[open] summary::before{transform:rotate(45deg)}
     <div class="step"><div class="qnum">Ihr erster Schritt – diese Woche</div><p id="rstep"></p></div>
     <details id="rdetails"><summary>Ihre Antworten im Einzelnen anzeigen</summary><div id="ranswers"></div></details>
     <div class="cta">
-      <a class="btn" id="book" target="_blank" rel="noopener">Termin vereinbaren</a>
+      <a class="btn" id="book" target="_blank" rel="noopener">Kostenloses Auswertungsgespräch buchen</a>
       <button class="btn sec" id="pdf">Ergebnis als PDF herunterladen</button>
     </div>
+    <p class="small" id="pdf-fallback" hidden style="margin-top:1rem">Kein PDF zu sehen? <a id="pdf-open" href="#" target="_blank" rel="noopener" style="color:var(--cyan)">PDF in neuem Tab öffnen</a> und dort speichern oder teilen.<span id="pdf-inapp" hidden> Alternativ diese Seite über das Menü der App im Browser öffnen.</span></p>
     <p class="small" style="margin-top:1rem">Das PDF enthält die komplette Auswertung inklusive Ihrer Antworten. Es wird in Ihrem Browser erstellt – nichts davon wird übertragen.</p>
     <button class="ghost" id="restart">Check neu starten</button>
   </section>
@@ -254,6 +255,8 @@ function showResult(){
   // Solange der Platzhalter drinsteht: Termin-Button ausblenden
   $("book").hidden=!hasBooking;
   $("book").href=BOOKING_URL;
+  $("pdf-fallback").hidden=true;
+  loadJsPDF().catch(()=>{});
   $("pin").style.left="0%"; show("s-res");
   requestAnimationFrame(()=>requestAnimationFrame(()=>{$("pin").style.left=(score/10*100)+"%";}));
 }
@@ -329,11 +332,11 @@ function buildPdf(doc,score,r){
 
   // Abschluss
   ensure(20);y+=1;
-  font("bold",12);color(C.ink);doc.text("Lust auf ein Gespräch?",M,y+4.5);y+=8;
   if(hasBooking){
-    para("Wir schauen uns Ihren Angebotsprozess gern gemeinsam an – unverbindlich und konkret. Termin buchen:",{size:10.5,gap:1});
+    font("bold",12);color(C.ink);doc.text("Kostenloses Auswertungsgespräch (30 Min.) buchen:",M,y+4.5);y+=8;
     font("bold",10.5);color(C.cyan);doc.textWithLink(BOOKING_URL,M,y+lh(10.5)*0.72,{url:BOOKING_URL});y+=lh(10.5)+3;
   } else {
+    font("bold",12);color(C.ink);doc.text("Lust auf ein Gespräch?",M,y+4.5);y+=8;
     para("Wir schauen uns Ihren Angebotsprozess gern gemeinsam an – unverbindlich und konkret. Mehr über uns:",{size:10.5,gap:1});
     font("bold",10.5);color(C.cyan);doc.textWithLink("smiling-data-club.de",M,y+lh(10.5)*0.72,{url:"https://smiling-data-club.de"});y+=lh(10.5)+3;
   }
@@ -349,17 +352,30 @@ function buildPdf(doc,score,r){
   return doc;
 }
 
+// In-App-Browser (LinkedIn, Facebook, Instagram …) blockieren Downloads oft.
+// Dort öffnet sich das PDF stattdessen in einem neuen Tab; zusätzlich gibt es immer einen Link als Ausweg.
+const IN_APP=/LinkedInApp|FBAN|FBAV|Instagram|; wv\)/i.test(navigator.userAgent);
+let pdfUrl=null;
+function makePdf(){
+  const doc=buildPdf(new window.jspdf.jsPDF({unit:"mm",format:"a4"}),last.score,last.r);
+  if(pdfUrl) URL.revokeObjectURL(pdfUrl);
+  pdfUrl=URL.createObjectURL(doc.output("blob"));
+  $("pdf-open").href=pdfUrl;
+  $("pdf-fallback").hidden=false; $("pdf-inapp").hidden=!IN_APP;
+  if(IN_APP){ window.open(pdfUrl,"_blank"); }
+  else doc.save("Angebots-Check_Ergebnis.pdf");
+}
 $("pdf").onclick=async()=>{
   if(!last) return;
+  // Ist jsPDF schon geladen, läuft alles direkt im Klick – sonst blockieren Browser das neue Tab.
+  if(window.jspdf){ try{ makePdf(); }catch(e){ pdfError(); } return; }
   const btn=$("pdf"),label=btn.textContent;
   btn.disabled=true;btn.textContent="PDF wird erstellt …";
-  try{
-    const {jsPDF}=await loadJsPDF();
-    buildPdf(new jsPDF({unit:"mm",format:"a4"}),last.score,last.r).save("Angebots-Check_Ergebnis.pdf");
-  }catch(e){
-    alert("Das PDF konnte leider nicht erstellt werden. Bitte versuchen Sie es noch einmal.");
-  }finally{btn.disabled=false;btn.textContent=label;}
+  try{ await loadJsPDF(); makePdf(); }
+  catch(e){ pdfError(); }
+  finally{btn.disabled=false;btn.textContent=label;}
 };
+function pdfError(){ alert("Das PDF konnte leider nicht erstellt werden. Bitte versuchen Sie es noch einmal."); }
 $("restart").onclick=()=>{answers=Array(Q.length).fill(null);step=0;last=null;setFile(0);show("s-start");};
 </script>
 </body>
