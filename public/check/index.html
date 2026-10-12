@@ -10,6 +10,7 @@
   - Keine Formulare, keine Datenübertragung, kein Tracking, keine externen Ressourcen.
   - Schrift: nutzt "Urbanist", falls auf der Website selbst gehostet; sonst System-Schrift.
     Bitte KEINE Google-Fonts-Einbindung (DSGVO).
+  - PDF: jsPDF (MIT) liegt lokal unter /check/jspdf.umd.min.js und wird erst beim Klick geladen.
   - Einzige Anpassung vor Livegang: BOOKING_URL unten im Script.
 -->
 <style>
@@ -69,26 +70,28 @@ ol.hebel{padding-left:1.25rem;margin:0}
 ol.hebel li{margin-bottom:.6rem}
 .cta{margin-top:2rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
 [hidden]{display:none!important}
-#print-report{display:none}
+#rtext p{max-width:62ch}
+ol.hebel li strong{color:var(--ink)}
+ol.hebel li{color:var(--muted);margin-bottom:1rem}
+.step{margin-top:1.75rem;border:2px solid var(--cyan);border-radius:14px;padding:1.1rem 1.25rem;background:rgba(79,184,205,.06)}
+.step .qnum{color:var(--cyan);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.8rem}
+.step p{margin:0}
+details{margin-top:1.75rem;border-top:1px solid var(--line);padding-top:1rem}
+summary{list-style:none;cursor:pointer;font-weight:700;font-size:1.1rem;min-height:44px;display:flex;align-items:center}
+summary:hover{color:var(--cyan)}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"";width:.55rem;height:.55rem;border-right:2px solid var(--cyan);border-bottom:2px solid var(--cyan);transform:rotate(-45deg);margin-right:.75rem;transition:transform .2s}
+details[open] summary::before{transform:rotate(45deg)}
+.ans{margin-top:1.25rem}
+.ans .qnum{color:var(--cyan);margin-bottom:.25rem;font-size:.85rem}
+.ans .aq{font-weight:700;margin-bottom:.35rem}
+.ans .aa{color:var(--pink);font-weight:700;margin-bottom:.35rem}
+.ans p:last-child{color:var(--muted)}
 .legal{max-width:46rem;margin:0 auto;padding:0 1.25rem 2rem;font-size:.85rem;color:var(--muted);display:flex;gap:1.25rem}
 .legal a{color:var(--muted);text-underline-offset:3px}
 .legal a:hover{color:var(--ink)}
 @media (prefers-reduced-motion:reduce){.pin{transition:none}}
 
-/* Druck / PDF: nur der Report */
-@media print{
-  @page{size:A4;margin:18mm}
-  body{background:#fff;color:#1A1A2E;background-image:none;font-size:11pt}
-  header,main,.legal{display:none!important}
-  #print-report{display:block!important}
-  #print-report img{height:40px;width:auto}
-  #print-report h1{font-size:22pt;margin:18pt 0 6pt;color:#1A1A2E}
-  #print-report h2{font-size:15pt;margin:14pt 0 6pt}
-  #print-report .pr-meta{color:#5B5670;font-size:10pt}
-  #print-report .pr-type{color:#6B3FA0}
-  #print-report li{margin-bottom:5pt}
-  #print-report .pr-foot{margin-top:24pt;padding-top:10pt;border-top:1px solid #DDD5E8;font-size:10pt;color:#5B5670}
-}
 </style>
 </head>
 <body>
@@ -124,14 +127,16 @@ ol.hebel li{margin-bottom:.6rem}
       <div class="pin" id="pin" style="left:0%"></div>
     </div>
     <div class="scale"><span>Gut aufgestellt</span><span>Engpass</span><span>Risiko</span></div>
-    <p id="rtext" style="margin-top:1.5rem"></p>
+    <div id="rtext" style="margin-top:1.5rem"></div>
     <h3>Ihre nächsten Hebel</h3>
     <ol class="hebel" id="rhebel"></ol>
+    <div class="step"><div class="qnum">Ihr erster Schritt – diese Woche</div><p id="rstep"></p></div>
+    <details id="rdetails"><summary>Ihre Antworten im Einzelnen anzeigen</summary><div id="ranswers"></div></details>
     <div class="cta">
       <a class="btn" id="book" target="_blank" rel="noopener">Termin vereinbaren</a>
-      <button class="btn sec" id="pdf">Ergebnis als PDF speichern</button>
+      <button class="btn sec" id="pdf">Ergebnis als PDF herunterladen</button>
     </div>
-    <p class="small" style="margin-top:1rem">Tipp: Im Druckfenster „Als PDF speichern“ wählen.</p>
+    <p class="small" style="margin-top:1rem">Das PDF enthält die komplette Auswertung inklusive Ihrer Antworten. Es wird in Ihrem Browser erstellt – nichts davon wird übertragen.</p>
     <button class="ghost" id="restart">Check neu starten</button>
   </section>
 </main>
@@ -141,20 +146,6 @@ ol.hebel li{margin-bottom:.6rem}
   <a href="/datenschutz">Datenschutz</a>
 </footer>
 
-<!-- Inhalt für Druck/PDF -->
-<div id="print-report">
-  <img src="data:image/png;base64,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" alt="Smiling Data Club">
-  <h1>Ihr Angebots-Check</h1>
-  <div class="pr-meta" id="pr-meta"></div>
-  <h2 class="pr-type" id="pr-title"></h2>
-  <p id="pr-text"></p>
-  <h2>Ihre nächsten Hebel</h2>
-  <ol id="pr-hebel"></ol>
-  <div class="pr-foot">
-    <span id="pr-book-line">Lust auf ein Gespräch? Termin buchen: <span id="pr-book"></span><br></span>
-    Smiling Data Club · SIRIUS GmbH document solutions · smiling-data-club.de
-  </div>
-</div>
 
 <script>
 /* ===== Einzige Stelle zum Anpassen vor Livegang ===== */
@@ -163,28 +154,59 @@ const BOOKING_URL = "https://[ZOHO-BOOKINGS-LINK]";
 
 const FILES=["Kalkulation.xlsx","Kalkulation_neu.xlsx","Kalkulation_final.xlsx","Kalkulation_final_v2.xlsx","Kalkulation_final_v5.xlsx","Kalkulation_final_v7.xlsx"];
 const Q=[
- {q:"Wie lange dauert es bei Ihnen von der Anfrage bis zum Angebotsversand?",a:["Am selben oder nächsten Tag","Zwei bis vier Tage","Eine Woche oder länger"]},
- {q:"Wo liegt das Wissen, das man für ein korrektes Angebot braucht?",a:["Sauber dokumentiert, im System hinterlegt","Bei zwei, drei erfahrenen Leuten","Ehrlich gesagt: weiß ich nicht genau"]},
- {q:"Welche Rolle spielen Excel-Tabellen in Ihrer Kalkulation?",a:["Kaum eine – wir kalkulieren im System","Eine wichtige, neben dem System","Ohne Excel geht bei uns nichts"]},
- {q:"Ihr erfahrenster Kalkulator fällt sechs Monate aus. Was passiert?",a:["Angebote gehen ganz normal raus","Es wird langsamer, aber es läuft","Angebote bleiben liegen"]},
- {q:"Wie viele Programme und Dateien braucht es für ein einziges Angebot?",a:["Eins","Zwei bis drei","Ich habe aufgehört zu zählen"]}
+ {q:"Wie lange dauert es bei Ihnen von der Anfrage bis zum Angebotsversand?",a:["Am selben oder nächsten Tag","Zwei bis vier Tage","Eine Woche oder länger"],label:"Durchlaufzeit",
+  fb:["Sehr gut. Schnelle Angebote sind ein echter Wettbewerbsvorteil: Wer zuerst ein solides Angebot vorlegt, setzt oft den Maßstab, an dem alle weiteren gemessen werden. Achten Sie darauf, dass dieses Tempo nicht nur in ruhigen Wochen gilt, sondern auch dann, wenn viele Anfragen gleichzeitig kommen.",
+      "Das ist in vielen Branchen üblich – aber nicht schnell. In dieser Zeit holen Interessenten häufig weitere Angebote ein. Meist steckt die Verzögerung nicht in der eigentlichen Kalkulation, sondern im Zusammensuchen von Informationen und im Warten auf Rückfragen.",
+      "Hier geht Ihnen wahrscheinlich Umsatz verloren, ohne dass Sie es merken: Wer so lange wartet, hat sich oft schon anderweitig umgesehen. Eine lange Durchlaufzeit ist fast immer ein Zeichen dafür, dass Informationen verstreut sind oder an einzelnen Personen hängen."]},
+ {q:"Wo liegt das Wissen, das man für ein korrektes Angebot braucht?",a:["Sauber dokumentiert, im System hinterlegt","Bei zwei, drei erfahrenen Leuten","Ehrlich gesagt: weiß ich nicht genau"],label:"Wissen",
+  fb:["Das ist die beste Voraussetzung, die Sie haben können. Dokumentiertes Wissen lässt sich prüfen, verbessern und automatisieren. Halten Sie die Dokumentation aktuell – gerade dann, wenn sich Preise, Produkte oder Lieferanten ändern.",
+      "Das ist der Normalfall – und zugleich ein Risiko. Solange alle da sind, läuft es. Aber Urlaub, Krankheit oder ein Jobwechsel reichen aus, damit Angebote ins Stocken geraten. Je früher dieses Wissen festgehalten wird, desto leichter gelingt es, solange die Erfahrenen es noch selbst erklären können.",
+      "Diese ehrliche Antwort ist wertvoll. Wenn nicht klar ist, wo das Wissen liegt, ist es meist auf viele Köpfe, E-Mails und Dateien verteilt. Ein erster Überblick darüber, wer was weiß und wo was steht, schafft hier schnell Klarheit."]},
+ {q:"Welche Rolle spielen Excel-Tabellen in Ihrer Kalkulation?",a:["Kaum eine – wir kalkulieren im System","Eine wichtige, neben dem System","Ohne Excel geht bei uns nichts"],label:"Rolle von Excel",
+  fb:["Gut so. Excel ist ein starkes Werkzeug für Auswertungen und Einzelfälle. Als Fundament der Kalkulation ist ein System mit klaren Regeln, Berechtigungen und einer nachvollziehbaren Historie aber deutlich robuster.",
+      "Damit sind Sie in guter Gesellschaft – und genau hier entstehen viele Fehler: Daten werden doppelt gepflegt, Versionen laufen auseinander, und das System zeigt nicht mehr das, was tatsächlich kalkuliert wurde. Die Excel-Logik ins System zu holen, schließt diese Lücke.",
+      "Dann ist Excel faktisch Ihr Kalkulationssystem – allerdings ohne Versionierung, Rechteverwaltung und Prüfmechanismen. Formeln werden versehentlich überschrieben, und am Ende weiß niemand mehr sicher, welche Datei gilt. Hier liegt vermutlich der größte einzelne Hebel in Ihrem Prozess."]},
+ {q:"Ihr erfahrenster Kalkulator fällt sechs Monate aus. Was passiert?",a:["Angebote gehen ganz normal raus","Es wird langsamer, aber es läuft","Angebote bleiben liegen"],label:"Ausfall einer Schlüsselperson",
+  fb:["Sehr gut – Ihr Prozess hängt nicht an einzelnen Personen. Das ist seltener, als man denkt, und ein echter Wert für Ihr Unternehmen, gerade mit Blick auf Wachstum und Nachfolge.",
+      "Ehrlich und realistisch. „Langsamer“ heißt in der Praxis oft: mehr Rückfragen, mehr Fehler, längere Wartezeiten für Ihre Kunden – und eine hohe Belastung für die Kolleginnen und Kollegen, die einspringen. Je mehr Kalkulationslogik im System steckt, desto kleiner wird diese Lücke.",
+      "Das ist ein ernstes Risiko für Ihr Unternehmen, nicht nur für den Vertrieb. Ein längerer Ausfall kann bedeuten, dass über Monate kaum neue Aufträge hereinkommen. Hier lohnt es sich, bald anzusetzen – solange das Wissen noch weitergegeben werden kann."]},
+ {q:"Wie viele Programme und Dateien braucht es für ein einziges Angebot?",a:["Eins","Zwei bis drei","Ich habe aufgehört zu zählen"],label:"Programme und Dateien",
+  fb:["Ideal. Ein durchgängiger Prozess in einem System ist schnell, nachvollziehbar und lässt sich gut automatisieren.",
+      "Das klingt überschaubar, bedeutet aber meist Copy & Paste zwischen den Programmen – und jede Übertragung ist eine mögliche Fehlerquelle. Oft lassen sich diese Schritte verbinden, sodass Daten nur noch einmal eingegeben werden.",
+      "Eine ehrliche Antwort, die viel erklärt: Jede zusätzliche Datei kostet Zeit und erhöht das Risiko, mit veralteten Zahlen zu arbeiten. Der erste Schritt ist, den Weg eines Angebots einmal aufzuzeichnen – dann wird sichtbar, was sich zusammenfassen lässt."]}
 ];
 const R=[
  {max:3,title:"Ihr Angebotsprozess läuft.",
-  text:"Angebote gehen zügig raus, das Wissen dafür ist im Unternehmen verankert und Excel ist Werkzeug, nicht Fundament. Damit sind Sie vielen Wettbewerbern einen Schritt voraus. Die Frage ist jetzt: Hält der Prozess auch, wenn die Anfragen deutlich zunehmen?",
-  hebel:["Wiederkehrende Handgriffe automatisieren – etwa Freigaben, Nachfassen und Statusmeldungen.","Kennzahlen sichtbar machen: Durchlaufzeit pro Angebot und Abschlussquote je Produktgruppe.","Den Prozess für Wachstum testen: Was passiert bei doppeltem Anfragevolumen?"]},
+  text:["Angebote gehen zügig raus, das Wissen dafür ist im Unternehmen verankert und Excel ist Werkzeug, nicht Fundament. Damit sind Sie vielen Wettbewerbern einen Schritt voraus.",
+        "Ein gut laufender Prozess hat allerdings eine Eigenart: Man schaut selten genau hin. Kleine Umwege – eine zusätzliche Freigabe per E-Mail, ein Nachfassen, das jemand im Kopf behält, eine Preisliste, die nur einmal im Jahr gepflegt wird – fallen erst auf, wenn das Volumen steigt oder jemand Neues einsteigt.",
+        "Die Frage ist deshalb nicht, ob Ihr Prozess funktioniert, sondern ob er auch hält, wenn die Anfragen deutlich zunehmen. Wer jetzt die letzten Handgriffe automatisiert und die richtigen Kennzahlen im Blick hat, baut seinen Vorsprung aus, statt ihn nur zu verteidigen."],
+  hebel:[{t:"Wiederkehrende Handgriffe automatisieren",d:"Freigaben, Erinnerungen zum Nachfassen und Statusmeldungen an Kunden laufen oft noch von Hand. Jeder dieser Schritte ist klein, zusammen kosten sie spürbar Zeit. Automatisiert passieren sie zuverlässig – auch in der Urlaubszeit."},
+         {t:"Kennzahlen sichtbar machen",d:"Wie lange braucht ein Angebot im Durchschnitt? Welche Produktgruppen werden besonders oft beauftragt, welche fast nie? Wenn diese Zahlen auf Knopfdruck verfügbar sind, entscheiden Sie über Preise und Schwerpunkte auf Basis von Fakten statt Bauchgefühl."},
+         {t:"Den Prozess für Wachstum testen",d:"Spielen Sie einmal durch, was bei doppeltem Anfragevolumen passieren würde: Wer wäre der Engpass, welcher Schritt bliebe liegen? Die Antwort zeigt, wo sich die nächste Investition lohnt."}],
+  step:"Nehmen Sie Ihre letzten zehn Angebote und notieren Sie jeweils das Datum der Anfrage und das Datum des Versands. Die Spanne zeigt schnell, ob Ihr Prozess durchgehend schnell ist – oder nur meistens."},
  {max:7,title:"Ihr Angebotsprozess wird zum Engpass.",
-  text:"Im Alltag funktioniert es – aber Tempo und Qualität hängen an wenigen Personen und an gewachsenen Tabellen. Jeder Tag zwischen Anfrage und Angebot ist ein Tag, an dem Ihr Wettbewerber schneller sein kann.",
-  hebel:["Kalkulationslogik aus Excel in ein System holen, das alle nutzen können.","Produktvarianten als Artikel mit klaren Einheiten hinterlegen – pro Meter, pro Kilo, pro Stunde.","Angebote direkt aus dem CRM erzeugen statt aus mehreren Dateien zusammenzusetzen."]},
+  text:["Im Alltag funktioniert es – aber Tempo und Qualität hängen an wenigen Personen und an gewachsenen Tabellen. Jeder Tag zwischen Anfrage und Angebot ist ein Tag, an dem Ihr Wettbewerber schneller sein kann.",
+        "Das ist eine typische Situation in wachsenden Unternehmen: Die Kalkulation ist über Jahre entstanden, sie funktioniert, und die Menschen, die sie beherrschen, machen einen guten Job. Schwierig wird es, wenn sich Anfragen häufen, Preise sich ändern oder jemand ausfällt. Dann zeigt sich, wie viel Wissen nur in Köpfen und Dateien steckt.",
+        "Die gute Nachricht: Sie müssen nicht alles auf einmal umbauen. Oft reicht es, die Kalkulationslogik einmal sauber zu erfassen und an einer zentralen Stelle abzulegen. Danach geht jedes Angebot schneller – und ist für alle im Team nachvollziehbar."],
+  hebel:[{t:"Kalkulationslogik aus Excel in ein System holen, das alle nutzen können",d:"Die Regeln, nach denen Sie kalkulieren, sind ein Unternehmenswert. In einer Excel-Datei sind sie schwer zu prüfen, leicht zu überschreiben und nur für wenige verständlich. In einem gemeinsamen System werden sie einmal gepflegt und überall gleich angewendet."},
+         {t:"Produktvarianten als Artikel mit klaren Einheiten hinterlegen",d:"Pro Meter, pro Kilo, pro Stunde: Wenn jede Variante als eigener Artikel mit fester Einheit und Preis angelegt ist, muss niemand mehr umrechnen oder nachfragen. Das senkt die Fehlerquote und macht Angebote auch für neue Kolleginnen und Kollegen machbar."},
+         {t:"Angebote direkt aus dem CRM erzeugen",d:"Statt Kundendaten, Preise und Texte aus mehreren Dateien zusammenzukopieren, entsteht das Angebot dort, wo der Kunde ohnehin gepflegt ist. Das spart Zeit, und Sie sehen jederzeit, welche Angebote noch offen sind."}],
+  step:"Setzen Sie sich eine Stunde mit der erfahrensten Person in Ihrer Kalkulation zusammen und lassen Sie sich ein typisches Angebot Schritt für Schritt erklären. Schreiben Sie jede Regel und jede Ausnahme mit. Diese Liste ist die Grundlage für alles Weitere."},
  {max:10,title:"Ihre Kalkulation ist ein Unternehmensrisiko.",
-  text:"Wenn wenige Personen und ein Stapel Excel-Dateien über Ihre Angebote entscheiden, ist das kein Vertriebsproblem mehr – es ist ein Risiko für das ganze Unternehmen. Die gute Nachricht: Genau dieser Prozess lässt sich gut digitalisieren.",
-  hebel:["Wissensträger entlasten: Kalkulationsregeln einmal sauber im System abbilden.","Eine zentrale Quelle für Artikel, Preise und Varianten schaffen.","Die Zeit von der Anfrage bis zum Angebot von Tagen auf Stunden senken."]}
+  text:["Wenn wenige Personen und ein Stapel Excel-Dateien über Ihre Angebote entscheiden, ist das kein Vertriebsproblem mehr – es ist ein Risiko für das ganze Unternehmen. Die gute Nachricht: Genau dieser Prozess lässt sich gut digitalisieren.",
+        "Das Risiko zeigt sich auf mehreren Ebenen. Angebote dauern zu lange, und Aufträge gehen an schnellere Wettbewerber. Fehler in Tabellen fallen oft erst auf, wenn ein Auftrag schon angenommen ist. Und wenn eine Schlüsselperson ausfällt oder das Unternehmen verlässt, geht mit ihr ein Teil Ihrer Kalkulationsgrundlage.",
+        "Das ist kein Vorwurf – so entstehen Prozesse, wenn ein Unternehmen über Jahre wächst und das Tagesgeschäft Vorrang hat. Wichtig ist, jetzt gegenzusteuern, solange die Wissensträger noch da sind und ihr Wissen weitergeben können. Der Weg dahin ist überschaubarer, als es sich von innen anfühlt."],
+  hebel:[{t:"Wissensträger entlasten",d:"Die Menschen, die heute alles im Kopf haben, sind meist auch die am stärksten ausgelasteten. Wenn ihre Kalkulationsregeln einmal sauber im System abgebildet sind, werden sie von Routinefragen befreit und können sich auf die schwierigen Fälle konzentrieren."},
+         {t:"Eine zentrale Quelle für Artikel, Preise und Varianten schaffen",d:"Solange es mehrere Versionen einer Preisliste gibt, ist unklar, welche gilt. Eine einzige, gepflegte Quelle beendet die Suche nach der richtigen Datei und sorgt dafür, dass alle mit denselben Zahlen arbeiten."},
+         {t:"Die Zeit von der Anfrage bis zum Angebot von Tagen auf Stunden senken",d:"Wenn Kalkulation, Artikel und Kundendaten zusammenspielen, wird ein Standardangebot zur Routine. Ein schnelles, sauberes Angebot ist oft schon ein Argument für sich – gerade dann, wenn der Wettbewerb länger braucht."}],
+  step:"Zählen Sie, wie viele Dateien, Programme und Personen an einem einzigen typischen Angebot beteiligt sind, und zeichnen Sie den Weg auf ein Blatt Papier. Dieses Bild macht sichtbar, wo der größte Hebel liegt – und ist der beste Einstieg in ein erstes Gespräch."}
 ];
 
 let step=0, answers=Array(Q.length).fill(null);
 const $=id=>document.getElementById(id);
 const show=id=>{["s-start","s-q","s-res"].forEach(s=>$(s).hidden=(s!==id));window.scrollTo(0,0)};
 const setFile=i=>$("fname").textContent=FILES[Math.min(i,FILES.length-1)];
+const hasBooking=!BOOKING_URL.includes("[");
 
 function renderQ(){
   const it=Q[step];
@@ -207,29 +229,128 @@ $("go").onclick=()=>{step=0;renderQ();};
 $("next").onclick=()=>{ if(step<Q.length-1){step++;renderQ();} else {setFile(5);showResult();} };
 $("back").onclick=()=>{ if(step>0){step--;renderQ();} else show("s-start"); };
 
+let last=null;
 function showResult(){
   const score=answers.reduce((s,v)=>s+v,0);
   const r=R.find(x=>score<=x.max);
+  last={score,r};
   $("rscore").textContent=`Ihr Ergebnis: ${score} von 10 Punkten`;
   $("rtitle").textContent=r.title;
-  $("rtext").textContent=r.text;
-  $("rhebel").innerHTML=r.hebel.map(h=>`<li>${h}</li>`).join("");
-  // Solange der Platzhalter drinsteht: Termin-Button und PDF-Zeile ausblenden
-  const hasBooking=!BOOKING_URL.includes("[");
-  $("book").hidden=!hasBooking; $("pr-book-line").hidden=!hasBooking;
+  $("rtext").innerHTML=r.text.map(p=>`<p>${p}</p>`).join("");
+  $("rhebel").innerHTML=r.hebel.map(h=>`<li><strong>${h.t}</strong><br>${h.d}</li>`).join("");
+  $("rstep").textContent=r.step;
+  $("ranswers").innerHTML=Q.map((it,i)=>`<div class="ans"><div class="qnum">Frage ${i+1} · ${it.label}</div><p class="aq">${it.q}</p><p class="aa">Ihre Antwort: ${it.a[answers[i]]}</p><p>${it.fb[answers[i]]}</p></div>`).join("");
+  $("rdetails").open=false;
+  // Solange der Platzhalter drinsteht: Termin-Button ausblenden
+  $("book").hidden=!hasBooking;
   $("book").href=BOOKING_URL;
-  // Druckversion befüllen
-  const d=new Date().toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"});
-  $("pr-meta").textContent=`Erstellt am ${d} · ${score} von 10 Punkten`;
-  $("pr-title").textContent=r.title;
-  $("pr-text").textContent=r.text;
-  $("pr-hebel").innerHTML=r.hebel.map(h=>`<li>${h}</li>`).join("");
-  $("pr-book").textContent=BOOKING_URL;
   $("pin").style.left="0%"; show("s-res");
   requestAnimationFrame(()=>requestAnimationFrame(()=>{$("pin").style.left=(score/10*100)+"%";}));
 }
-$("pdf").onclick=()=>window.print();
-$("restart").onclick=()=>{answers=Array(Q.length).fill(null);step=0;setFile(0);show("s-start");};
+
+/* ===== PDF (jsPDF, lokal unter /check/ – wird erst beim Klick geladen) ===== */
+function loadJsPDF(){
+  if(window.jspdf) return Promise.resolve(window.jspdf);
+  return new Promise((res,rej)=>{const s=document.createElement("script");s.src="/check/jspdf.umd.min.js";s.onload=()=>res(window.jspdf);s.onerror=rej;document.head.appendChild(s);});
+}
+const C={bg:[26,26,46],surface:[35,35,66],ink:[243,240,250],muted:[180,174,203],line:[58,55,96],cyan:[79,184,205],pink:[233,82,151],purple:[155,111,214],grid:[31,42,62]};
+
+function buildPdf(doc,score,r){
+  const W=210,H=297,M=18,CW=W-2*M,BOTTOM=H-17;
+  let y=M;
+  const fill=c=>doc.setFillColor(c[0],c[1],c[2]), stroke=c=>doc.setDrawColor(c[0],c[1],c[2]), color=c=>doc.setTextColor(c[0],c[1],c[2]);
+  const font=(style,size)=>{doc.setFont("helvetica",style);doc.setFontSize(size);};
+  const lh=size=>size*0.3528*1.45;
+  const bg=()=>{fill(C.bg);doc.rect(0,0,W,H,"F");stroke(C.grid);doc.setLineWidth(0.2);
+    for(let x=12;x<W;x+=12)doc.line(x,0,x,H); for(let g=12;g<H;g+=12)doc.line(0,g,W,g);};
+  const ensure=h=>{if(y+h>BOTTOM){doc.addPage();bg();y=M;}};
+  const linesOf=(text,size,style,width)=>{font(style,size);return doc.splitTextToSize(text,width);};
+  const para=(text,{size=10.5,style="normal",c=C.ink,indent=0,gap=3,width=CW-indent}={})=>{
+    const lines=linesOf(text,size,style,width),l=lh(size);
+    lines.forEach(t=>{ensure(l);font(style,size);color(c);doc.text(t,M+indent,y+l*0.72);y+=l;});
+    y+=gap;};
+  const heading=t=>{ensure(22);y+=4;font("bold",14);color(C.ink);doc.text(t,M,y+5);fill(C.pink);doc.rect(M,y+7.5,14,0.9,"F");y+=13;};
+
+  bg();
+  // Kopf
+  const logo=document.querySelector("header img").src;
+  doc.addImage(logo,"PNG",M,M,34.7,12);
+  font("normal",8);doc.setFont("courier","normal");color(C.muted);doc.text("Kalkulation_final_v7.xlsx",W-M,M+7,{align:"right"});
+  y=M+24;
+  font("bold",9);color(C.cyan);doc.text("IHR ANGEBOTS-CHECK",M,y);y+=5;
+  const d=new Date().toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"});
+  font("normal",9);color(C.muted);doc.text(`Erstellt am ${d} · ${score} von 10 Punkten`,M,y);y+=6;
+  para(r.title,{size:24,style:"bold",gap:4});
+  // Skala
+  const gap=1.5,u=(CW-2*gap)/11,segs=[[4,C.cyan],[4,C.purple],[3,C.pink]];
+  let x=M; segs.forEach(([n,c])=>{fill(c);doc.roundedRect(x,y,n*u,3.5,1.75,1.75,"F");x+=n*u+gap;});
+  fill(C.ink);doc.roundedRect(M+score/10*CW-0.7,y-2.2,1.4,7.9,0.7,0.7,"F");
+  y+=10;font("normal",8.5);color(C.muted);
+  doc.text("Gut aufgestellt",M,y);doc.text("Engpass",M+CW/2,y,{align:"center"});doc.text("Risiko",M+CW,y,{align:"right"});
+  y+=9;
+  r.text.forEach(p=>para(p,{gap:3}));
+
+  heading("Ihre nächsten Hebel");
+  r.hebel.forEach((h,i)=>{
+    const tl=linesOf(h.t,11,"bold",CW-10), dl=linesOf(h.d,10,"normal",CW-10);
+    ensure(lh(11)*tl.length+lh(10)*Math.min(dl.length,3)+2);
+    fill(C.pink);doc.circle(M+3.4,y+3,3.4,"F");font("bold",9.5);color([255,255,255]);doc.text(String(i+1),M+3.4,y+4.3,{align:"center"});
+    para(h.t,{size:11,style:"bold",indent:10,gap:0.8});
+    para(h.d,{size:10,c:C.muted,indent:10,gap:4});
+  });
+
+  // Erster Schritt
+  const sl=linesOf(r.step,10.5,"normal",CW-14), bh=16+sl.length*lh(10.5);
+  ensure(bh+4);y+=2;
+  fill(C.surface);stroke(C.cyan);doc.setLineWidth(0.5);doc.roundedRect(M,y,CW,bh,3,3,"FD");
+  font("bold",9);color(C.cyan);doc.text("IHR ERSTER SCHRITT – DIESE WOCHE",M+7,y+8);
+  font("normal",10.5);color(C.ink);sl.forEach((t,i)=>doc.text(t,M+7,y+14+i*lh(10.5)));
+  y+=bh+3;
+
+  heading("Ihre Antworten im Einzelnen");
+  Q.forEach((it,i)=>{
+    const a=answers[i];
+    ensure(lh(8.5)+lh(10.5)*2+lh(10)*3+4);
+    para(`FRAGE ${i+1} · ${it.label.toUpperCase()}`,{size:8.5,style:"bold",c:C.cyan,gap:1});
+    para(it.q,{size:10.5,style:"bold",gap:1});
+    para(`Ihre Antwort: ${it.a[a]}`,{size:10,style:"bold",c:C.pink,gap:1.2});
+    para(it.fb[a],{size:10,c:C.muted,gap:3.5});
+  });
+
+  // Abschluss
+  ensure(20);y+=1;
+  font("bold",12);color(C.ink);doc.text("Lust auf ein Gespräch?",M,y+4.5);y+=8;
+  if(hasBooking){
+    para("Wir schauen uns Ihren Angebotsprozess gern gemeinsam an – unverbindlich und konkret. Termin buchen:",{size:10.5,gap:1});
+    font("bold",10.5);color(C.cyan);doc.textWithLink(BOOKING_URL,M,y+lh(10.5)*0.72,{url:BOOKING_URL});y+=lh(10.5)+3;
+  } else {
+    para("Wir schauen uns Ihren Angebotsprozess gern gemeinsam an – unverbindlich und konkret. Mehr über uns:",{size:10.5,gap:1});
+    font("bold",10.5);color(C.cyan);doc.textWithLink("smiling-data-club.de",M,y+lh(10.5)*0.72,{url:"https://smiling-data-club.de"});y+=lh(10.5)+3;
+  }
+
+  // Fußzeile auf jeder Seite
+  const n=doc.getNumberOfPages();
+  for(let p=1;p<=n;p++){
+    doc.setPage(p);stroke(C.line);doc.setLineWidth(0.3);doc.line(M,H-14,W-M,H-14);
+    font("normal",8);color(C.muted);
+    doc.text("Smiling Data Club · SIRIUS GmbH document solutions · smiling-data-club.de",M,H-9);
+    doc.text(`Seite ${p} von ${n}`,W-M,H-9,{align:"right"});
+  }
+  return doc;
+}
+
+$("pdf").onclick=async()=>{
+  if(!last) return;
+  const btn=$("pdf"),label=btn.textContent;
+  btn.disabled=true;btn.textContent="PDF wird erstellt …";
+  try{
+    const {jsPDF}=await loadJsPDF();
+    buildPdf(new jsPDF({unit:"mm",format:"a4"}),last.score,last.r).save("Angebots-Check_Ergebnis.pdf");
+  }catch(e){
+    alert("Das PDF konnte leider nicht erstellt werden. Bitte versuchen Sie es noch einmal.");
+  }finally{btn.disabled=false;btn.textContent=label;}
+};
+$("restart").onclick=()=>{answers=Array(Q.length).fill(null);step=0;last=null;setFile(0);show("s-start");};
 </script>
 </body>
 </html>
