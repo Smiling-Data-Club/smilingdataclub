@@ -123,7 +123,28 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="5. Webanalyse">
+          <Section title="5. Terminbuchung über Zoho Bookings">
+            <p>
+              Auf einzelnen Seiten bieten wir die Möglichkeit, über einen Link einen Gesprächstermin
+              zu buchen. Die Buchung erfolgt über den Dienst Zoho Bookings der Zoho Corporation B.V.,
+              Beneluxlaan 4B, 3527 HS Utrecht, Niederlande. Erst wenn Sie den Link anklicken, werden
+              Sie zu Zoho Bookings weitergeleitet. Dort werden die Angaben verarbeitet, die Sie für
+              die Buchung eingeben (z. B. Name, E-Mail-Adresse, Wunschtermin, ggf. Telefonnummer und
+              Anmerkungen). Zoho verarbeitet die Daten in Rechenzentren in der EU.
+            </p>
+            <p className="mt-2">
+              Die Verarbeitung erfolgt zur Durchführung vorvertraglicher Maßnahmen auf Ihre Anfrage
+              hin (Art. 6 Abs. 1 lit. b DSGVO). Die Daten werden gelöscht, sobald sie für den Termin
+              und eventuelle Anschlussfragen nicht mehr erforderlich sind, sofern keine gesetzlichen
+              Aufbewahrungspflichten bestehen.
+            </p>
+            <p className="mt-2">
+              Unser Angebots-Check auf dieser Website verarbeitet Ihre Antworten ausschließlich lokal
+              in Ihrem Browser. Es werden dabei keine Daten an uns oder Dritte übertragen.
+            </p>
+          </Section>
+
+          <Section title="6. Webanalyse">
             <p>
               Zur Analyse des Nutzungsverhaltens setzen wir Zoho Marketing Automation (Websitetracking) ein. Dabei können folgende Daten erhoben werden:
             </p>
@@ -144,7 +165,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="6. Cookies">
+          <Section title="7. Cookies">
             <p>
               Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von
               Art. 6 Abs. 1 lit. f DSGVO gesetzt. Für das Websitetracking setzt Zoho Marketing
@@ -161,7 +182,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="7. SSL-/TLS-Verschlüsselung">
+          <Section title="8. SSL-/TLS-Verschlüsselung">
             <p>
               Diese Seite nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung. Eine
               verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von
@@ -169,7 +190,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="8. Ihre Rechte als betroffene Person">
+          <Section title="9. Ihre Rechte als betroffene Person">
             <p>Ihnen stehen folgende Rechte gegenüber dem Verantwortlichen zu:</p>
             <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground">
               <li>
@@ -201,7 +222,7 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="9. Beschwerderecht bei einer Aufsichtsbehörde">
+          <Section title="10. Beschwerderecht bei einer Aufsichtsbehörde">
             <p>
               Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten gegen
               die DSGVO verstößt, haben Sie das Recht, sich bei einer Datenschutz-Aufsichtsbehörde
@@ -227,13 +248,13 @@ const Datenschutz = () => {
             </p>
           </Section>
 
-          <Section title="10. Änderung dieser Datenschutzerklärung">
+          <Section title="11. Änderung dieser Datenschutzerklärung">
             <p>
               Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den
               aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen
               umzusetzen. Für Ihren erneuten Besuch gilt dann die neue Datenschutzerklärung.
             </p>
-            <p className="mt-2 text-muted-foreground">Stand: März 2026</p>
+            <p className="mt-2 text-muted-foreground">Stand: Oktober 2026</p>
           </Section>
         </div>
       </div>
