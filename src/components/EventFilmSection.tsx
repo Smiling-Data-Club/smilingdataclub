@@ -1,14 +1,61 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 // TODO: Vorschau-URL des SIRIUS-Flow-Projekts. Vor Livegang MP4 in dieses
 // Projekt hochladen und hier auf den lokalen Pfad umstellen.
 const VIDEO_URL =
   "https://id-preview--dcccc61e-ef91-4ea4-880f-52f0edb86a1c.lovable.app/__l5e/assets-v1/60676312-6677-42c4-8300-9c13cb9bbbbd/aftermovie-ios.mp4";
 
-const EventFilmSection = () => {
+const FilmLink = ({ to, children }: { to: string; children: React.ReactNode }) => {
+  const [hoverLink, setHoverLink] = useState(false);
+  return (
+    <Link
+      to={to}
+      onMouseEnter={() => setHoverLink(true)}
+      onMouseLeave={() => setHoverLink(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 8,
+        fontFamily: "var(--font-mono-sw)",
+        fontSize: 15,
+        letterSpacing: ".02em",
+        color: hoverLink ? "var(--sw-text)" : "var(--sw-pink)",
+        textShadow: hoverLink
+          ? "0 0 18px hsl(var(--neon-pink) / .85)"
+          : "0 0 14px hsl(var(--neon-pink) / .55)",
+        paddingBottom: 3,
+        borderBottom: hoverLink
+          ? "1px solid hsl(var(--neon-pink) / .8)"
+          : "1px solid hsl(var(--neon-pink) / .35)",
+        textDecoration: "none",
+        transition: "color 300ms, border-color 300ms, text-shadow 300ms",
+      }}
+    >
+      {children}
+      <span
+        style={{
+          fontSize: "1.1em",
+          lineHeight: 1,
+          display: "inline-block",
+          transform: hoverLink ? "translateX(4px)" : "translateX(0)",
+          transition: "transform 300ms",
+        }}
+      >
+        →
+      </span>
+    </Link>
+  );
+};
+
+interface EventFilmSectionProps {
+  /** Titel und Links zu Rückblick/Vormerken anzeigen (Startseite) */
+  showLinks?: boolean;
+}
+
+const EventFilmSection = ({ showLinks = true }: EventFilmSectionProps) => {
   const [started, setStarted] = useState(false);
   const [hover, setHover] = useState(false);
-  const [hoverLink, setHoverLink] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleStart = () => {
@@ -19,19 +66,23 @@ const EventFilmSection = () => {
   return (
     <section className="sw-section relative">
       <div className="max-w-4xl mx-auto text-center">
-        <div
-          className="sw-section-title sw-animate-up"
-          style={{ marginBottom: 20, animationDelay: "0s" }}
-        >
-          CULTURE &amp; CODE
-        </div>
+        {showLinks && (
+          <>
+            <div
+              className="sw-section-title sw-animate-up"
+              style={{ marginBottom: 20, animationDelay: "0s" }}
+            >
+              CULTURE &amp; CODE
+            </div>
 
-        <p
-          className="sw-lead text-base sw-animate-up"
-          style={{ marginBottom: 40, animationDelay: "0.1s" }}
-        >
-          Der Abend, auf den wir hingearbeitet haben. Kick-off am 1. Juli in Freiburg.
-        </p>
+            <p
+              className="sw-lead text-base sw-animate-up"
+              style={{ marginBottom: 40, animationDelay: "0.1s" }}
+            >
+              Der Abend, auf den wir hingearbeitet haben. Kick-off am 1. Juli 2026 in Freiburg.
+            </p>
+          </>
+        )}
 
         <div
           className="sw-animate-up"
@@ -109,47 +160,15 @@ const EventFilmSection = () => {
           )}
         </div>
 
-        <a
-          href="https://www.sirius-gmbh.de/smiling-data-club"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="sw-animate-up"
-          onMouseEnter={() => setHoverLink(true)}
-          onMouseLeave={() => setHoverLink(false)}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            marginTop: 26,
-            fontFamily: "var(--font-mono-sw)",
-            fontSize: 15,
-            letterSpacing: ".02em",
-            color: hoverLink ? "var(--sw-text)" : "var(--sw-pink)",
-            textShadow: hoverLink
-              ? "0 0 18px hsl(var(--neon-pink) / .85)"
-              : "0 0 14px hsl(var(--neon-pink) / .55)",
-            paddingBottom: 3,
-            borderBottom: hoverLink
-              ? "1px solid hsl(var(--neon-pink) / .8)"
-              : "1px solid hsl(var(--neon-pink) / .35)",
-            textDecoration: "none",
-            transition: "color 300ms, border-color 300ms, text-shadow 300ms",
-            animationDelay: "0.3s",
-          }}
-        >
-          Alle Eindrücke vom Abend
-          <span
-            style={{
-              fontSize: "1.1em",
-              lineHeight: 1,
-              display: "inline-block",
-              transform: hoverLink ? "translateX(4px)" : "translateX(0)",
-              transition: "transform 300ms",
-            }}
+        {showLinks && (
+          <div
+            className="sw-animate-up flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-10"
+            style={{ marginTop: 26, animationDelay: "0.3s" }}
           >
-            →
-          </span>
-        </a>
+            <FilmLink to="/events/culture-and-code-26">Rückblick 2026</FilmLink>
+            <FilmLink to="/events/culture-and-code-27">Culture &amp; Code 27 – jetzt vormerken</FilmLink>
+          </div>
+        )}
       </div>
     </section>
   );

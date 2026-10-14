@@ -150,7 +150,6 @@ const HeroSection = () => {
   const [glitchKey, setGlitchKey] = useState(0);
   const [glitching, setGlitching] = useState(false);
   const [drifting, setDrifting] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const timeoutRef = useRef<number | null>(null);
   const isMd = typeof window !== 'undefined' && window.innerWidth >= 768;
   const logoSize = isMd ? 256 : 192;
@@ -242,56 +241,6 @@ const HeroSection = () => {
           <FlickerTagline text="Today's complexity. Retro simplicity." />
         </p>
 
-        <a
-          href="/game"
-          className="font-pixel text-[11px] md:text-sm py-3 px-5 transition-all duration-300 inline-flex items-center justify-center sw-animate-up"
-          style={{
-            animationDelay: '0.32s',
-            border: '2px solid hsl(var(--neon-pink) / .75)',
-            background: hovered
-              ? 'linear-gradient(160deg, rgba(5,5,16,.92), hsl(var(--neon-pink) / .22))'
-              : 'linear-gradient(160deg, rgba(5,5,16,.88), hsl(var(--neon-pink) / .12))',
-            boxShadow: hovered
-              ? '0 0 40px hsl(var(--neon-pink) / .5), inset 0 0 22px hsl(var(--neon-pink) / .1)'
-              : '0 0 26px hsl(var(--neon-pink) / .28), inset 0 0 18px hsl(var(--neon-pink) / .06)',
-            borderRadius: '10px',
-            color: 'var(--sw-text)',
-            textShadow: '0 0 12px hsl(var(--neon-pink) / .8)',
-          }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          <span>KRISEN SIMULATOR</span>
-          <span
-            style={{
-              marginLeft: 10,
-              fontFamily: 'var(--font-mono-sw)',
-              fontSize: '1.1em',
-              lineHeight: 1,
-              display: 'inline-block',
-              transform: hovered ? 'translateX(4px)' : 'translateX(0)',
-              transition: 'transform 300ms',
-            }}
-          >
-            →
-          </span>
-        </a>
-
-        <p
-          className="sw-animate-up"
-          style={{
-            fontFamily: 'var(--font-mono-sw)',
-            fontSize: 15,
-            color: 'var(--sw-text-2)',
-            marginTop: 18,
-            textAlign: 'center',
-            letterSpacing: '.02em',
-            textShadow: '0 0 14px hsl(var(--neon-cyan) / .3), 0 1px 6px rgba(5,5,16,.9)',
-            animationDelay: '0.4s',
-          }}
-        >
-          Mach den Krisentest für dein Unternehmen
-        </p>
         </div>
       </div>
 
