@@ -8,7 +8,7 @@ import pixelAssistenz from "@/assets/pixel-assistenz.png";
 import pixelTechnik from "@/assets/pixel-technik.png";
 import pixelGf from "@/assets/pixel-gf.png";
 
-const WEBHOOK_URL = "https://flow.zoho.eu/20106110113/flow/webhook/incoming?zapikey=1001.b5cb68984b6d8bf9b189137ca336b48e.990d3eef8c8cfdb48f7532cf01674854&isdebug=false";
+// Ergebnis geht an die Netlify Function /api/krisencheck (→ Zoho Flow).
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -444,9 +444,8 @@ const Game = () => {
     };
 
     try {
-      await fetch(WEBHOOK_URL, {
+      await fetch("/api/krisencheck", {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(
           Object.entries(payload).map(([k, v]) => [k, typeof v === "object" ? JSON.stringify(v) : String(v)])

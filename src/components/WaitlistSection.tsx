@@ -1,15 +1,24 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
-
-const WEBHOOK_URL =
-  "https://flow.zoho.eu/20106110113/flow/webhook/incoming?zapikey=1001.0ccd122c2824a51d4309ea2b4ef7c7e5.e8e31339336bcce2a43b9785fc2ed8a4&isdebug=false";
+import { anmelden, type Interesse } from "@/lib/anmeldung";
 
 interface WaitlistSectionProps {
   bonusActive?: boolean;
+  interesse?: Interesse;
+  title?: string;
+  lead?: string;
+  buttonLabel?: string;
 }
 
-const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
+const WaitlistSection = ({
+  bonusActive,
+  interesse = "newsletter",
+  title = "JOIN THE CLUB",
+  lead = "Newsletter, Event-Einladungen und exklusive Inhalte zu KI und Automatisierung.",
+  buttonLabel = "Jetzt beitreten",
+}: WaitlistSectionProps) => {
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,15 +27,11 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
 
     setIsSubmitting(true);
     try {
-      const formData = new URLSearchParams();
-      formData.append("email", email);
-      if (bonusActive) formData.append("bonus", "PONG1UP");
-
-      await fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: formData.toString(),
-        mode: "no-cors",
+      await anmelden({
+        email,
+        interesse,
+        bonus: bonusActive ? "PONG1UP" : undefined,
+        website,
       });
       toast.success("Danke! Bitte bestätige deine Anmeldung per E-Mail. 📬");
       setEmail("");
@@ -40,12 +45,8 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
   return (
     <section id="waitlist" className="sw-section relative">
       <div className="max-w-xl mx-auto text-center">
-        <h2 className="sw-section-title mb-4">
-          JOIN THE CLUB
-        </h2>
-        <p className="sw-lead text-base md:text-lg mb-10">
-          Newsletter, Event-Einladungen und exklusive Inhalte zu KI und Automatisierung.
-        </p>
+        <h2 className="sw-section-title mb-4">{title}</h2>
+        <p className="sw-lead text-base md:text-lg mb-10">{lead}</p>
 
         {bonusActive && (
           <div
@@ -69,6 +70,17 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
 
 
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Honeypot gegen Bots – für Menschen unsichtbar */}
+          <input
+            type="text"
+            name="website"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
           <input
             type="email"
             name="email"
@@ -96,7 +108,7 @@ const WaitlistSection = ({ bonusActive }: WaitlistSectionProps) => {
               fontSize: 11,
             }}
           >
-            {isSubmitting ? "Wird gesendet..." : "Jetzt beitreten"}
+            {isSubmitting ? "Wird gesendet..." : buttonLabel}
           </button>
         </form>
       </div>
