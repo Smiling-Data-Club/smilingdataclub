@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { oeffneCookieEinstellungen } from "@/lib/consent";
 
 const FooterSection = () => {
   return (
@@ -12,7 +13,7 @@ const FooterSection = () => {
       <p className="text-xs" style={{ color: "var(--sw-text-3)" }}>
         A <span style={{ color: "var(--sw-text-2)" }}>SIRIUS GmbH</span> brand
       </p>
-      <div className="flex items-center justify-center gap-4 mt-3">
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mt-3">
         <Link
           to="/impressum"
           className="hover:text-primary text-xs transition-colors"
@@ -28,6 +29,15 @@ const FooterSection = () => {
         >
           Datenschutz
         </Link>
+        <span style={{ color: "var(--sw-text-4)", opacity: 0.5 }}>|</span>
+        <button
+          type="button"
+          onClick={oeffneCookieEinstellungen}
+          className="hover:text-primary text-xs transition-colors"
+          style={{ color: "var(--sw-text-4)", background: "none", border: "none", padding: 0, cursor: "pointer" }}
+        >
+          Cookie-Einstellungen
+        </button>
       </div>
       <p
         className="mt-3"

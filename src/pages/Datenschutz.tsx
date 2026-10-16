@@ -198,6 +198,12 @@ const Datenschutz = () => {
             <p className="mt-2">
               Die Daten werden bei der Zoho Corporation B.V. in der EU verarbeitet.
             </p>
+            <p className="mt-2">
+              Zusätzlich nutzen wir Zoho PageSense, um die Nutzung der Website auszuwerten (z. B.
+              Seitenaufrufe, Klick- und Scrollverhalten). Das PageSense-Script wird erst geladen,
+              nachdem Sie im Cookie-Banner auf „Akzeptieren“ geklickt haben. Ihre Entscheidung
+              können Sie jederzeit über den Link „Cookie-Einstellungen“ unten auf jeder Seite ändern.
+            </p>
           </Section>
 
           <Section title="8. Cookies">
@@ -206,7 +212,9 @@ const Datenschutz = () => {
               Art. 6 Abs. 1 lit. f DSGVO gesetzt. Für das Websitetracking setzt Zoho Marketing
               Automation ein Cookie (zsiq), das Besucher sitzungsübergreifend identifiziert — dieses
               Cookie wird nur mit Ihrer Einwilligung gesetzt (Art. 6 Abs. 1 lit. a DSGVO) und kann
-              über das Cookie-Banner verwaltet werden.
+              über das Cookie-Banner verwaltet werden. Ihre Entscheidung im Cookie-Banner speichern
+              wir lokal in Ihrem Browser (Local Storage), damit wir nicht bei jedem Besuch erneut
+              fragen müssen.
             </p>
             <p className="mt-2">
               Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert
