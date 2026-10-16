@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Game from "./pages/Game.tsx";
 import Auswertung from "./pages/Auswertung.tsx";
 import Loesung from "./pages/loesungen/Loesung.tsx";
+import UseCases from "./pages/loesungen/UseCases.tsx";
 import CultureCode26 from "./pages/events/CultureCode26.tsx";
 import CultureCode27 from "./pages/events/CultureCode27.tsx";
 import Termine from "./pages/events/Termine.tsx";
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/game" element={<Game />} />
           <Route path="/game/auswertung" element={<Auswertung />} />
+          <Route path="/loesungen/use-cases" element={<UseCases />} />
           <Route path="/loesungen/:slug" element={<Loesung />} />
           <Route path="/events/culture-and-code-26" element={<CultureCode26 />} />
           <Route path="/events/culture-and-code-27" element={<CultureCode27 />} />

@@ -18,10 +18,10 @@ export const NAVIGATION: NavGroup[] = [
   {
     label: "Lösungen",
     items: [
-      { label: "Zoho One & CRM", to: "/loesungen/zoho", hint: "Ein Ökosystem für alles" },
-      { label: "KI & Automatisierung", to: "/loesungen/ki-automatisierung", hint: "KI, die wirklich hilft" },
-      { label: "DocuWare & IDP", to: "/loesungen/docuware", hint: "Vom Scan zum Datensatz" },
-      { label: "MCP", to: "/loesungen/mcp", hint: "KI trifft deine Systeme" },
+      { label: "Zoho One", to: "/loesungen/zoho", hint: "Betriebssystem für dein Business" },
+      { label: "DocuWare", to: "/loesungen/docuware", hint: "Dokumentenmanagement, das mitwächst" },
+      { label: "AI", to: "/loesungen/ai", hint: "App Building nach Maß" },
+      { label: "Use Cases", to: "/loesungen/use-cases", hint: "Was unsere Kunden sagen" },
     ],
   },
   {

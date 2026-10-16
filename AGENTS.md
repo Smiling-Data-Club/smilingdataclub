@@ -17,7 +17,8 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | --- | --- |
 | Menü (Hauptpunkte, Unterpunkte, Member-Login) | `src/data/navigation.ts` |
 | Routen | `src/App.tsx` (neue Seite = Route hier **und** Eintrag in `navigation.ts`) |
-| Lösungs-Seiten (Zoho, KI, DocuWare, MCP) inkl. Testimonials | `src/data/loesungen.ts` → gerendert von `src/pages/loesungen/Loesung.tsx` |
+| Lösungs-Seiten (Zoho One, DocuWare, AI) inkl. Texte und Testimonials | `src/data/loesungen.ts` → gerendert von `src/pages/loesungen/Loesung.tsx` |
+| Use Cases (sammelt alle Testimonials) | `src/pages/loesungen/UseCases.tsx` |
 | Webinare & Termine (von Hand gepflegt) | `src/data/termine.ts` |
 | Culture & Code 27 – Datum | `src/pages/events/CultureCode27.tsx`, Konstante `DATUM` |
 | Rahmen jeder Unterseite (Header, Hintergrund, Seitenkopf, Footer) | `src/components/PageLayout.tsx` |
@@ -33,6 +34,8 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 **Startseite** – Reihenfolge bleibt: Hero → „Was wir machen“ (Kacheln) →
 Culture & Code (Film) → Code-Block → Join the Club → Pong (Bonus Level, ganz unten).
 Ausführliche Inhalte gehören auf die Unterseiten, nicht zurück auf die Startseite.
+
+Umleitungen alter Adressen stehen in `public/_redirects` (vor der SPA-Regel).
 
 **Adressen, die nicht geändert werden dürfen** (stehen in Mails, auf LinkedIn,
 in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
