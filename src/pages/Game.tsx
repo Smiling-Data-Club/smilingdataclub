@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FooterSection from "@/components/FooterSection";
+import SiteHeader from "@/components/SiteHeader";
 import pixelBuchhaltung from "@/assets/pixel-buchhaltung.png";
 import pixelVertrieb from "@/assets/pixel-vertrieb.png";
 import pixelIt from "@/assets/pixel-it.png";
@@ -474,12 +475,8 @@ const Game = () => {
     <div className="min-h-screen scanlines relative">
       <div className="absolute inset-0 synthwave-grid pointer-events-none" />
 
-      {/* Minimal nav link back */}
-      <nav className="relative z-20 flex items-center justify-between px-6 py-4">
-        <Link to="/" className="font-pixel text-[10px] text-primary hover:text-glow-cyan transition-all">
-          ← SMILING DATA CLUB
-        </Link>
-      </nav>
+      <SiteHeader />
+      <div className="h-16" aria-hidden />
 
       <main className={`relative z-10 transition-opacity duration-500 ${fadeIn ? "opacity-100" : "opacity-0"}`}>
 

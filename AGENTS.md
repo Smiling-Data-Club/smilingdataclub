@@ -25,6 +25,7 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Startseite | `src/pages/Index.tsx` |
 | Angebots-Check | `public/check/` – eigenständige HTML-Seite, **nicht** Teil der React-App |
 | Krisen-Simulator | `src/pages/Game.tsx`, Auswertung `src/pages/Auswertung.tsx` |
+| Culture & Code 26 (Fotos, Clips, Vorträge, Interviews) | `src/data/cultureCode26.ts` |
 | Server-Funktionen | `netlify/functions/` |
 | Aftermovie Culture & Code (Video + Vorschaubild) | `public/videos/` |
 
@@ -33,7 +34,8 @@ Culture & Code (Film) → Code-Block → Join the Club → Pong (Bonus Level, ga
 Ausführliche Inhalte gehören auf die Unterseiten, nicht zurück auf die Startseite.
 
 **Adressen, die nicht geändert werden dürfen** (stehen in Mails, auf LinkedIn,
-in Auswertungslinks): `/game`, `/game/auswertung`, `/check`.
+in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
+`/events/culture-and-code-26` (Ziel der Umleitung von sirius-gmbh.de).
 
 ## Formulare und Zoho – verbindlich
 
@@ -81,10 +83,6 @@ Mobil prüfen (390 px), kein horizontales Scrollen.
 
 ## Offene Punkte (Stand Oktober 2026)
 
-- sirius-gmbh.de (Repo `Smiling-Data-Club/sirius-flow-3dc01161`): `/smiling-data-club`
-  und `/culture-and-code` per 301 auf `/events/culture-and-code-26` umleiten.
-- Krisen-Simulator, Impressum und Datenschutz auf `PageLayout`/`SiteHeader`
-  umstellen.
 - Domain klären: `index.html` und `public/sitemap.xml` nennen
   `smiling-data.club`, live läuft `smiling-data-club.de`.
 - Member-Login (`/member`) ist Platzhalter. Echter Login später über den
