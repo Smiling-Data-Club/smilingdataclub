@@ -26,6 +26,7 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Angebots-Check | `public/check/` – eigenständige HTML-Seite, **nicht** Teil der React-App |
 | Krisen-Simulator | `src/pages/Game.tsx`, Auswertung `src/pages/Auswertung.tsx` |
 | Server-Funktionen | `netlify/functions/` |
+| Aftermovie Culture & Code (Video + Vorschaubild) | `public/videos/` |
 
 **Startseite** – Reihenfolge bleibt: Hero → „Was wir machen“ (Kacheln) →
 Culture & Code (Film) → Code-Block → Join the Club → Pong (Bonus Level, ganz unten).
@@ -82,8 +83,6 @@ Mobil prüfen (390 px), kein horizontales Scrollen.
 
 - sirius-gmbh.de (Repo `Smiling-Data-Club/sirius-flow-3dc01161`): `/smiling-data-club`
   und `/culture-and-code` per 301 auf `/events/culture-and-code-26` umleiten.
-- Eventfilm liegt noch auf einer Lovable-Vorschau-URL
-  (`src/components/EventFilmSection.tsx`) – Datei ins Repo holen.
 - Krisen-Simulator, Impressum und Datenschutz auf `PageLayout`/`SiteHeader`
   umstellen.
 - Domain klären: `index.html` und `public/sitemap.xml` nennen
