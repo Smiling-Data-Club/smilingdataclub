@@ -73,3 +73,39 @@ export const O_TOENE: OTon[] = [
   { titel: "Culture & Code in einem Wort", beschreibung: "Ein-Wort-Statements der Teilnehmenden.", src: reelWort, poster: reelWortPoster },
   { titel: "Momente des Lächelns", beschreibung: "Kurze Sequenz aus Lach- und Networking-Momenten.", src: reelLaecheln, poster: reelLaechelnPoster },
 ];
+// Vorträge – verlinkt auf YouTube (nicht eingebettet, die Videos sind lang).
+// Link fehlt noch → Kachel zeigt „Video folgt“.
+export interface Vortrag {
+  person: string;
+  titel: string;
+  rolle: string;
+  foto: string;
+  youtubeUrl?: string;
+}
+
+export const VORTRAEGE: Vortrag[] = [
+  {
+    person: "Prof. Dr. Hannah Bast",
+    titel: "Closing Keynote: KI, Algorithmen und der Mensch dahinter",
+    rolle: "Universität Freiburg",
+    foto: hannahBast,
+    youtubeUrl: "https://www.youtube.com/watch?v=_mCutMwjE1Y",
+  },
+  {
+    person: "Josef R. Schneider",
+    titel: "Impuls: AI meets EQ",
+    rolle: "Impulsvortrag",
+    foto: josefSchneider,
+  },
+];
+
+// Interviews – YouTube-Video-ID eintragen (der Teil nach „watch?v=“ bzw. „youtu.be/“).
+// Wird per Zwei-Klick eingebettet: YouTube lädt erst nach Klick.
+// Beispiel: { name: "Vorname Nachname", rolle: "Firma", youtubeId: "abc123XYZ" },
+export interface Interview {
+  name: string;
+  rolle?: string;
+  youtubeId: string;
+}
+
+export const INTERVIEWS: Interview[] = [];
