@@ -1,10 +1,10 @@
 import { Link, useParams } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
-import YouTubeZweiKlick from "@/components/YouTubeZweiKlick";
+import TestimonialKarte from "@/components/TestimonialKarte";
 import NotFound from "@/pages/NotFound";
 import TerminKarte from "@/components/TerminKarte";
-import { LOESUNGEN, type Weiterlesen } from "@/data/loesungen";
+import { LOESUNGEN, USE_CASES_KACHEL, type Weiterlesen } from "@/data/loesungen";
 import { kommendeTermine } from "@/data/termine";
 import siriusLogo from "@/assets/sirius-logo-weiss.svg";
 
@@ -63,7 +63,15 @@ const Loesung = () => {
   const loesung = LOESUNGEN.find((l) => l.slug === slug);
   if (!loesung) return <NotFound />;
 
-  const andere = LOESUNGEN.filter((l) => l.slug !== loesung.slug);
+  const andere = [
+    ...LOESUNGEN.filter((l) => l.slug !== loesung.slug).map((l) => ({
+      to: `/loesungen/${l.slug}`,
+      title: l.title,
+      description: l.description,
+      cardClass: l.cardClass,
+    })),
+    USE_CASES_KACHEL,
+  ];
   const termine = kommendeTermine().filter((t) => t.loesung === loesung.slug);
 
   return (
@@ -180,17 +188,7 @@ const Loesung = () => {
             <SectionTitle>SUCCESS STORIES</SectionTitle>
             <div className="grid md:grid-cols-3 gap-6">
               {loesung.testimonials.map((t) => (
-                <figure key={t.youtubeId} className="sw-card sw-animate-up flex flex-col gap-4" style={{ padding: 18 }}>
-                  <YouTubeZweiKlick videoId={t.youtubeId} title={`${t.company} – ${t.person}`} />
-                  <blockquote className="text-base leading-relaxed" style={{ color: "var(--sw-text)" }}>
-                    „{t.quote}“
-                  </blockquote>
-                  <figcaption style={{ fontFamily: "var(--font-mono-sw)", fontSize: 12, color: "var(--sw-text-3)" }}>
-                    {t.person}, {t.role}
-                    <br />
-                    {t.company}
-                  </figcaption>
-                </figure>
+                <TestimonialKarte key={t.youtubeId} t={t} />
               ))}
             </div>
           </div>
@@ -246,8 +244,8 @@ const Loesung = () => {
           <div className="grid sm:grid-cols-3 gap-5">
             {andere.map((l) => (
               <Link
-                key={l.slug}
-                to={`/loesungen/${l.slug}`}
+                key={l.to}
+                to={l.to}
                 className={`${l.cardClass} transition-transform duration-300 hover:-translate-y-1`}
                 style={{ padding: "18px 20px" }}
               >

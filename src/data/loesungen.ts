@@ -1,7 +1,6 @@
 import pixelGlobe from "@/assets/pixel-globe.png";
 import pixelBot from "@/assets/pixel-bot.png";
 import pixelDocument from "@/assets/pixel-document.png";
-import pixelNetwork from "@/assets/pixel-network.png";
 
 export interface Testimonial {
   quote: string;
@@ -72,12 +71,14 @@ const DOCUWARE_TESTIMONIALS: Testimonial[] = [
   },
 ];
 
+// Reihenfolge = Reihenfolge im Menü, auf der Startseite und unter „Weitere Lösungen“.
+// Die Seite „Use Cases“ (/loesungen/use-cases) sammelt alle testimonials.
 export const LOESUNGEN: Loesung[] = [
   {
     slug: "zoho",
     icon: pixelGlobe,
-    title: "Zoho One & CRM",
-    description: "40+ Apps. Ein Ökosystem. Alles verbunden — CRM, Finanzen, HR, Support.",
+    title: "Zoho One",
+    description: "Betriebssystem für dein Business",
     details:
       "Ein Login für CRM, Buchhaltung, Projekte, Support und Marketing, statt fünf Tools, die nichts voneinander wissen. Wir nutzen Zoho One selbst als Betriebsplattform: Was wir dir einrichten, läuft bei uns seit Jahren im Alltag.",
     cardClass: "sw-card",
@@ -107,46 +108,10 @@ export const LOESUNGEN: Loesung[] = [
     fakten: ["Zoho Authorized Partner", "Zoho One ist unsere eigene Betriebsplattform"],
   },
   {
-    slug: "ki-automatisierung",
-    icon: pixelBot,
-    title: "KI & Automatisierung",
-    description: "Von Chatbots bis Workflow-Automation — KI, die wirklich hilft.",
-    details:
-      "Nicht der Chatbot, der nichts weiß. Sondern Rechnungen, die sich selbst zuordnen, und Anfragen, die im richtigen Postfach landen. Wir bauen kleine Automatisierungen, die nächste Woche laufen, statt Konzepte für nächstes Jahr.",
-    cardClass: "sw-card-pink",
-    kennstDuDas: [
-      "Rechnungen, Lieferscheine und Anfragen werden von Hand abgetippt oder weitergeleitet.",
-      "Dieselben Copy-&-Paste-Schritte, jeden Tag, quer durch mehrere Programme.",
-      "Alle reden über KI – aber niemand weiß, wo man im eigenen Betrieb anfangen soll.",
-    ],
-    leistungen: [
-      {
-        titel: "Erst hinschauen",
-        text: "Wir suchen mit dir die Stelle, an der Automatisierung am meisten Zeit spart. Meist ist das kein großes Projekt, sondern ein nerviger Handgriff, der hundertmal am Tag passiert.",
-      },
-      {
-        titel: "Kleine Automatisierungen",
-        text: "Mit Zoho Flow, Make oder Zoho-eigenen Funktionen bauen wir Abläufe, die nächste Woche laufen – nicht Konzepte für nächstes Jahr.",
-      },
-      {
-        titel: "KI mit Augenmaß",
-        text: "KI liest Dokumente aus, sortiert Anfragen vor und schreibt Entwürfe. Entscheiden tut weiterhin ein Mensch.",
-      },
-      {
-        titel: "Datenschutz von Anfang an",
-        text: "Bevor etwas gebaut wird, klären wir, welche Daten wohin gehen – und wählen Dienste, bei denen das sauber geregelt ist.",
-      },
-    ],
-    weiterlesen: [
-      { titel: "Krisen-Simulator: Wie krisenfest ist dein Team?", url: "/game" },
-      { titel: "Angebots-Check: Wie viel Risiko steckt in deiner Kalkulation?", url: "/check" },
-    ],
-  },
-  {
     slug: "docuware",
     icon: pixelDocument,
-    title: "DocuWare & IDP",
-    description: "Intelligente Dokumentenverarbeitung. Vom Scan zum strukturierten Datensatz.",
+    title: "DocuWare",
+    description: "Dokumentenmanagement, das mitwächst",
     details:
       "Jede Rechnung in fünf Sekunden gefunden, und die Prüfung akzeptiert sie. DocuWare archiviert revisionssicher, IDP (Intelligent Document Processing) liest Belege automatisch aus, ohne dass jemand abtippt.",
     cardClass: "sw-card-purple",
@@ -200,36 +165,52 @@ export const LOESUNGEN: Loesung[] = [
     ],
   },
   {
-    slug: "mcp",
-    icon: pixelNetwork,
-    title: "MCP",
-    description: "Model Context Protocol — die Brücke zwischen KI-Modellen und deinen Systemen.",
+    slug: "ai",
+    icon: pixelBot,
+    title: "AI",
+    description: "App Building nach Maß",
     details:
-      "Model Context Protocol: ein gemeinsamer Stecker zwischen KI-Modellen und deinen Systemen. Statt für jedes Tool eine eigene Schnittstelle zu bauen, spricht die KI direkt mit CRM, Archiv und Kalender.",
-    cardClass: "sw-card",
+      "Wenn es die passende Software nicht gibt, bauen wir sie: schlanke Web-Apps und KI-Werkzeuge, genau für euren Ablauf – und angebunden an die Systeme, die ihr schon habt.",
+    cardClass: "sw-card-pink",
     kennstDuDas: [
-      "Die KI kann viel – aber sie weiß nichts über deine Kunden, Aufträge oder Dokumente.",
-      "Jede Verbindung zwischen KI und Software ist eine eigene Bastelei.",
-      "Unklar, was die KI eigentlich darf: nur lesen? Auch schreiben? Löschen?",
+      "Für euren Ablauf gibt es keine fertige Software – also läuft er über Excel-Listen und E-Mails.",
+      "Die Standardsoftware kann vieles, aber genau das eine nicht, was ihr jeden Tag braucht.",
+      "Alle reden über KI – aber niemand weiß, wo man im eigenen Betrieb anfangen soll.",
     ],
     leistungen: [
       {
-        titel: "Ein Stecker für alle Systeme",
-        text: "Über MCP greift die KI auf CRM, Archiv und Kalender zu – mit einer einheitlichen Schnittstelle statt vieler Einzellösungen.",
+        titel: "Apps nach Maß",
+        text: "Vom Kalkulations-Tool bis zum Kundenportal: kleine Web-Apps, die genau euren Ablauf abbilden – im Browser, ohne Installation.",
       },
       {
-        titel: "Klare Rechte",
-        text: "Wir legen fest, was die KI darf. Bewährt hat sich: Lesen ist frei, Schreiben nur nach Bestätigung durch einen Menschen.",
+        titel: "KI eingebaut",
+        text: "KI liest Dokumente aus, sortiert Anfragen vor und schreibt Entwürfe. Entscheiden tut weiterhin ein Mensch.",
       },
       {
-        titel: "Eigene Konnektoren",
-        text: "Für Systeme ohne fertige MCP-Anbindung bauen wir den passenden Konnektor.",
+        titel: "Verbunden mit euren Systemen",
+        text: "Über Schnittstellen und MCP (Model Context Protocol) sprechen Apps und KI direkt mit CRM, Archiv und Kalender – mit klaren Rechten: Lesen ist frei, Schreiben nur nach Bestätigung.",
       },
       {
-        titel: "Klein anfangen",
-        text: "Ein System, ein Anwendungsfall, ein paar Wochen Praxis. Danach wisst ihr, ob und wie es weitergeht.",
+        titel: "Schnell lauffähig",
+        text: "Eine erste Version in Wochen statt Monaten. Danach bauen wir nach echtem Feedback aus eurem Alltag weiter.",
+      },
+      {
+        titel: "Datenschutz von Anfang an",
+        text: "Bevor etwas gebaut wird, klären wir, welche Daten wohin gehen – und wählen Dienste, bei denen das sauber geregelt ist.",
       },
     ],
-    fakten: ["Wir nutzen MCP selbst im Alltag, z. B. mit unserem Zoho CRM"],
+    fakten: ["Selbst gebaut: Krisen-Simulator und Angebots-Check", "Wir nutzen MCP selbst im Alltag, z. B. mit unserem Zoho CRM"],
+    weiterlesen: [
+      { titel: "Krisen-Simulator: Wie krisenfest ist dein Team?", url: "/game", quelle: "Beispiel-App von uns" },
+      { titel: "Angebots-Check: Wie viel Risiko steckt in deiner Kalkulation?", url: "/check", quelle: "Beispiel-App von uns" },
+    ],
   },
 ];
+
+/** Kachel „Use Cases“ – erscheint neben den Lösungen auf Startseite und Lösungsseiten */
+export const USE_CASES_KACHEL = {
+  to: "/loesungen/use-cases",
+  title: "Use Cases",
+  description: "Was unsere Kunden sagen",
+  cardClass: "sw-card" as const,
+};

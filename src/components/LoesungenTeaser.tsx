@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
-import { LOESUNGEN } from "@/data/loesungen";
+import pixelTrophy from "@/assets/pixel-trophy.png";
+import { LOESUNGEN, USE_CASES_KACHEL } from "@/data/loesungen";
+
+const KACHELN = [
+  ...LOESUNGEN.map((l) => ({ ...l, to: `/loesungen/${l.slug}` })),
+  { ...USE_CASES_KACHEL, icon: pixelTrophy },
+];
 
 // Startseite: schmaler Streifen „Was wir machen“ – Details auf /loesungen/…
 const LoesungenTeaser = () => (
@@ -17,10 +23,10 @@ const LoesungenTeaser = () => (
       </p>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {LOESUNGEN.map((l, i) => (
+        {KACHELN.map((l, i) => (
           <Link
-            key={l.slug}
-            to={`/loesungen/${l.slug}`}
+            key={l.to}
+            to={l.to}
             className={`${l.cardClass} sw-animate-up text-left transition-transform duration-300 hover:-translate-y-1`}
             style={{ animationDelay: `${i * 0.08}s`, padding: "22px 22px" }}
           >
