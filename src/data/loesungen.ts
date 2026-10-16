@@ -38,6 +38,10 @@ export interface Loesung {
   fakten?: string[];
   testimonials?: Testimonial[];
   weiterlesen?: Weiterlesen[];
+  /** Absender „SIRIUS präsentiert“ + Umsetzungs-Block (nur DocuWare – SIRIUS-Kerngeschäft) */
+  siriusPraesentiert?: boolean;
+  /** Überschrift über den Terminen, Standard „Live erleben“ */
+  termineTitel?: string;
 }
 
 const SIRIUS_BLOG = "https://www.sirius-gmbh.de/blog";
@@ -174,6 +178,8 @@ export const LOESUNGEN: Loesung[] = [
       },
     ],
     fakten: ["DocuWare Gold Partner", "DocuWare Customer Service Champion 2026"],
+    siriusPraesentiert: true,
+    termineTitel: "Webinar-Reihe",
     testimonials: DOCUWARE_TESTIMONIALS,
     weiterlesen: [
       {

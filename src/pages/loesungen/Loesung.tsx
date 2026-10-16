@@ -6,6 +6,7 @@ import NotFound from "@/pages/NotFound";
 import TerminKarte from "@/components/TerminKarte";
 import { LOESUNGEN, type Weiterlesen } from "@/data/loesungen";
 import { kommendeTermine } from "@/data/termine";
+import siriusLogo from "@/assets/sirius-logo-weiss.svg";
 
 const BOOKING_URL = "https://sirius-gmbh.zohobookings.eu/240927000000441095";
 
@@ -66,7 +67,12 @@ const Loesung = () => {
   const termine = kommendeTermine().filter((t) => t.loesung === loesung.slug);
 
   return (
-    <PageLayout title={loesung.title} eyebrow="LÖSUNGEN" headline={loesung.title} lead={loesung.description}>
+    <PageLayout
+      title={loesung.title}
+      eyebrow={loesung.siriusPraesentiert ? "SIRIUS PRÄSENTIERT" : "LÖSUNGEN"}
+      headline={loesung.title}
+      lead={loesung.description}
+    >
       <section className="sw-section" style={{ paddingTop: 0 }}>
         <div className={`${loesung.cardClass} max-w-3xl mx-auto sw-animate-up`}>
           <img src={loesung.icon} alt="" className="w-10 h-10 mb-5" style={{ imageRendering: "pixelated" }} />
@@ -94,6 +100,29 @@ const Loesung = () => {
             </ul>
           )}
         </div>
+        {loesung.siriusPraesentiert && (
+          <a
+            href="https://www.sirius-gmbh.de/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="sw-card max-w-3xl mx-auto mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 transition-transform duration-300 hover:-translate-y-1"
+            style={{ padding: "18px 24px" }}
+          >
+            <img src={siriusLogo} alt="SIRIUS GmbH document solutions" className="h-12 w-auto shrink-0" />
+            <span className="min-w-0">
+              <span className="sw-eyebrow block mb-1" style={{ fontSize: 10 }}>
+                Umsetzung
+              </span>
+              <span className="block" style={{ color: "var(--sw-text)" }}>
+                SIRIUS GmbH document solutions, Freiburg
+              </span>
+              <span style={{ fontFamily: "var(--font-mono-sw)", fontSize: 12, color: "var(--sw-text-3)" }}>
+                DocuWare Gold Partner · seit über 45 Jahren für Dokumente im Mittelstand
+                <ExternalLink className="inline w-3 h-3 ml-1" aria-hidden />
+              </span>
+            </span>
+          </a>
+        )}
       </section>
 
       {loesung.kennstDuDas && loesung.kennstDuDas.length > 0 && (
@@ -135,7 +164,7 @@ const Loesung = () => {
       {termine.length > 0 && (
         <section className="sw-section">
           <div className="max-w-3xl mx-auto">
-            <SectionTitle>LIVE ERLEBEN</SectionTitle>
+            <SectionTitle>{(loesung.termineTitel ?? "Live erleben").toUpperCase()}</SectionTitle>
             <div className="flex flex-col gap-5">
               {termine.map((t) => (
                 <TerminKarte key={`${t.datum}-${t.titel}`} termin={t} />
