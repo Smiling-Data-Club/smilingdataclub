@@ -18,6 +18,7 @@ import UeberUns from "./pages/ueber-uns/UeberUns.tsx";
 import Team from "./pages/ueber-uns/Team.tsx";
 import Member from "./pages/Member.tsx";
 import ScrollManager from "./components/ScrollManager.tsx";
+import CookieBanner from "./components/CookieBanner.tsx";
 
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollManager />
+        <CookieBanner />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/impressum" element={<Impressum />} />

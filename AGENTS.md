@@ -66,6 +66,9 @@ in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
 - Neue Formulare, Tracking oder externe Dienste: vorher klären, ob die
   Datenschutzerklärung (`src/pages/Datenschutz.tsx`) das abdeckt.
 - Netlify-Functions-Region: Frankfurt (eu-central-1).
+- Analyse (Zoho PageSense) lädt **nur nach Einwilligung** über den Cookie-Banner
+  (`src/lib/consent.ts`, `src/components/CookieBanner.tsx`). Tracking-Scripts nie
+  direkt in `index.html` einbauen.
 
 ## Schreibweise
 
