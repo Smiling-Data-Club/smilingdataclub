@@ -37,7 +37,7 @@ export interface Loesung {
   fakten?: string[];
   testimonials?: Testimonial[];
   weiterlesen?: Weiterlesen[];
-  /** Absender „SIRIUS präsentiert“ + Umsetzungs-Block (nur DocuWare – SIRIUS-Kerngeschäft) */
+  /** Absender „SIRIUS präsentiert“ über der Überschrift (nur DocuWare, wie im Newsletter) */
   siriusPraesentiert?: boolean;
   /** Überschrift über den Terminen, Standard „Live erleben“ */
   termineTitel?: string;
