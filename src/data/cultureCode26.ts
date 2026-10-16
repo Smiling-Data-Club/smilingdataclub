@@ -89,6 +89,7 @@ export const VORTRAEGE: Vortrag[] = [
     titel: "Closing Keynote: KI, Algorithmen und der Mensch dahinter",
     rolle: "Universität Freiburg",
     foto: hannahBast,
+    youtubeUrl: "https://www.youtube.com/watch?v=_mCutMwjE1Y",
   },
   {
     person: "Josef R. Schneider",
