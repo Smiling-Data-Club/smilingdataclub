@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import EventFilmSection from "@/components/EventFilmSection";
-import ComingSoon from "@/components/ComingSoon";
+import { FotoGalerie, OToene } from "@/components/EventGalerie";
+import { GALERIE, O_TOENE } from "@/data/cultureCode26";
 
-// Rückblick auf den Kick-off – Texte von sirius-gmbh.de/smiling-data-club.
-// TODO: Bildergalerie und O-Ton-Videos übernehmen, sobald das SIRIUS-Repo verfügbar ist.
+// Rückblick auf den Kick-off – Texte, Fotos und O-Töne von sirius-gmbh.de/smiling-data-club.
 
 const ABSCHNITTE = [
   {
@@ -53,21 +53,24 @@ const CultureCode26 = () => (
     <Abschnitt {...ABSCHNITTE[0]} />
 
     <section className="sw-section">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <p className="sw-eyebrow mb-3">02 · DER TAG IN BILDERN</p>
         <h2 className="sw-headline text-2xl md:text-3xl mb-8">so hat sich der tag angefühlt</h2>
-        <ComingSoon title="GALERIE FOLGT" text="Die Bilder vom Tag ziehen gerade von der SIRIUS-Seite hierher um." />
+        <FotoGalerie fotos={GALERIE} />
+        <p className="mt-4" style={{ fontFamily: "var(--font-mono-sw)", fontSize: 11, color: "var(--sw-text-4)" }}>
+          Fotos: Golden Cut Media
+        </p>
       </div>
     </section>
 
     <section className="sw-section">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <p className="sw-eyebrow mb-3">03 · IN BEWEGUNG</p>
-        <h2 className="sw-headline text-2xl md:text-3xl mb-8">kurz gesagt.</h2>
-        <ComingSoon
-          title="O-TÖNE FOLGEN"
-          text="Drei O-Töne unserer Gäste vom Tag: Dein Highlight · Culture & Code in einem Wort · Momente des Lächelns."
-        />
+        <h2 className="sw-headline text-2xl md:text-3xl mb-3">kurz gesagt.</h2>
+        <p className="mb-8" style={{ color: "var(--sw-text-2)" }}>
+          Drei O-Töne unserer Gäste vom Tag.
+        </p>
+        <OToene clips={O_TOENE} />
       </div>
     </section>
 

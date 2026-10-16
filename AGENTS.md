@@ -80,8 +80,8 @@ Mobil prüfen (390 px), kein horizontales Scrollen.
 
 ## Offene Punkte (Stand Oktober 2026)
 
-- Bilder und O-Töne von Culture & Code 26 von sirius-gmbh.de übernehmen;
-  dort `/smiling-data-club` per 301 hierher umleiten (SIRIUS-Repo nötig).
+- sirius-gmbh.de (Repo `Smiling-Data-Club/sirius-flow-3dc01161`): `/smiling-data-club`
+  und `/culture-and-code` per 301 auf `/events/culture-and-code-26` umleiten.
 - Eventfilm liegt noch auf einer Lovable-Vorschau-URL
   (`src/components/EventFilmSection.tsx`) – Datei ins Repo holen.
 - Krisen-Simulator, Impressum und Datenschutz auf `PageLayout`/`SiteHeader`
