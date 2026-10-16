@@ -3,7 +3,9 @@ import PageLayout from "@/components/PageLayout";
 import ComingSoon from "@/components/ComingSoon";
 import YouTubeZweiKlick from "@/components/YouTubeZweiKlick";
 import NotFound from "@/pages/NotFound";
+import TerminKarte from "@/components/TerminKarte";
 import { LOESUNGEN } from "@/data/loesungen";
+import { kommendeTermine } from "@/data/termine";
 
 const BOOKING_URL = "https://sirius-gmbh.zohobookings.eu/240927000000441095";
 
@@ -13,6 +15,7 @@ const Loesung = () => {
   if (!loesung) return <NotFound />;
 
   const andere = LOESUNGEN.filter((l) => l.slug !== loesung.slug);
+  const termine = kommendeTermine().filter((t) => t.loesung === loesung.slug);
 
   return (
     <PageLayout title={loesung.title} eyebrow="LÖSUNGEN" headline={loesung.title} lead={loesung.description}>
@@ -29,6 +32,21 @@ const Loesung = () => {
           </p>
         </div>
       </section>
+
+      {termine.length > 0 && (
+        <section className="sw-section">
+          <div className="max-w-3xl mx-auto">
+            <p className="sw-section-title text-center" style={{ marginBottom: 32 }}>
+              LIVE ERLEBEN
+            </p>
+            <div className="flex flex-col gap-5">
+              {termine.map((t) => (
+                <TerminKarte key={`${t.datum}-${t.titel}`} termin={t} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {loesung.testimonials && loesung.testimonials.length > 0 && (
         <section className="sw-section">

@@ -1,17 +1,7 @@
 import PageLayout from "@/components/PageLayout";
 import ComingSoon from "@/components/ComingSoon";
+import TerminKarte from "@/components/TerminKarte";
 import { kommendeTermine } from "@/data/termine";
-
-const formatDatum = (iso: string) =>
-  new Date(iso).toLocaleString("de-DE", {
-    weekday: "long",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Europe/Berlin",
-  });
 
 const Termine = () => {
   const termine = kommendeTermine();
@@ -32,32 +22,7 @@ const Termine = () => {
               cta={{ label: "Join the Club", to: "/#waitlist" }}
             />
           ) : (
-            termine.map((t) => (
-              <article key={`${t.datum}-${t.titel}`} className="sw-card sw-animate-up">
-                <p className="sw-eyebrow mb-2" style={{ fontSize: 11 }}>
-                  {t.art}
-                  {t.ort ? ` · ${t.ort}` : ""}
-                </p>
-                <p className="mb-2" style={{ fontFamily: "var(--font-mono-sw)", fontSize: 13, color: "var(--sw-pink)" }}>
-                  {formatDatum(t.datum)} Uhr
-                </p>
-                <h2 className="text-xl mb-2" style={{ color: "var(--sw-text)" }}>
-                  {t.titel}
-                </h2>
-                {t.beschreibung && <p style={{ color: "var(--sw-text-2)" }}>{t.beschreibung}</p>}
-                {t.anmeldeUrl && (
-                  <a
-                    href={t.anmeldeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="neon-btn inline-block mt-5"
-                    style={{ borderRadius: 10, fontSize: 10 }}
-                  >
-                    Zur Anmeldung
-                  </a>
-                )}
-              </article>
-            ))
+            termine.map((t) => <TerminKarte key={`${t.datum}-${t.titel}`} termin={t} />)
           )}
         </div>
       </section>

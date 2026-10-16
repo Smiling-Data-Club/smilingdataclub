@@ -7,7 +7,8 @@ Kurz halten, bei Änderungen an der Struktur hier nachziehen.
 
 Öffentliche Website des Smiling Data Club (SDC), einer Marke der SIRIUS GmbH
 document solutions, Freiburg. Vite + React + TypeScript, Tailwind, shadcn/ui,
-react-router. Gehostet auf **Netlify** (Domain smiling-data-club.de).
+react-router. Gehostet auf **Netlify**. Hauptdomain: **https://www.smiling-data-club.de**
+(so in Sitemap, Open-Graph-Tags und Canonical).
 Das Repo ist **öffentlich** und an **Lovable** angebunden.
 
 ## Struktur – wo was liegt
@@ -83,7 +84,5 @@ Mobil prüfen (390 px), kein horizontales Scrollen.
 
 ## Offene Punkte (Stand Oktober 2026)
 
-- Domain klären: `index.html` und `public/sitemap.xml` nennen
-  `smiling-data.club`, live läuft `smiling-data-club.de`.
 - Member-Login (`/member`) ist Platzhalter. Echter Login später über den
   SDC-Auth-Hub – bis dahin **kein** Formular mit Passwortfeld.
