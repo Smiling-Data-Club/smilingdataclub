@@ -1,10 +1,9 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-// TODO: Vorschau-URL des SIRIUS-Flow-Projekts. Vor Livegang MP4 in dieses
-// Projekt hochladen und hier auf den lokalen Pfad umstellen.
-const VIDEO_URL =
-  "https://id-preview--dcccc61e-ef91-4ea4-880f-52f0edb86a1c.lovable.app/__l5e/assets-v1/60676312-6677-42c4-8300-9c13cb9bbbbd/aftermovie-ios.mp4";
+// Aftermovie Culture & Code 2026 – liegt in public/videos/ (Netlify-CDN).
+const VIDEO_URL = "/videos/aftermovie.mp4";
+const POSTER_URL = "/videos/aftermovie-poster.jpg";
 
 const FilmLink = ({ to, children }: { to: string; children: React.ReactNode }) => {
   const [hoverLink, setHoverLink] = useState(false);
@@ -102,6 +101,7 @@ const EventFilmSection = ({ showLinks = true }: EventFilmSectionProps) => {
           <video
             ref={videoRef}
             src={VIDEO_URL}
+            poster={POSTER_URL}
             preload="metadata"
             controls={started}
             playsInline
