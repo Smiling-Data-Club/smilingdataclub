@@ -8,8 +8,8 @@ import YouTubeZweiKlick from "@/components/YouTubeZweiKlick";
 import ComingSoon from "@/components/ComingSoon";
 import { GALERIE, INTERVIEWS, O_TOENE, VORTRAEGE } from "@/data/cultureCode26";
 
-// Rückblick auf den Kick-off. Aftermovie bleibt sichtbar, alles andere steckt in
-// aufklappbaren Kacheln, damit die Seite nicht endlos lang wird.
+// Rückblick auf den Kick-off. Aftermovie, Geschichte und Danke sind direkt lesbar,
+// alles Umfangreiche steckt in aufklappbaren Kacheln.
 // Reihenfolge = Reihenfolge im Array KACHELN unten.
 
 const textStyle = { color: "var(--sw-text-2)" } as const;
@@ -73,7 +73,10 @@ const Vortraege = () => (
 
 const Interviews = () =>
   INTERVIEWS.length === 0 ? (
-    <ComingSoon title="INTERVIEWS FOLGEN" text="Die Interviews mit Gästen und Speaker:innen sind im Schnitt und kommen in Kürze hierher." />
+    <ComingSoon
+      title="INTERVIEWS FOLGEN"
+      text="Die Interviews mit Gästen und Speaker:innen sind im Schnitt und kommen in Kürze hierher."
+    />
   ) : (
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {INTERVIEWS.map((i) => (
@@ -100,20 +103,6 @@ interface Kachel {
 }
 
 const KACHELN: Kachel[] = [
-  {
-    id: "geschichte",
-    eyebrow: "DIE GESCHICHTE DAHINTER",
-    titel: "warum es diesen tag gab",
-    info: "1 Min. lesen",
-    inhalt: (
-      <p className="text-lg leading-relaxed max-w-3xl" style={textStyle}>
-        Smiling Data Club ist kein Produkt-Launch und keine Messe. Es ist die Idee, dass man über KI, Führung und die
-        Zukunft der Arbeit auch anders reden kann — persönlich, ehrlich, ohne Bühnennebel. Wir haben Paletten-Möbel
-        selbst gebaut, einen Coffee Bike organisiert und einen Tag lang alles dafür getan, dass sich niemand wie auf
-        einer Konferenz fühlt. Das war kein Zufall. Das war Absicht.
-      </p>
-    ),
-  },
   {
     id: "vortraege",
     eyebrow: "DIE VORTRÄGE",
@@ -171,20 +160,6 @@ const KACHELN: Kachel[] = [
       </p>
     ),
   },
-  {
-    id: "danke",
-    eyebrow: "DANKE",
-    titel: "danke.",
-    info: "",
-    inhalt: (
-      <p className="text-lg leading-relaxed max-w-3xl" style={textStyle}>
-        Dieser Tag hat vor allem unserem kleinen Orga-Team einiges abverlangt — von der ersten Idee bis zum letzten
-        Handgriff. Und es war jede Minute wert. Danke an Betül und Hannah Bast fürs Teilen ihres Wissens, an das ganze
-        Team für den Einsatz vor, während und nach dem Tag, an Sharp für die Technik und an Golden Cut Media für Ton,
-        Bild und Licht. Und an jede und jeden, die/der da war — schön, dass ihr dabei wart.
-      </p>
-    ),
-  },
 ];
 
 const CultureCode26 = () => (
@@ -195,6 +170,19 @@ const CultureCode26 = () => (
     lead="Unser erstes Smiling Data Club Event — und es war genau das, was wir uns erträumt haben."
   >
     <EventFilmSection showLinks={false} />
+
+    <section className="sw-section" style={{ paddingTop: 0 }}>
+      <div className="max-w-3xl mx-auto">
+        <p className="sw-eyebrow mb-3">DIE GESCHICHTE DAHINTER</p>
+        <h2 className="sw-headline text-2xl md:text-3xl mb-6">warum es diesen tag gab</h2>
+        <p className="text-lg leading-relaxed max-w-3xl" style={textStyle}>
+          Smiling Data Club ist kein Produkt-Launch und keine Messe. Es ist die Idee, dass man über KI, Führung und die
+          Zukunft der Arbeit auch anders reden kann — persönlich, ehrlich, ohne Bühnennebel. Wir haben Paletten-Möbel
+          selbst gebaut, einen Coffee Bike organisiert und einen Tag lang alles dafür getan, dass sich niemand wie auf
+          einer Konferenz fühlt. Das war kein Zufall. Das war Absicht.
+        </p>
+      </div>
+    </section>
 
     <section className="sw-section" style={{ paddingTop: 0 }}>
       <AccordionPrimitive.Root type="multiple" className="max-w-5xl mx-auto flex flex-col gap-4">
@@ -231,6 +219,19 @@ const CultureCode26 = () => (
       </AccordionPrimitive.Root>
     </section>
 
+    <section className="sw-section" style={{ paddingBottom: 0 }}>
+      <div className="max-w-3xl mx-auto">
+        <p className="sw-eyebrow mb-3">DANKE</p>
+        <h2 className="sw-headline text-2xl md:text-3xl mb-6">danke.</h2>
+        <p className="text-lg leading-relaxed max-w-3xl" style={textStyle}>
+          Dieser Tag hat vor allem unserem kleinen Orga-Team einiges abverlangt — von der ersten Idee bis zum letzten
+          Handgriff. Und es war jede Minute wert. Danke an Betül und Hannah Bast fürs Teilen ihres Wissens, an das ganze
+          Team für den Einsatz vor, während und nach dem Tag, an Sharp für die Technik und an Golden Cut Media für Ton,
+          Bild und Licht. Und an jede und jeden, die/der da war — schön, dass ihr dabei wart.
+        </p>
+      </div>
+    </section>
+
     <section className="sw-section">
       <div className="max-w-3xl mx-auto text-center sw-card-feature">
         <p className="sw-eyebrow mb-3">WAS KOMMT ALS NÄCHSTES</p>
@@ -238,7 +239,11 @@ const CultureCode26 = () => (
         <p className="leading-relaxed mb-8" style={textStyle}>
           Culture & Code war kein einmaliges Ding. Die nächste Ausgabe ist für Ende September 2027 geplant.
         </p>
-        <Link to="/events/culture-and-code-27" className="neon-btn inline-block" style={{ borderRadius: 10, fontSize: 11 }}>
+        <Link
+          to="/events/culture-and-code-27"
+          className="neon-btn inline-block"
+          style={{ borderRadius: 10, fontSize: 11 }}
+        >
           Culture &amp; Code 27 vormerken
         </Link>
       </div>
