@@ -1,20 +1,13 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import SiteHeader from "@/components/SiteHeader";
 import FooterSection from "@/components/FooterSection";
 
 const Datenschutz = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-3xl mx-auto px-6 py-12">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8 font-mono text-sm"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Zurück
-        </Link>
+      <SiteHeader />
+      <div className="max-w-3xl mx-auto px-6 pt-28 pb-12">
 
-        <h1 className="text-3xl md:text-4xl font-bold mb-10 font-['Press_Start_2P'] text-primary leading-relaxed">
+        <h1 className="text-base sm:text-3xl md:text-4xl break-words font-bold mb-10 font-['Press_Start_2P'] text-primary leading-relaxed">
           Datenschutzerklärung
         </h1>
 

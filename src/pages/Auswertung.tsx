@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import FooterSection from "@/components/FooterSection";
+import SiteHeader from "@/components/SiteHeader";
 import { AUSWERTUNG_CONTENT, riskKeyFromLabel } from "@/data/auswertung-content";
 import { QUICK_WINS } from "@/data/quick-wins";
 
@@ -195,11 +196,8 @@ const Auswertung = () => {
     return (
       <div className="min-h-screen scanlines relative">
         <div className="absolute inset-0 synthwave-grid pointer-events-none" />
-        <nav className="relative z-20 flex items-center justify-between px-6 py-4">
-          <Link to="/" className="font-pixel text-[10px] text-primary hover:text-glow-cyan transition-all">
-            ← SMILING DATA CLUB
-          </Link>
-        </nav>
+        <SiteHeader />
+        <div className="h-16" aria-hidden />
         <main className="relative z-10 min-h-[70vh] flex flex-col items-center justify-center text-center px-6">
           <h1 className="font-pixel text-2xl md:text-4xl text-secondary text-glow-pink mb-6 leading-relaxed">
             KEINE AUSWERTUNG GEFUNDEN
@@ -230,11 +228,8 @@ const Auswertung = () => {
     <div className="min-h-screen scanlines relative">
       <div className="absolute inset-0 synthwave-grid pointer-events-none" />
 
-      <nav className="relative z-20 flex items-center justify-between px-6 py-4">
-        <Link to="/" className="font-pixel text-[10px] text-primary hover:text-glow-cyan transition-all">
-          ← SMILING DATA CLUB
-        </Link>
-      </nav>
+      <SiteHeader />
+      <div className="h-16" aria-hidden />
 
       <main className={`relative z-10 transition-opacity duration-500 ${fadeIn ? "opacity-100" : "opacity-0"}`}>
         {/* ════════ HERO ════════ */}
