@@ -10,7 +10,7 @@ const FooterSection = () => {
       }}
     >
       <p className="text-xs" style={{ color: "var(--sw-text-3)" }}>
-        A <span style={{ color: "var(--sw-text-2)" }}>Sirius GmbH</span> brand
+        A <span style={{ color: "var(--sw-text-2)" }}>SIRIUS GmbH</span> brand
       </p>
       <div className="flex items-center justify-center gap-4 mt-3">
         <Link

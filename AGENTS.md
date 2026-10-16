@@ -67,6 +67,12 @@ in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
   Datenschutzerklärung (`src/pages/Datenschutz.tsx`) das abdeckt.
 - Netlify-Functions-Region: Frankfurt (eu-central-1).
 
+## Schreibweise
+
+- **SIRIUS** immer in Großbuchstaben (SIRIUS GmbH, SIRIUS-Blog) – nie „Sirius“.
+  Ausnahme: Domains wie `sirius-gmbh.de`.
+- Auf der Seite wird geduzt.
+
 ## Design
 
 Synthwave-/Pixel-Stil wie bestehend. Vorhandene Klassen und Farben nutzen
