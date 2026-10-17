@@ -30,6 +30,7 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Culture & Code 26 (Fotos, Clips, Vorträge, Interviews) | `src/data/cultureCode26.ts` |
 | Server-Funktionen | `netlify/functions/` |
 | Aftermovie Culture & Code (Video + Vorschaubild) | `public/videos/` |
+| SVG-Morph-Animation (GSAP, per npm – nie per CDN) | `src/components/MorphShape.tsx`, Formen in `src/data/morphShapes.ts` |
 
 **Startseite** – Reihenfolge bleibt: Hero → „Was wir machen“ (Kacheln) →
 Culture & Code (Film) → Code-Block → Join the Club → Pong (Bonus Level, ganz unten).
