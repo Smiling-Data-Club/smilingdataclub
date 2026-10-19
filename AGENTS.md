@@ -79,7 +79,8 @@ in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
 
 - **SIRIUS** immer in Großbuchstaben (SIRIUS GmbH, SIRIUS-Blog) – nie „Sirius“.
   Ausnahme: Domains wie `sirius-gmbh.de`.
-- Auf der Seite wird geduzt.
+- Auf der Seite wird geduzt. Ausnahme: der Angebots-Check (`/check`) siezt bewusst –
+  so lassen (Entscheidung Marketing, Oktober 2026).
 
 ## Design
 
