@@ -458,6 +458,11 @@
     padding-right: 24px;
   }
 
+  /* Zwei Abschnitte direkt untereinander: nur ein Abstand, nicht doppelt */
+  .sw-section + .sw-section {
+    padding-top: 0;
+  }
+
   .sw-card {
     border: 1px solid hsl(var(--neon-cyan) / 0.45);
     border-radius: 10px;

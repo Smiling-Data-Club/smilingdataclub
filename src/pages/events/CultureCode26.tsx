@@ -220,7 +220,7 @@ const CultureCode26 = () => (
       </AccordionPrimitive.Root>
     </section>
 
-    <section className="sw-section" style={{ paddingBottom: 0 }}>
+    <section className="sw-section">
       <div className="max-w-3xl mx-auto">
         <SectionTitle>DANKE</SectionTitle>
         <p className="text-lg leading-relaxed max-w-3xl" style={textStyle}>

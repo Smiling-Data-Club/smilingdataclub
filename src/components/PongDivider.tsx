@@ -103,8 +103,10 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
     const step = () => {
       const b = state.ball;
       const rightX = width - LEFT_X - PADDLE_W;
-      b.x += b.vx;
-      b.y += b.vy;
+      // Sobald jemand mitspielt (Maus im Feld), läuft der Ball doppelt so schnell
+      const tempo = mouseY.current !== null ? 2 : 1;
+      b.x += b.vx * tempo;
+      b.y += b.vy * tempo;
       if (b.y <= 0) {
         b.y = 0;
         b.vy *= -1;
@@ -157,8 +159,8 @@ const PongDivider = ({ onScore }: PongDividerProps) => {
 
       const leftTarget = target;
       const rightTarget = playerActive && my !== null ? my - paddleH / 2 : target;
-      const leftLerp = 0.05;
-      const rightLerp = playerActive ? 0.15 : 0.05;
+      const leftLerp = playerActive ? 0.09 : 0.05;
+      const rightLerp = playerActive ? 0.22 : 0.05;
 
       state.left += (leftTarget - state.left) * leftLerp;
       state.right += (rightTarget - state.right) * rightLerp;
