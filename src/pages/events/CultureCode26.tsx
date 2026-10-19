@@ -78,10 +78,10 @@ const Interviews = () =>
       text="Die Interviews mit Gästen und Speaker:innen sind im Schnitt und kommen in Kürze hierher."
     />
   ) : (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
       {INTERVIEWS.map((i) => (
         <figure key={i.youtubeId} className="sw-card flex flex-col gap-3" style={{ padding: 14 }}>
-          <YouTubeZweiKlick videoId={i.youtubeId} title={`Interview: ${i.name}`} />
+          <YouTubeZweiKlick videoId={i.youtubeId} title={`Interview: ${i.name}`} hochkant={!i.querformat} />
           <figcaption>
             <p className="font-pixel text-[10px] leading-relaxed" style={{ color: "var(--sw-text)" }}>
               {i.name}
