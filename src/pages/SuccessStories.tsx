@@ -5,6 +5,12 @@ import SectionTitle from "@/components/SectionTitle";
 import TestimonialKarte from "@/components/TestimonialKarte";
 import { LOESUNGEN } from "@/data/loesungen";
 
+const MehrLink = ({ slug, title }: { slug: string; title: string }) => (
+  <Link to={`/loesungen/${slug}`} style={{ fontFamily: "var(--font-mono-sw)", fontSize: 13, color: "var(--sw-cyan)" }}>
+    Mehr zu {title} →
+  </Link>
+);
+
 const BOOKING_URL = "https://sirius-gmbh.zohobookings.eu/240927000000441095";
 
 // Sammelt die Kundenstimmen aller Lösungen. Neue Stimmen: bei der passenden
@@ -33,24 +39,21 @@ const SuccessStories = () => {
                 <TestimonialKarte key={t.youtubeId} t={t} />
               ))}
             </div>
-            {l.useCases?.partner && (
+            {l.useCases?.partner ? (
               <div className="sw-card-purple max-w-3xl mx-auto mt-10 sw-animate-up">
                 <p className="sw-eyebrow mb-3" style={{ fontSize: 11 }}>
                   {l.useCases.partner.titel}
                 </p>
-                <p className="leading-relaxed" style={{ color: "var(--sw-text-2)" }}>
+                <p className="leading-relaxed mb-4" style={{ color: "var(--sw-text-2)" }}>
                   {l.useCases.partner.text}
                 </p>
+                <MehrLink slug={l.slug} title={l.title} />
               </div>
+            ) : (
+              <p className="text-center mt-8">
+                <MehrLink slug={l.slug} title={l.title} />
+              </p>
             )}
-            <p className="text-center mt-6">
-              <Link
-                to={`/loesungen/${l.slug}`}
-                style={{ fontFamily: "var(--font-mono-sw)", fontSize: 13, color: "var(--sw-cyan)" }}
-              >
-                Mehr zu {l.title} →
-              </Link>
-            </p>
           </div>
         </section>
       ))}

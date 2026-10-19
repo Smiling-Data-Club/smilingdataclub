@@ -8,6 +8,8 @@ interface WaitlistSectionProps {
   title?: string;
   lead?: string;
   buttonLabel?: string;
+  /** Kleiner Hinweis direkt unter dem Formular (z. B. Datenschutz) */
+  hinweis?: React.ReactNode;
 }
 
 const WaitlistSection = ({
@@ -16,6 +18,7 @@ const WaitlistSection = ({
   title = "JOIN THE CLUB",
   lead = "Newsletter, Event-Einladungen und exklusive Inhalte zu KI und Automatisierung.",
   buttonLabel = "Jetzt beitreten",
+  hinweis,
 }: WaitlistSectionProps) => {
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
@@ -111,6 +114,11 @@ const WaitlistSection = ({
             {isSubmitting ? "Wird gesendet..." : buttonLabel}
           </button>
         </form>
+        {hinweis && (
+          <p className="mt-6" style={{ fontFamily: "var(--font-mono-sw)", fontSize: 12, color: "var(--sw-text-4)" }}>
+            {hinweis}
+          </p>
+        )}
       </div>
     </section>
   );

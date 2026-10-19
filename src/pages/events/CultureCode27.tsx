@@ -29,20 +29,18 @@ const CultureCode27 = () => (
       title="JETZT VORMERKEN"
       lead="Trag dich ein – dann erfährst du als Erste:r vom Datum und bekommst deine Einladung."
       buttonLabel="Vormerken"
+      hinweis={
+        <>
+          Wir verwenden deine Adresse, um dich über kommende Smiling Data Club Events und Neuigkeiten aus dem Club zu
+          informieren. Du bekommst zuerst eine Bestätigungsmail – erst nach deinem Klick bist du eingetragen. Abmeldung
+          jederzeit möglich. Mehr dazu in unserer{" "}
+          <a href="/datenschutz" className="underline">
+            Datenschutzerklärung
+          </a>
+          .
+        </>
+      }
     />
-
-    <p
-      className="max-w-xl mx-auto px-6 pb-16 text-center"
-      style={{ fontFamily: "var(--font-mono-sw)", fontSize: 12, color: "var(--sw-text-4)" }}
-    >
-      Wir verwenden deine Adresse, um dich über kommende Smiling Data Club Events und Neuigkeiten aus dem Club zu
-      informieren. Du bekommst zuerst eine Bestätigungsmail – erst nach deinem Klick bist du eingetragen. Abmeldung
-      jederzeit möglich. Mehr dazu in unserer{" "}
-      <a href="/datenschutz" className="underline">
-        Datenschutzerklärung
-      </a>
-      .
-    </p>
   </PageLayout>
 );
 
