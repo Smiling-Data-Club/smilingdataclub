@@ -1,24 +1,27 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import PageLayout from "@/components/PageLayout";
 
-const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
-        </a>
+const NotFound = () => (
+  <PageLayout
+    title="Seite nicht gefunden"
+    eyebrow="404 · GAME OVER"
+    headline="diese seite gibt es nicht."
+    lead="Vielleicht hat sich ein Pixel verschoben. Hier geht es weiter:"
+  >
+    <section className="sw-section" style={{ paddingTop: 0 }}>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <Link to="/" className="neon-btn inline-block" style={{ borderRadius: 10, fontSize: 11 }}>
+          Zur Startseite
+        </Link>
+        <Link
+          to="/loesungen/use-cases"
+          style={{ fontFamily: "var(--font-mono-sw)", fontSize: 14, color: "var(--sw-cyan)" }}
+        >
+          Was unsere Kunden sagen →
+        </Link>
       </div>
-    </div>
-  );
-};
+    </section>
+  </PageLayout>
+);
 
 export default NotFound;
