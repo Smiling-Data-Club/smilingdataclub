@@ -7,7 +7,7 @@ const Member = () => (
   <PageLayout
     title="Member-Bereich"
     eyebrow="MEMBERS ONLY"
-    headline="der member-bereich kommt."
+    headline="Der Member-Bereich kommt."
     lead="Exklusive Inhalte für Club-Mitglieder: Anleitungen, Vorlagen und Know-how rund um KI und Automatisierung."
   >
     <section className="sw-section" style={{ paddingTop: 0 }}>

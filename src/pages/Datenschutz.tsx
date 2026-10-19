@@ -2,7 +2,7 @@ import PageLayout from "@/components/PageLayout";
 
 const Datenschutz = () => {
   return (
-    <PageLayout title="Datenschutz" eyebrow="RECHTLICHES" headline="datenschutzerklärung">
+    <PageLayout title="Datenschutz" eyebrow="RECHTLICHES" headline="Datenschutzerklärung">
       <section className="sw-section" style={{ paddingTop: 0 }}>
         <div className="max-w-3xl mx-auto">
           <div className="space-y-8 text-foreground/90 text-sm leading-relaxed">

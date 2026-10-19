@@ -43,7 +43,7 @@ const AboutSection = ({ hideIntro = false }: AboutSectionProps) => {
           {cards.map((card, i) => (
             <div
               key={card.title}
-              className={`${card.cardClass} sw-animate-up transition-transform duration-300 hover:-translate-y-2`}
+              className={`${card.cardClass} text-left sw-animate-up transition-transform duration-300 hover:-translate-y-2`}
               style={{ animationDelay: `${i * 0.1}s` }}
             >
               <h3 className="font-pixel text-xs mb-3" style={{ color: "var(--sw-text)" }}>

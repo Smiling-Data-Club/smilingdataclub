@@ -6,13 +6,13 @@ const UeberUns = () => (
   <PageLayout
     title="Über den Club"
     eyebrow="ÜBER UNS"
-    headline="technik soll dem menschen nutzen — nicht umgekehrt."
+    headline="Technik soll dem Menschen nutzen – nicht umgekehrt."
     lead="Wir glauben an Systeme, die lächeln machen. An Prozesse, die fließen. An Daten, die Sinn ergeben."
   >
     <AboutSection hideIntro />
 
     <section className="sw-section">
-      <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-6">
+      <div className="max-w-5xl mx-auto grid sm:grid-cols-2 gap-6">
         <Link to="/ueber-uns/team" className="sw-card-pink transition-transform duration-300 hover:-translate-y-1">
           <p className="font-pixel text-xs mb-3" style={{ color: "var(--sw-text)" }}>
             Das Team

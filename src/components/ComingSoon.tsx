@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import MorphShape from "@/components/MorphShape";
-import { MORPH_SHAPES } from "@/data/morphShapes";
 
 interface ComingSoonProps {
   title?: string;
@@ -11,7 +9,6 @@ interface ComingSoonProps {
 // Platzhalter-Block im SDC-Stil für Inhalte, die noch folgen.
 const ComingSoon = ({ title = "COMING SOON", text, cta }: ComingSoonProps) => (
   <div className="sw-card-feature text-center max-w-2xl mx-auto sw-animate-up">
-    <MorphShape from={MORPH_SHAPES.dokument} to={MORPH_SHAPES.blitz} className="w-12 h-12 md:w-14 md:h-14 mx-auto mb-5" />
     <p className="font-pixel text-xs md:text-sm mb-4" style={{ color: "var(--sw-pink)", letterSpacing: ".14em" }}>
       {title}
       <span className="neon-flicker" aria-hidden>

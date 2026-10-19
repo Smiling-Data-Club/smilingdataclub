@@ -4,6 +4,7 @@ import PageLayout from "@/components/PageLayout";
 import TestimonialKarte from "@/components/TestimonialKarte";
 import NotFound from "@/pages/NotFound";
 import TerminKarte from "@/components/TerminKarte";
+import SectionTitle from "@/components/SectionTitle";
 import { LOESUNGEN, USE_CASES_KACHEL, type Weiterlesen } from "@/data/loesungen";
 import { kommendeTermine } from "@/data/termine";
 
@@ -15,12 +16,6 @@ const SCHRITTE = [
   { titel: "Erster Baustein", text: "Wir setzen etwas Kleines, Konkretes um, das schnell im Alltag läuft." },
   { titel: "Ausbauen", text: "Erst wenn das funktioniert, kommt das Nächste – in eurem Tempo." },
 ];
-
-const SectionTitle = ({ children, color = "var(--sw-cyan)" }: { children: React.ReactNode; color?: string }) => (
-  <p className="sw-section-title text-center" style={{ marginBottom: 32, color }}>
-    {children}
-  </p>
-);
 
 const WeiterlesenLink = ({ w }: { w: Weiterlesen }) => {
   const extern = w.url.startsWith("http");
@@ -111,7 +106,7 @@ const Loesung = () => {
       {loesung.kennstDuDas && loesung.kennstDuDas.length > 0 && (
         <section className="sw-section">
           <div className="max-w-3xl mx-auto">
-            <SectionTitle color="var(--sw-pink)">KENNST DU DAS?</SectionTitle>
+            <SectionTitle>KENNST DU DAS?</SectionTitle>
             <ul className="flex flex-col gap-3" style={{ listStyle: "none", padding: 0 }}>
               {loesung.kennstDuDas.map((k) => (
                 <li key={k} className="sw-card-pink flex gap-4 items-start" style={{ padding: "16px 20px" }}>
@@ -159,7 +154,7 @@ const Loesung = () => {
 
       {loesung.testimonials && loesung.testimonials.length > 0 && (
         <section className="sw-section">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <SectionTitle>SUCCESS STORIES</SectionTitle>
             <div className="grid md:grid-cols-3 gap-6">
               {loesung.testimonials.map((t) => (
@@ -173,7 +168,7 @@ const Loesung = () => {
       {loesung.weiterlesen && loesung.weiterlesen.length > 0 && (
         <section className="sw-section">
           <div className="max-w-3xl mx-auto">
-            <SectionTitle color="var(--sw-purple)">WEITERLESEN</SectionTitle>
+            <SectionTitle>WEITERLESEN</SectionTitle>
             <div className="flex flex-col gap-3">
               {loesung.weiterlesen.map((w) => (
                 <WeiterlesenLink key={w.url} w={w} />
@@ -215,7 +210,7 @@ const Loesung = () => {
 
       <section className="sw-section">
         <div className="max-w-5xl mx-auto">
-          <p className="sw-eyebrow text-center mb-8">Weitere Lösungen</p>
+          <SectionTitle>WEITERE LÖSUNGEN</SectionTitle>
           <div className="grid sm:grid-cols-3 gap-5">
             {andere.map((l) => (
               <Link

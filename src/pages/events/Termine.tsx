@@ -10,7 +10,7 @@ const Termine = () => {
     <PageLayout
       title="Webinare & Termine"
       eyebrow="EVENTS"
-      headline="webinare & termine"
+      headline="Webinare & Termine"
       lead="Wo du uns als Nächstes live erlebst – online oder vor Ort."
     >
       <section className="sw-section" style={{ paddingTop: 0 }}>

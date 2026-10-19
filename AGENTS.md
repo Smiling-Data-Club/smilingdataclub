@@ -30,7 +30,8 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Culture & Code 26 (Fotos, Clips, Vorträge, Interviews) | `src/data/cultureCode26.ts` |
 | Server-Funktionen | `netlify/functions/` |
 | Aftermovie Culture & Code (Video + Vorschaubild) | `public/videos/` |
-| SVG-Morph-Animation (GSAP, per npm – nie per CDN) | `src/components/MorphShape.tsx`, Formen in `src/data/morphShapes.ts` |
+| SVG-Morph-Animation (GSAP, per npm – nie per CDN; derzeit nicht eingebunden) | `src/components/MorphShape.tsx`, Formen in `src/data/morphShapes.ts` |
+| Abschnittsüberschrift (Pixel, Cyan) | `src/components/SectionTitle.tsx` |
 
 **Startseite** – Reihenfolge bleibt: Hero → „Was wir machen“ (Kacheln) →
 Culture & Code (Film) → Code-Block → Join the Club → Pong (Bonus Level, ganz unten).
@@ -79,7 +80,9 @@ in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
 
 ## Design
 
-Synthwave-/Pixel-Stil wie bestehend. Vorhandene Klassen und Farben nutzen
+Synthwave-/Pixel-Stil wie bestehend. Einheitlich: Seitenkopf über `PageLayout`,
+Abschnitte mit `SectionTitle`, Überschriften in normaler Groß-/Kleinschreibung,
+keine Icons/Emojis in Kacheln, Breiten nur `max-w-3xl` (Text) und `max-w-5xl` (Raster). Vorhandene Klassen und Farben nutzen
 (`sw-section`, `sw-card`, `sw-card-pink`, `sw-card-purple`, `sw-card-feature`,
 `sw-section-title`, `sw-headline`, `sw-lead`, `sw-eyebrow`, `neon-btn`;
 Farben `--sw-*` in `src/index.css`). Keine neuen Farben oder Schriften ohne
