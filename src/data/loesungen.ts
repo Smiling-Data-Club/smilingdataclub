@@ -1,9 +1,17 @@
+import vorschauTannenhof from "@/assets/testimonials/tannenhof-todtnau.jpg";
+import vorschauGessler from "@/assets/testimonials/gessler-collection.jpg";
+import vorschauBelle from "@/assets/testimonials/belle-ag.jpg";
+
 export interface Testimonial {
   quote: string;
   person: string;
   role: string;
   company: string;
+  /** Kurzname für die Zeile „Success Story · …“ */
+  story: string;
   youtubeId: string;
+  /** Standbild aus dem Video, lokal abgelegt (nie direkt von img.youtube.com laden) */
+  vorschau?: string;
 }
 
 export interface Leistung {
@@ -38,33 +46,41 @@ export interface Loesung {
   siriusPraesentiert?: boolean;
   /** Überschrift über den Terminen, Standard „Live erleben“ */
   termineTitel?: string;
+  /** Zusatztext auf der Seite „Use Cases“ (übernommen von der alten Testimonial-Landingpage) */
+  useCases?: { intro: string; partner?: { titel: string; text: string } };
 }
 
 const SIRIUS_BLOG = "https://www.sirius-gmbh.de/blog";
 
 // Video-Testimonials von sales.sirius-gmbh.de/testimonials – alle zu DocuWare.
-// TODO: Freigabe der drei Personen für die Nutzung unter der Marke SDC prüfen.
+// Vorschaubilder: einmalig aus dem Video übernommen, liegen unter src/assets/testimonials/.
 const DOCUWARE_TESTIMONIALS: Testimonial[] = [
   {
     quote: "DocuWare hat uns wirklich den Rücken freigehalten.",
     person: "Bastian Rudigier",
     role: "QMB",
     company: "Deutscher Arbeitskreis für Familienhilfe e.V. (Tannenhof Todtnau)",
+    story: "Tannenhof Todtnau",
     youtubeId: "HB3e8Xly6BM",
+    vorschau: vorschauTannenhof,
   },
   {
     quote: "Wir sparen jeden Tag wertvolle Zeit.",
     person: "Johannes Gessler",
     role: "Geschäftsführer",
     company: "Gessler Collection",
+    story: "Gessler Collection",
     youtubeId: "5CFvvNQnBC4",
+    vorschau: vorschauGessler,
   },
   {
     quote: "DocuWare hat unseren Arbeitsalltag deutlich vereinfacht.",
     person: "Aline Hernandez",
     role: "Kaufmännische Geschäftsleitung",
     company: "BELLE AG",
+    story: "BELLE AG",
     youtubeId: "z7m9qV7ZceU",
+    vorschau: vorschauBelle,
   },
 ];
 
@@ -143,6 +159,14 @@ export const LOESUNGEN: Loesung[] = [
     ],
     fakten: ["DocuWare Gold Partner", "DocuWare Customer Service Champion 2026"],
     siriusPraesentiert: true,
+    useCases: {
+      intro:
+        "Die digitale Transformation geht weiter. SIRIUS hilft deinem Unternehmen, Schritt zu halten – und bringt deine Dokumentenverwaltung in die Cloud. Drei Kunden erzählen, was sich bei ihnen verändert hat.",
+      partner: {
+        titel: "SIRIUS × DocuWare",
+        text: "Als zertifizierter DocuWare Gold Partner und ausgezeichneter Customer Service Champion 2026 zählt SIRIUS mit zahlreichen Projekten zu den erfolgreichsten Partnern der Branche. Für dich heißt das: Profis, die dich gut betreuen und deine Digitalisierungsprojekte schnell und erfolgreich umsetzen.",
+      },
+    },
     termineTitel: "Webinar-Reihe",
     testimonials: DOCUWARE_TESTIMONIALS,
     weiterlesen: [

@@ -23,11 +23,26 @@ const UseCases = () => {
         <section key={l.slug} className="sw-section" style={{ paddingTop: 0 }}>
           <div className="max-w-5xl mx-auto">
             <SectionTitle>{l.title.toUpperCase()}</SectionTitle>
+            {l.useCases?.intro && (
+              <p className="text-lg leading-relaxed text-center max-w-3xl mx-auto mb-10" style={{ color: "var(--sw-text-2)" }}>
+                {l.useCases.intro}
+              </p>
+            )}
             <div className="grid md:grid-cols-3 gap-6">
               {l.testimonials!.map((t) => (
                 <TestimonialKarte key={t.youtubeId} t={t} />
               ))}
             </div>
+            {l.useCases?.partner && (
+              <div className="sw-card-purple max-w-3xl mx-auto mt-10 sw-animate-up">
+                <p className="sw-eyebrow mb-3" style={{ fontSize: 11 }}>
+                  {l.useCases.partner.titel}
+                </p>
+                <p className="leading-relaxed" style={{ color: "var(--sw-text-2)" }}>
+                  {l.useCases.partner.text}
+                </p>
+              </div>
+            )}
             <p className="text-center mt-6">
               <Link
                 to={`/loesungen/${l.slug}`}
