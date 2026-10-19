@@ -99,13 +99,18 @@ export const VORTRAEGE: Vortrag[] = [
   },
 ];
 
-// Interviews – YouTube-Video-ID eintragen (der Teil nach „watch?v=“ bzw. „youtu.be/“).
+// Interviews – YouTube-Video-ID eintragen: der Teil nach „watch?v=“, „youtu.be/“
+// oder bei Shorts nach „shorts/“. Shorts sind hochkant und werden auch so gezeigt.
 // Wird per Zwei-Klick eingebettet: YouTube lädt erst nach Klick.
 // Beispiel: { name: "Vorname Nachname", rolle: "Firma", youtubeId: "abc123XYZ" },
 export interface Interview {
   name: string;
   rolle?: string;
   youtubeId: string;
+  /** Querformat-Video statt Short (Standard: Short, hochkant) */
+  querformat?: boolean;
 }
 
-export const INTERVIEWS: Interview[] = [];
+export const INTERVIEWS: Interview[] = [
+  { name: "Fabian Schüler", rolle: "Geschäftsführer, SIRIUS GmbH", youtubeId: "NT5uYYdReM4" },
+];
