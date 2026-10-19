@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,7 +10,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Game from "./pages/Game.tsx";
 import Auswertung from "./pages/Auswertung.tsx";
 import Loesung from "./pages/loesungen/Loesung.tsx";
-import UseCases from "./pages/loesungen/UseCases.tsx";
+import SuccessStories from "./pages/SuccessStories.tsx";
 import CultureCode26 from "./pages/events/CultureCode26.tsx";
 import CultureCode27 from "./pages/events/CultureCode27.tsx";
 import Termine from "./pages/events/Termine.tsx";
@@ -37,7 +37,9 @@ const App = () => (
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/game" element={<Game />} />
           <Route path="/game/auswertung" element={<Auswertung />} />
-          <Route path="/loesungen/use-cases" element={<UseCases />} />
+          <Route path="/success-stories" element={<SuccessStories />} />
+          {/* Alte Adresse (bis Oktober 2026); auf Netlify zusätzlich 301 in public/_redirects */}
+          <Route path="/loesungen/use-cases" element={<Navigate to="/success-stories" replace />} />
           <Route path="/loesungen/:slug" element={<Loesung />} />
           <Route path="/events/culture-and-code-26" element={<CultureCode26 />} />
           <Route path="/events/culture-and-code-27" element={<CultureCode27 />} />

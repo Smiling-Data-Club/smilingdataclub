@@ -1,7 +1,7 @@
 import YouTubeZweiKlick from "@/components/YouTubeZweiKlick";
 import type { Testimonial } from "@/data/loesungen";
 
-// Video-Testimonial mit Zitat – genutzt auf den Lösungsseiten und unter Use Cases.
+// Video-Testimonial mit Zitat – genutzt auf den Lösungsseiten und unter Success Stories.
 const TestimonialKarte = ({ t }: { t: Testimonial }) => (
   <figure className="sw-card sw-animate-up flex flex-col gap-4" style={{ padding: 18 }}>
     <YouTubeZweiKlick videoId={t.youtubeId} title={`${t.company} – ${t.person}`} vorschau={t.vorschau} />

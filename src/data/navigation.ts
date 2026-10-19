@@ -12,6 +12,8 @@ export interface NavItem {
 export interface NavGroup {
   label: string;
   items: NavItem[];
+  /** Direkter Link ohne Dropdown (dann bleibt `items` leer) */
+  to?: string;
 }
 
 export const NAVIGATION: NavGroup[] = [
@@ -21,9 +23,9 @@ export const NAVIGATION: NavGroup[] = [
       { label: "Zoho One", to: "/loesungen/zoho", hint: "Betriebssystem für dein Business" },
       { label: "DocuWare", to: "/loesungen/docuware", hint: "Dokumentenmanagement, das mitwächst" },
       { label: "AI", to: "/loesungen/ai", hint: "App Building nach Maß" },
-      { label: "Use Cases", to: "/loesungen/use-cases", hint: "Was unsere Kunden sagen" },
     ],
   },
+  { label: "Success Stories", to: "/success-stories", items: [] },
   {
     label: "Tools",
     items: [

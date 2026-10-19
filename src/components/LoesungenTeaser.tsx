@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import SectionTitle from "@/components/SectionTitle";
-import { LOESUNGEN, USE_CASES_KACHEL } from "@/data/loesungen";
+import { LOESUNGEN, SUCCESS_STORIES_KACHEL } from "@/data/loesungen";
 
 const KACHELN = [
   ...LOESUNGEN.map((l) => ({ ...l, to: `/loesungen/${l.slug}` })),
-  USE_CASES_KACHEL,
+  SUCCESS_STORIES_KACHEL,
 ];
 
 // Startseite: schmaler Streifen „Was wir machen“ – Details auf /loesungen/…

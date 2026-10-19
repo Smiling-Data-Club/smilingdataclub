@@ -14,7 +14,7 @@ const NotFound = () => (
           Zur Startseite
         </Link>
         <Link
-          to="/loesungen/use-cases"
+          to="/success-stories"
           style={{ fontFamily: "var(--font-mono-sw)", fontSize: 14, color: "var(--sw-cyan)" }}
         >
           Was unsere Kunden sagen →

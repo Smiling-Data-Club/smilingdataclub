@@ -5,7 +5,7 @@ import TestimonialKarte from "@/components/TestimonialKarte";
 import NotFound from "@/pages/NotFound";
 import TerminKarte from "@/components/TerminKarte";
 import SectionTitle from "@/components/SectionTitle";
-import { LOESUNGEN, USE_CASES_KACHEL, type Weiterlesen } from "@/data/loesungen";
+import { LOESUNGEN, SUCCESS_STORIES_KACHEL, type Weiterlesen } from "@/data/loesungen";
 import { kommendeTermine } from "@/data/termine";
 
 const BOOKING_URL = "https://sirius-gmbh.zohobookings.eu/240927000000441095";
@@ -64,7 +64,7 @@ const Loesung = () => {
       description: l.description,
       cardClass: l.cardClass,
     })),
-    USE_CASES_KACHEL,
+    SUCCESS_STORIES_KACHEL,
   ];
   const termine = kommendeTermine().filter((t) => t.loesung === loesung.slug);
 
