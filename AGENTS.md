@@ -25,7 +25,9 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Header mit Dropdowns und Handy-Menü | `src/components/SiteHeader.tsx` |
 | Platzhalter „Coming soon“ | `src/components/ComingSoon.tsx` |
 | Startseite | `src/pages/Index.tsx` |
-| Angebots-Check | `public/check/` – eigenständige HTML-Seite, **nicht** Teil der React-App |
+| Angebots-Check | `public/check/` – eigenständige HTML-Seite, **nicht** Teil der React-App (wegen eigener Vorschau für LinkedIn). Kopf, Fuß, Farben und Schriften sind dort von Hand nachgebaut – bei Änderungen am Menü mitziehen |
+| Schriften (selbst gehostet, keine Google Fonts) | `public/fonts/` mit `fonts.css`, eingebunden in `index.html` und `public/check/` |
+| Seitenkopf (kleine Zeile, Überschrift, Untertitel) | `src/components/PageHead.tsx` (auch im Krisen-Simulator) |
 | Krisen-Simulator | `src/pages/Game.tsx`, Auswertung `src/pages/Auswertung.tsx` |
 | Culture & Code 26 (Fotos, Clips, Vorträge, Interviews) | `src/data/cultureCode26.ts` |
 | Server-Funktionen | `netlify/functions/` |
@@ -63,6 +65,7 @@ in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
 
 - Keine Personendaten und keine Request-Bodies ins Log – nur Status und
   Fehlerklasse.
+- Schriften nur selbst gehostet (`public/fonts/`), nie über Google Fonts.
 - YouTube/Vimeo erst nach Klick laden (`src/components/YouTubeZweiKlick.tsx`),
   keine Vorschaubilder von `img.youtube.com`, kein direktes `<iframe>`.
 - Neue Formulare, Tracking oder externe Dienste: vorher klären, ob die
@@ -76,7 +79,8 @@ in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
 
 - **SIRIUS** immer in Großbuchstaben (SIRIUS GmbH, SIRIUS-Blog) – nie „Sirius“.
   Ausnahme: Domains wie `sirius-gmbh.de`.
-- Auf der Seite wird geduzt.
+- Auf der Seite wird geduzt. Ausnahme: der Angebots-Check (`/check`) siezt bewusst –
+  so lassen (Entscheidung Marketing, Oktober 2026).
 
 ## Design
 

@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FooterSection from "@/components/FooterSection";
 import SiteHeader from "@/components/SiteHeader";
+import SynthwaveBackground from "@/components/SynthwaveBackground";
+import PageHead from "@/components/PageHead";
 import pixelBuchhaltung from "@/assets/pixel-buchhaltung.png";
 import pixelVertrieb from "@/assets/pixel-vertrieb.png";
 import pixelIt from "@/assets/pixel-it.png";
@@ -472,38 +474,47 @@ const Game = () => {
   // ── Render ──
 
   return (
-    <div className="min-h-screen scanlines relative">
-      <div className="absolute inset-0 synthwave-grid pointer-events-none" />
-
+    <div className="min-h-screen relative">
       <SiteHeader />
-      <div className="h-16" aria-hidden />
-
-      <main className={`relative z-10 transition-opacity duration-500 ${fadeIn ? "opacity-100" : "opacity-0"}`}>
+      <div className="relative">
+      <SynthwaveBackground variant="calm" />
+      <main className={`relative z-10 pt-16 transition-opacity duration-500 ${fadeIn ? "opacity-100" : "opacity-0"}`}>
 
         {/* ════════ START SCREEN ════════ */}
         {screen === "start" && (
-          <section className="min-h-[80vh] flex flex-col items-center justify-center px-6 text-center">
-            <h1 className="font-pixel text-3xl md:text-5xl lg:text-6xl text-glow-pink text-secondary mb-6 leading-relaxed">
-              KRISEN SIMULATOR
-            </h1>
-            <p className="text-foreground/80 max-w-xl text-base md:text-lg mb-10">
-              Wie krisenanfällig ist euer Unternehmen? Findet es in 3&nbsp;Minuten heraus.
-            </p>
-            <button
-              onClick={() => { setFadeIn(false); setTimeout(() => { setScreen("quiz"); }, 300); }}
-              className="neon-btn rounded-md text-sm px-12 py-4"
-            >
-              START
-            </button>
-            <p className="text-muted-foreground text-xs mt-6">
-              6 Level · {LEVELS.reduce((s, l) => s + l.questions.length, 0)} Fragen · 1 ehrliches Ergebnis.
-            </p>
-          </section>
+          <>
+            <PageHead
+              eyebrow="TOOLS"
+              headline="Krisen-Simulator"
+              lead="Wie krisenanfällig ist euer Unternehmen? Findet es in 3 Minuten heraus."
+            />
+            <section className="sw-section" style={{ paddingTop: 0 }}>
+              <div className="sw-card-feature max-w-2xl mx-auto text-center sw-animate-up">
+                <p className="font-pixel text-xs md:text-sm mb-4" style={{ color: "var(--sw-pink)", letterSpacing: ".14em" }}>
+                  PRESS START
+                  <span className="neon-flicker" aria-hidden>
+                    _
+                  </span>
+                </p>
+                <p className="leading-relaxed mb-8" style={{ color: "var(--sw-text-2)" }}>
+                  Was passiert, wenn morgen die falsche Person ausfällt? 6 Level, eins pro Abteilung,{" "}
+                  {LEVELS.reduce((s, l) => s + l.questions.length, 0)} Fragen und 1 ehrliches Ergebnis.
+                </p>
+                <button
+                  onClick={() => { setFadeIn(false); setTimeout(() => { setScreen("quiz"); }, 300); }}
+                  className="neon-btn inline-block"
+                  style={{ borderRadius: 10, fontSize: 11 }}
+                >
+                  Start
+                </button>
+              </div>
+            </section>
+          </>
         )}
 
         {/* ════════ QUIZ SCREEN ════════ */}
         {screen === "quiz" && (
-          <section className="max-w-2xl mx-auto px-6 py-8 min-h-[80vh]">
+          <section className="sw-section max-w-3xl mx-auto min-h-[80vh]">
             <LevelProgress current={currentLevel} total={LEVELS.length} />
 
             <p className="font-pixel text-xs text-primary mb-2 tracking-widest">
@@ -542,7 +553,7 @@ const Game = () => {
                     key={i}
                     disabled={selectedAnswer !== null}
                     onClick={() => handleAnswer(a.points)}
-                    className={`w-full text-left px-5 py-4 rounded-md border transition-all duration-200 
+                    className={`w-full text-left px-5 py-4 rounded-[10px] border transition-all duration-200 
                       ${selectedAnswer === a.points
                         ? "border-primary bg-primary/20 text-primary"
                         : "border-border/50 bg-card/50 hover:border-primary/50 hover:bg-card text-foreground/90"
@@ -561,7 +572,7 @@ const Game = () => {
 
         {/* ════════ RESULT SCREEN ════════ */}
         {screen === "result" && (
-          <section className="max-w-4xl mx-auto px-6 py-8">
+          <section className="sw-section max-w-5xl mx-auto">
             {/* Overall Score */}
             <div className="text-center mb-12">
               <p className="font-pixel text-xs text-muted-foreground mb-4 tracking-widest">RESILIENZ-SCORE</p>
@@ -595,7 +606,7 @@ const Game = () => {
                 return (
                   <div
                     key={level.key}
-                    className={`rounded-lg border border-border/50 bg-card/60 p-5 ${isSkipped ? "opacity-50" : colors.glow} transition-all`}
+                    className={`sw-card ${isSkipped ? "opacity-50" : colors.glow} transition-all`}
                   >
                     <div className="flex items-center gap-2 mb-3">
                       <img src={level.icon} alt={level.name} className="w-8 h-8" style={{ imageRendering: "pixelated" }} loading="lazy" />
@@ -635,24 +646,24 @@ const Game = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input required placeholder="Vorname *" value={formData.vorname}
                       onChange={e => setFormData(p => ({ ...p, vorname: e.target.value }))}
-                      className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                      className="bg-card/50 border border-border/50 rounded-[10px] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                     />
                     <input required placeholder="Nachname *" value={formData.nachname}
                       onChange={e => setFormData(p => ({ ...p, nachname: e.target.value }))}
-                      className="bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                      className="bg-card/50 border border-border/50 rounded-[10px] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                     />
                   </div>
                   <input required type="email" placeholder="E-Mail *" value={formData.email}
                     onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
-                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                    className="w-full bg-card/50 border border-border/50 rounded-[10px] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                   />
                   <input required placeholder="Unternehmen *" value={formData.unternehmen}
                     onChange={e => setFormData(p => ({ ...p, unternehmen: e.target.value }))}
-                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                    className="w-full bg-card/50 border border-border/50 rounded-[10px] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                   />
                   <select required value={formData.rolle}
                     onChange={e => setFormData(p => ({ ...p, rolle: e.target.value }))}
-                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
+                    className="w-full bg-card/50 border border-border/50 rounded-[10px] px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
                   >
                     <option value="">Rolle im Unternehmen *</option>
                     <option value="Geschäftsführung">Geschäftsführung</option>
@@ -663,7 +674,7 @@ const Game = () => {
                   </select>
                   <select required value={formData.mitarbeiter}
                     onChange={e => setFormData(p => ({ ...p, mitarbeiter: e.target.value }))}
-                    className="w-full bg-card/50 border border-border/50 rounded-md px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
+                    className="w-full bg-card/50 border border-border/50 rounded-[10px] px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary"
                   >
                     <option value="">Anzahl Mitarbeiter *</option>
                     <option value="1-10">1-10</option>
@@ -672,7 +683,7 @@ const Game = () => {
                     <option value="200+">200+</option>
                   </select>
 
-                  <button type="submit" disabled={submitting} className="neon-btn rounded-md w-full py-4 text-xs">
+                  <button type="submit" disabled={submitting} className="neon-btn w-full" style={{ borderRadius: 10, fontSize: 11 }}>
                     {submitting ? "WIRD GESENDET..." : "DETAILANALYSE ANFORDERN"}
                   </button>
 
@@ -705,6 +716,7 @@ const Game = () => {
           </section>
         )}
       </main>
+      </div>
 
       <FooterSection />
     </div>

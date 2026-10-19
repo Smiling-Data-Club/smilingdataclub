@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SynthwaveBackground from "@/components/SynthwaveBackground";
 import FooterSection from "@/components/FooterSection";
+import PageHead from "@/components/PageHead";
 
 interface PageLayoutProps {
   /** Wird als „… · Smiling Data Club“ in den Browser-Tab geschrieben */
@@ -24,29 +25,7 @@ const PageLayout = ({ title, eyebrow, headline, lead, children }: PageLayoutProp
       <div className="relative">
         <SynthwaveBackground variant="calm" />
         <main className="relative z-10 pt-16">
-          <section className="sw-section text-center">
-            <div className="max-w-3xl mx-auto">
-              {eyebrow && (
-                <p className="sw-eyebrow sw-animate-up" style={{ marginBottom: 18 }}>
-                  {eyebrow}
-                </p>
-              )}
-              <h1
-                className="sw-headline text-4xl md:text-6xl mb-6 sw-animate-up"
-                style={{ animationDelay: "0.1s" }}
-              >
-                {headline}
-              </h1>
-              {lead && (
-                <p
-                  className="sw-lead text-base md:text-lg sw-animate-up"
-                  style={{ animationDelay: "0.2s" }}
-                >
-                  {lead}
-                </p>
-              )}
-            </div>
-          </section>
+          <PageHead eyebrow={eyebrow} headline={headline} lead={lead} />
           {children}
         </main>
       </div>
