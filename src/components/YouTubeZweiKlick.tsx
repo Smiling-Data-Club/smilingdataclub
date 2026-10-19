@@ -5,11 +5,13 @@ interface YouTubeZweiKlickProps {
   title: string;
   /** Hochformat für YouTube Shorts (9:16) */
   hochkant?: boolean;
+  /** Eigenes, lokal abgelegtes Standbild – nie von img.youtube.com */
+  vorschau?: string;
 }
 
 // Zwei-Klick-Lösung: Bis zum Klick wird nichts von YouTube geladen –
 // auch kein Vorschaubild. Danach youtube-nocookie.com.
-const YouTubeZweiKlick = ({ videoId, title, hochkant = false }: YouTubeZweiKlickProps) => {
+const YouTubeZweiKlick = ({ videoId, title, hochkant = false, vorschau }: YouTubeZweiKlickProps) => {
   const [aktiv, setAktiv] = useState(false);
 
   return (
@@ -38,7 +40,9 @@ const YouTubeZweiKlick = ({ videoId, title, hochkant = false }: YouTubeZweiKlick
           onClick={() => setAktiv(true)}
           className={`absolute inset-0 flex flex-col items-center justify-center text-center ${hochkant ? "gap-2 p-2" : "gap-3 p-4"}`}
           style={{
-            background: "linear-gradient(160deg, rgba(5,5,16,.6), hsl(var(--neon-pink) / .12))",
+            background: vorschau
+              ? `linear-gradient(180deg, rgba(5,5,16,.15) 0%, rgba(5,5,16,.25) 55%, rgba(5,5,16,.85) 100%), url(${vorschau}) center / cover`
+              : "linear-gradient(160deg, rgba(5,5,16,.6), hsl(var(--neon-pink) / .12))",
             border: "none",
             cursor: "pointer",
           }}
@@ -52,6 +56,7 @@ const YouTubeZweiKlick = ({ videoId, title, hochkant = false }: YouTubeZweiKlick
               borderRadius: 9999,
               border: "2px solid hsl(var(--neon-cyan) / .75)",
               boxShadow: "0 0 26px hsl(var(--neon-cyan) / .4)",
+              background: vorschau ? "rgba(5,5,16,.7)" : undefined,
               color: "var(--sw-cyan)",
               fontFamily: "var(--font-mono-sw)",
               fontSize: hochkant ? 16 : 20,
@@ -60,15 +65,17 @@ const YouTubeZweiKlick = ({ videoId, title, hochkant = false }: YouTubeZweiKlick
             ▶
           </span>
           <span
+            className={vorschau ? "absolute bottom-0 inset-x-0 px-3 pb-2" : undefined}
             style={{
               fontFamily: "var(--font-mono-sw)",
-              fontSize: hochkant ? 10 : 11,
+              fontSize: hochkant || vorschau ? 10 : 11,
               lineHeight: 1.4,
-              color: "var(--sw-text-3)",
-              maxWidth: 280,
+              color: vorschau ? "var(--sw-text-2)" : "var(--sw-text-3)",
+              textShadow: vorschau ? "0 1px 6px rgba(0,0,0,.9)" : undefined,
+              maxWidth: vorschau ? undefined : 280,
             }}
           >
-            {hochkant
+            {hochkant || vorschau
               ? "Lädt von YouTube – Daten gehen an Google."
               : "Mit dem Klick lädst du das Video von YouTube. Dabei werden Daten an Google übertragen."}
           </span>
