@@ -33,6 +33,7 @@ const pixelLabel: React.CSSProperties = {
   fontSize: 10,
   letterSpacing: ".12em",
   textTransform: "uppercase",
+  whiteSpace: "nowrap",
 };
 
 const memberBtnStyle: React.CSSProperties = {
@@ -112,7 +113,8 @@ const SiteHeader = () => {
             className="w-9 h-9"
             style={{ filter: "drop-shadow(0 0 10px hsl(172 100% 45% / .5))" }}
           />
-          <span className="hidden sm:inline" style={{ ...pixelLabel, color: "var(--sw-text)" }}>
+          {/* Zwischen 1024 und 1280 px ausgeblendet, damit das Menü in eine Zeile passt */}
+          <span className="hidden sm:inline lg:hidden xl:inline" style={{ ...pixelLabel, color: "var(--sw-text)" }}>
             Smiling Data Club
           </span>
         </Link>
@@ -120,6 +122,24 @@ const SiteHeader = () => {
         {/* Desktop */}
         <nav ref={navRef} aria-label="Hauptmenü" className="hidden lg:flex items-center gap-1">
           {NAVIGATION.map((group) => {
+            if (group.to) {
+              const active = pathname === group.to;
+              return (
+                <Link
+                  key={group.label}
+                  to={group.to}
+                  className="px-3 py-2 transition-colors"
+                  aria-current={active ? "page" : undefined}
+                  style={{
+                    ...pixelLabel,
+                    color: active ? "var(--sw-cyan)" : "var(--sw-text-2)",
+                    textShadow: active ? "0 0 12px hsl(var(--neon-cyan) / .7)" : undefined,
+                  }}
+                >
+                  {group.label}
+                </Link>
+              );
+            }
             const open = openGroup === group.label;
             const active = isGroupActive(pathname, group.items);
             return (
@@ -227,7 +247,14 @@ const SiteHeader = () => {
           className="lg:hidden overflow-y-auto px-4 pb-8"
           style={{ height: "calc(100dvh - 4rem)", background: "rgba(5,5,16,.97)" }}
         >
-          {NAVIGATION.map((group) => (
+          {NAVIGATION.map((group) =>
+            group.to ? (
+              <div key={group.label} className="pt-6">
+                <Link to={group.to} style={{ ...pixelLabel, color: "var(--sw-cyan)" }}>
+                  {group.label} →
+                </Link>
+              </div>
+            ) : (
             <div key={group.label} className="pt-6">
               <p style={{ ...pixelLabel, color: "var(--sw-cyan)", marginBottom: 8 }}>{group.label}</p>
               <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -247,7 +274,8 @@ const SiteHeader = () => {
                 ))}
               </ul>
             </div>
-          ))}
+            ),
+          )}
           <Link to={MEMBER_LOGIN.to} className="mt-8 flex justify-center px-4 py-3" style={memberBtnStyle}>
             {MEMBER_LOGIN.label}
           </Link>

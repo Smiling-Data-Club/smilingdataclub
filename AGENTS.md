@@ -18,7 +18,7 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Menü (Hauptpunkte, Unterpunkte, Member-Login) | `src/data/navigation.ts` |
 | Routen | `src/App.tsx` (neue Seite = Route hier **und** Eintrag in `navigation.ts`) |
 | Lösungs-Seiten (Zoho One, DocuWare, AI) inkl. Texte und Testimonials | `src/data/loesungen.ts` → gerendert von `src/pages/loesungen/Loesung.tsx` |
-| Use Cases (sammelt alle Testimonials) | `src/pages/loesungen/UseCases.tsx` |
+| Success Stories (sammelt alle Testimonials, eigener Menüpunkt ohne Dropdown) | `src/pages/SuccessStories.tsx`, Adresse `/success-stories` |
 | Webinare & Termine (von Hand gepflegt) | `src/data/termine.ts` |
 | Culture & Code 27 – Datum | `src/pages/events/CultureCode27.tsx`, Konstante `DATUM` |
 | Rahmen jeder Unterseite (Header, Hintergrund, Seitenkopf, Footer) | `src/components/PageLayout.tsx` |

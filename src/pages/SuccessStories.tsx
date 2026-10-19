@@ -9,13 +9,13 @@ const BOOKING_URL = "https://sirius-gmbh.zohobookings.eu/240927000000441095";
 
 // Sammelt die Kundenstimmen aller Lösungen. Neue Stimmen: bei der passenden
 // Lösung in src/data/loesungen.ts unter `testimonials` eintragen.
-const UseCases = () => {
+const SuccessStories = () => {
   const mitStimmen = LOESUNGEN.filter((l) => l.testimonials && l.testimonials.length > 0);
 
   return (
     <PageLayout
-      title="Use Cases"
-      eyebrow="USE CASES"
+      title="Success Stories"
+      eyebrow="SUCCESS STORIES"
       headline="Was unsere Kunden sagen"
       lead="Echte Projekte, echte Stimmen – direkt von den Menschen, die damit jeden Tag arbeiten."
     >
@@ -76,4 +76,4 @@ const UseCases = () => {
   );
 };
 
-export default UseCases;
+export default SuccessStories;

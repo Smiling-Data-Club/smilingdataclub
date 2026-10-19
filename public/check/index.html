@@ -51,7 +51,7 @@ a{color:inherit}
 .site .in{max-width:72rem;margin:0 auto;padding:0 1rem;height:4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
 .brand img{width:36px;height:36px;filter:drop-shadow(0 0 10px hsl(172 100% 45%/.5))}
-.label{font-family:var(--font-pixel);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.label{font-family:var(--font-pixel);font-size:10px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .brand .label{color:var(--ink)}
 .site nav{display:flex;gap:.25rem}
 .site nav a{padding:.5rem .75rem;color:var(--text-2);text-decoration:none}
@@ -60,7 +60,7 @@ a{color:inherit}
 .site .member:hover{background:hsl(var(--neon-pink)/.12)}
 .site .mobil{display:none;color:var(--cyan);text-decoration:none}
 @media (max-width:1023px){.site nav,.site .member{display:none}.site .mobil{display:inline}}
-@media (max-width:639px){.brand .label{display:none}}
+@media (max-width:639px),(min-width:1024px) and (max-width:1279px){.brand .label{display:none}}
 
 /* Seitenkopf */
 .head{text-align:center;padding:4.5rem 1.25rem 2.5rem;max-width:48rem;margin:0 auto}
@@ -147,6 +147,7 @@ details[open] summary::before{transform:rotate(45deg)}
     <a class="brand" href="/" aria-label="Smiling Data Club – Startseite"><img src="/check/sdc-logo.png" alt=""><span class="label">Smiling Data Club</span></a>
     <nav aria-label="Hauptmenü">
       <a class="label" href="/loesungen/zoho">Lösungen</a>
+      <a class="label" href="/success-stories">Success Stories</a>
       <a class="label" href="/game" aria-current="true">Tools</a>
       <a class="label" href="/events/culture-and-code-26">Events</a>
       <a class="label" href="/ueber-uns">Über uns</a>

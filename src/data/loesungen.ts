@@ -46,7 +46,7 @@ export interface Loesung {
   siriusPraesentiert?: boolean;
   /** Überschrift über den Terminen, Standard „Live erleben“ */
   termineTitel?: string;
-  /** Zusatztext auf der Seite „Use Cases“ (übernommen von der alten Testimonial-Landingpage) */
+  /** Zusatztext auf der Seite „Success Stories“ (übernommen von der alten Testimonial-Landingpage) */
   useCases?: { intro: string; partner?: { titel: string; text: string } };
 }
 
@@ -85,7 +85,7 @@ const DOCUWARE_TESTIMONIALS: Testimonial[] = [
 ];
 
 // Reihenfolge = Reihenfolge im Menü, auf der Startseite und unter „Weitere Lösungen“.
-// Die Seite „Use Cases“ (/loesungen/use-cases) sammelt alle testimonials.
+// Die Seite „Success Stories“ (/success-stories) sammelt alle testimonials.
 export const LOESUNGEN: Loesung[] = [
   {
     slug: "zoho",
@@ -231,10 +231,10 @@ export const LOESUNGEN: Loesung[] = [
   },
 ];
 
-/** Kachel „Use Cases“ – erscheint neben den Lösungen auf Startseite und Lösungsseiten */
-export const USE_CASES_KACHEL = {
-  to: "/loesungen/use-cases",
-  title: "Use Cases",
+/** Kachel „Success Stories“ – erscheint neben den Lösungen auf Startseite und Lösungsseiten */
+export const SUCCESS_STORIES_KACHEL = {
+  to: "/success-stories",
+  title: "Success Stories",
   description: "Was unsere Kunden sagen",
   teaser: "Kunden erzählen auf Video, was sich bei ihnen verändert hat. Echte Projekte, echte Stimmen.",
   cardClass: "sw-card" as const,
