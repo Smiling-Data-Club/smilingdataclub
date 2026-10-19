@@ -6,7 +6,7 @@ const UeberUns = () => (
   <PageLayout
     title="Über den Club"
     eyebrow="ÜBER UNS"
-    headline="Technik soll dem Menschen nutzen — nicht umgekehrt."
+    headline="technik soll dem menschen nutzen — nicht umgekehrt."
     lead="Wir glauben an Systeme, die lächeln machen. An Prozesse, die fließen. An Daten, die Sinn ergeben."
   >
     <AboutSection hideIntro />
