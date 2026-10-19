@@ -112,5 +112,5 @@ export interface Interview {
 }
 
 export const INTERVIEWS: Interview[] = [
-  { name: "Fabian Schüler", rolle: "Geschäftsführer, SIRIUS GmbH", youtubeId: "NT5uYYdReM4" },
+  { name: "Fabian Schüler", rolle: "Geschäftsführer, Smiling Data Club & SIRIUS GmbH", youtubeId: "NT5uYYdReM4" },
 ];
