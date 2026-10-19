@@ -96,6 +96,7 @@ export const VORTRAEGE: Vortrag[] = [
     titel: "Impuls: AI meets EQ",
     rolle: "Impulsvortrag",
     foto: josefSchneider,
+    youtubeUrl: "https://www.youtube.com/watch?v=LFdRIiExgmg",
   },
 ];
 
