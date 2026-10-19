@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import FooterSection from "@/components/FooterSection";
 import SiteHeader from "@/components/SiteHeader";
+import SynthwaveBackground from "@/components/SynthwaveBackground";
+import SectionTitle from "@/components/SectionTitle";
 import { AUSWERTUNG_CONTENT, riskKeyFromLabel } from "@/data/auswertung-content";
 import { QUICK_WINS } from "@/data/quick-wins";
 
@@ -194,21 +196,21 @@ const Auswertung = () => {
   // ── Empty-State ──
   if (loaded && !data) {
     return (
-      <div className="min-h-screen scanlines relative">
-        <div className="absolute inset-0 synthwave-grid pointer-events-none" />
+      <div className="min-h-screen relative">
         <SiteHeader />
-        <div className="h-16" aria-hidden />
-        <main className="relative z-10 min-h-[70vh] flex flex-col items-center justify-center text-center px-6">
-          <h1 className="font-pixel text-2xl md:text-4xl text-secondary text-glow-pink mb-6 leading-relaxed">
-            KEINE AUSWERTUNG GEFUNDEN
-          </h1>
+        <div className="relative">
+        <SynthwaveBackground variant="calm" />
+        <main className="relative z-10 pt-16 min-h-[70vh] flex flex-col items-center justify-center text-center px-6">
+          <p className="sw-eyebrow mb-4">KRISEN-SIMULATOR</p>
+          <h1 className="sw-headline text-4xl md:text-6xl mb-6">Keine Auswertung gefunden</h1>
           <p className="text-foreground/80 max-w-md mb-8">
             Bitte starte das Quiz neu, damit wir dir deine personalisierte Auswertung zeigen können.
           </p>
-          <Link to="/game" className="neon-btn rounded-md px-10 py-4 text-xs">
-            QUIZ STARTEN
+          <Link to="/game" className="neon-btn inline-block" style={{ borderRadius: 10, fontSize: 11 }}>
+            Quiz starten
           </Link>
         </main>
+        </div>
         <FooterSection />
       </div>
     );
@@ -216,8 +218,8 @@ const Auswertung = () => {
 
   if (!data) {
     return (
-      <div className="min-h-screen scanlines relative">
-        <div className="absolute inset-0 synthwave-grid pointer-events-none" />
+      <div className="min-h-screen relative">
+        <SynthwaveBackground variant="calm" />
       </div>
     );
   }
@@ -225,22 +227,17 @@ const Auswertung = () => {
   const overallColors = riskColor(data.gesamt_risiko);
 
   return (
-    <div className="min-h-screen scanlines relative">
-      <div className="absolute inset-0 synthwave-grid pointer-events-none" />
-
+    <div className="min-h-screen relative">
       <SiteHeader />
-      <div className="h-16" aria-hidden />
-
-      <main className={`relative z-10 transition-opacity duration-500 ${fadeIn ? "opacity-100" : "opacity-0"}`}>
+      <div className="relative">
+      <SynthwaveBackground variant="calm" />
+      <main className={`relative z-10 pt-16 transition-opacity duration-500 ${fadeIn ? "opacity-100" : "opacity-0"}`}>
         {/* ════════ HERO ════════ */}
-        <section className="max-w-3xl mx-auto px-6 pt-8 pb-16 text-center">
-          <h1 className="font-pixel text-2xl md:text-4xl lg:text-5xl text-secondary text-glow-pink mb-6 leading-relaxed">
-            EURE AUSWERTUNG
-          </h1>
+        <section className="sw-section max-w-3xl mx-auto text-center">
+          <p className="sw-eyebrow mb-4">KRISEN-SIMULATOR</p>
+          <h1 className="sw-headline text-4xl md:text-6xl mb-6">Eure Auswertung</h1>
           {data.vorname && (
-            <p className="font-pixel text-xs md:text-sm text-primary text-glow-cyan mb-8 tracking-widest">
-              HI {data.vorname.toUpperCase()}
-            </p>
+            <p className="sw-lead text-base md:text-lg mb-10">Hi {data.vorname}!</p>
           )}
 
           <p className="font-pixel text-xs text-muted-foreground mb-4 tracking-widest">RESILIENZ-SCORE</p>
@@ -269,10 +266,8 @@ const Auswertung = () => {
         </section>
 
         {/* ════════ BRENNPUNKTE ════════ */}
-        <section className="max-w-4xl mx-auto px-6 pb-20">
-          <h2 className="font-pixel text-lg md:text-2xl text-secondary text-glow-pink mb-10 text-center leading-relaxed">
-            EURE BRENNPUNKTE
-          </h2>
+        <section className="sw-section max-w-5xl mx-auto" style={{ paddingTop: 0 }}>
+          <SectionTitle>EURE BRENNPUNKTE</SectionTitle>
 
           {brennpunkte.length === 0 ? (
             improvableAreas.length === 0 ? (
@@ -294,7 +289,7 @@ const Auswertung = () => {
                 return (
                   <article
                     key={b.key}
-                    className={`rounded-lg border border-border/50 bg-card/60 p-6 ${colors.glow} transition-all`}
+                    className={`sw-card ${colors.glow} transition-all`}
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <img
@@ -331,10 +326,8 @@ const Auswertung = () => {
 
         {/* ════════ QUICK WINS ════════ */}
         {top3Keys.length > 0 && (
-          <section className="max-w-4xl mx-auto px-6 pb-20">
-            <h2 className="font-pixel text-lg md:text-2xl text-secondary text-glow-pink mb-10 text-center leading-relaxed">
-              QUICK WINS DIESE WOCHE
-            </h2>
+          <section className="sw-section max-w-5xl mx-auto" style={{ paddingTop: 0 }}>
+            <SectionTitle>QUICK WINS DIESE WOCHE</SectionTitle>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {top3Keys
@@ -343,7 +336,7 @@ const Auswertung = () => {
                 .map((q) => (
                   <div
                     key={q.bereichKey}
-                    className="rounded-lg border border-border/50 bg-card/60 p-5 hover:border-primary/50 transition-all"
+                    className="sw-card transition-transform duration-300 hover:-translate-y-1"
                   >
                     <p className="font-pixel text-[9px] text-primary mb-3 tracking-widest">{q.bereich.toUpperCase()}</p>
                     <h3 className="font-pixel text-[11px] text-foreground mb-3 leading-relaxed">{q.titel}</h3>
@@ -365,10 +358,8 @@ const Auswertung = () => {
         )}
 
         {/* ════════ STACK ════════ */}
-        <section className="max-w-4xl mx-auto px-6 pb-20">
-          <h2 className="font-pixel text-lg md:text-2xl text-secondary text-glow-pink mb-3 text-center leading-relaxed">
-            UNSER STACK
-          </h2>
+        <section className="sw-section max-w-5xl mx-auto" style={{ paddingTop: 0 }}>
+          <SectionTitle>UNSER STACK</SectionTitle>
           <p className="text-foreground/70 text-center mb-10 text-sm">
             Wir empfehlen, was wir selbst nutzen.
           </p>
@@ -382,7 +373,7 @@ const Auswertung = () => {
             ].map((tool) => (
               <div
                 key={tool.name}
-                className="rounded-lg border border-border/50 bg-card/60 p-5 text-center hover:border-primary/50 transition-all"
+                className="sw-card text-center transition-transform duration-300 hover:-translate-y-1"
               >
                 <p className="font-pixel text-[11px] text-primary mb-2 text-glow-cyan">{tool.name}</p>
                 <p className="text-foreground/60 text-xs leading-relaxed">{tool.desc}</p>
@@ -395,7 +386,7 @@ const Auswertung = () => {
               href={ZOHO_TRIAL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block rounded-md border border-primary/60 text-primary hover:bg-primary/10 px-6 py-3 text-[11px] font-pixel tracking-widest transition-all"
+              className="inline-block rounded-[10px] border border-primary/60 text-primary hover:bg-primary/10 px-6 py-3 text-[11px] font-pixel tracking-widest transition-all"
             >
               ZOHO ONE UNVERBINDLICH TESTEN
             </a>
@@ -403,10 +394,8 @@ const Auswertung = () => {
         </section>
 
         {/* ════════ CTA ════════ */}
-        <section className="max-w-3xl mx-auto px-6 pb-16 text-center">
-          <h2 className="font-pixel text-base md:text-xl text-secondary text-glow-pink mb-6 leading-relaxed">
-            WENN IHR NICHT ALLEINE DURCH WOLLT
-          </h2>
+        <section className="sw-section max-w-3xl mx-auto text-center" style={{ paddingTop: 0 }}>
+          <SectionTitle>WENN IHR NICHT ALLEINE DURCH WOLLT</SectionTitle>
           <p className="text-foreground/80 mb-10 max-w-xl mx-auto">
             Wir gehen mit euch eure Brennpunkte durch und zeigen, wo ihr mit überschaubarem Aufwand den
             größten Hebel habt. Unverbindlich, kostenlos, ehrlich.
@@ -417,13 +406,13 @@ const Auswertung = () => {
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="neon-btn rounded-md px-10 py-4 text-xs"
+              className="neon-btn inline-block" style={{ borderRadius: 10, fontSize: 11 }}
             >
               TERMIN BUCHEN →
             </a>
             <button
               onClick={copyShareLink}
-              className="rounded-md border border-border/60 text-foreground/80 hover:text-primary hover:border-primary/60 px-6 py-3 text-[11px] font-pixel tracking-widest transition-all"
+              className="rounded-[10px] border border-border/60 text-foreground/80 hover:text-primary hover:border-primary/60 px-6 py-3 text-[11px] font-pixel tracking-widest transition-all"
             >
               DIESE SEITE TEILEN
             </button>
@@ -441,6 +430,7 @@ const Auswertung = () => {
           </Link>
         </div>
       </main>
+      </div>
 
       <FooterSection />
     </div>
