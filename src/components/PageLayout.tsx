@@ -27,12 +27,12 @@ const PageLayout = ({ title, eyebrow, headline, lead, children }: PageLayoutProp
           <section className="sw-section text-center">
             <div className="max-w-3xl mx-auto">
               {eyebrow && (
-                <p className="sw-section-title sw-animate-up" style={{ marginBottom: 20 }}>
+                <p className="sw-eyebrow sw-animate-up" style={{ marginBottom: 18 }}>
                   {eyebrow}
                 </p>
               )}
               <h1
-                className="sw-headline text-3xl md:text-5xl mb-6 sw-animate-up"
+                className="sw-headline text-4xl md:text-6xl mb-6 sw-animate-up"
                 style={{ animationDelay: "0.1s" }}
               >
                 {headline}

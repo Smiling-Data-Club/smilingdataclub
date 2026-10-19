@@ -5,7 +5,7 @@ const Team = () => (
   <PageLayout
     title="Team"
     eyebrow="DAS TEAM"
-    headline="die leute hinter dem club"
+    headline="Die Leute hinter dem Club"
     lead="It's dangerous to go alone! Take these."
   >
     <TeamSection hideTitle />

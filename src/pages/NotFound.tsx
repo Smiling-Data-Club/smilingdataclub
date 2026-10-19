@@ -5,7 +5,7 @@ const NotFound = () => (
   <PageLayout
     title="Seite nicht gefunden"
     eyebrow="404 · GAME OVER"
-    headline="diese seite gibt es nicht."
+    headline="Diese Seite gibt es nicht."
     lead="Vielleicht hat sich ein Pixel verschoben. Hier geht es weiter:"
   >
     <section className="sw-section" style={{ paddingTop: 0 }}>

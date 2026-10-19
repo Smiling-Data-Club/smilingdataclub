@@ -6,6 +6,7 @@ import EventFilmSection from "@/components/EventFilmSection";
 import { FotoGalerie, OToene } from "@/components/EventGalerie";
 import YouTubeZweiKlick from "@/components/YouTubeZweiKlick";
 import ComingSoon from "@/components/ComingSoon";
+import SectionTitle from "@/components/SectionTitle";
 import { GALERIE, INTERVIEWS, O_TOENE, VORTRAEGE } from "@/data/cultureCode26";
 
 // Rückblick auf den Kick-off. Aftermovie, Geschichte und Danke sind direkt lesbar,
@@ -106,14 +107,14 @@ const KACHELN: Kachel[] = [
   {
     id: "vortraege",
     eyebrow: "DIE VORTRÄGE",
-    titel: "zum nachschauen",
+    titel: "Zum Nachschauen",
     info: `${VORTRAEGE.length} Vorträge`,
     inhalt: <Vortraege />,
   },
   {
     id: "bilder",
     eyebrow: "DER TAG IN BILDERN",
-    titel: "so hat sich der tag angefühlt",
+    titel: "So hat sich der Tag angefühlt",
     info: `${GALERIE.length} Fotos`,
     inhalt: (
       <>
@@ -127,7 +128,7 @@ const KACHELN: Kachel[] = [
   {
     id: "kurz-gesagt",
     eyebrow: "IN BEWEGUNG",
-    titel: "kurz gesagt.",
+    titel: "Kurz gesagt.",
     info: `${O_TOENE.length} Clips`,
     inhalt: (
       <>
@@ -141,14 +142,14 @@ const KACHELN: Kachel[] = [
   {
     id: "interviews",
     eyebrow: "INTERVIEWS",
-    titel: "nachgefragt",
+    titel: "Nachgefragt",
     info: INTERVIEWS.length ? `${INTERVIEWS.length} Interviews` : "bald",
     inhalt: <Interviews />,
   },
   {
     id: "programm",
     eyebrow: "PROGRAMM-RECAP",
-    titel: "was an dem tag passiert ist",
+    titel: "Was an dem Tag passiert ist",
     info: "1 Min. lesen",
     inhalt: (
       <p className="text-lg leading-relaxed max-w-3xl" style={textStyle}>
@@ -166,15 +167,14 @@ const CultureCode26 = () => (
   <PageLayout
     title="Culture & Code 26"
     eyebrow="KICK-OFF · 01.07.2026 · FREIBURG"
-    headline="das war culture & code."
+    headline="Das war Culture & Code."
     lead="Unser erstes Smiling Data Club Event — und es war genau das, was wir uns erträumt haben."
   >
     <EventFilmSection showLinks={false} />
 
     <section className="sw-section" style={{ paddingTop: 0 }}>
       <div className="max-w-3xl mx-auto">
-        <p className="sw-eyebrow mb-3">DIE GESCHICHTE DAHINTER</p>
-        <h2 className="sw-headline text-2xl md:text-3xl mb-6">warum es diesen tag gab</h2>
+        <SectionTitle>DIE GESCHICHTE DAHINTER</SectionTitle>
         <p className="text-lg leading-relaxed max-w-3xl" style={textStyle}>
           Smiling Data Club ist kein Produkt-Launch und keine Messe. Es ist die Idee, dass man über KI, Führung und die
           Zukunft der Arbeit auch anders reden kann — persönlich, ehrlich, ohne Bühnennebel. Wir haben Paletten-Möbel
@@ -185,6 +185,7 @@ const CultureCode26 = () => (
     </section>
 
     <section className="sw-section" style={{ paddingTop: 0 }}>
+      <SectionTitle>RÜCKBLICK</SectionTitle>
       <AccordionPrimitive.Root type="multiple" className="max-w-5xl mx-auto flex flex-col gap-4">
         {KACHELN.map((k, i) => (
           <AccordionPrimitive.Item key={k.id} value={k.id} id={k.id} className="sw-card group" style={{ padding: 0 }}>
@@ -221,8 +222,7 @@ const CultureCode26 = () => (
 
     <section className="sw-section" style={{ paddingBottom: 0 }}>
       <div className="max-w-3xl mx-auto">
-        <p className="sw-eyebrow mb-3">DANKE</p>
-        <h2 className="sw-headline text-2xl md:text-3xl mb-6">danke.</h2>
+        <SectionTitle>DANKE</SectionTitle>
         <p className="text-lg leading-relaxed max-w-3xl" style={textStyle}>
           Dieser Tag hat vor allem unserem kleinen Orga-Team einiges abverlangt — von der ersten Idee bis zum letzten
           Handgriff. Und es war jede Minute wert. Danke an Betül und Hannah Bast fürs Teilen ihres Wissens, an das ganze
@@ -235,7 +235,7 @@ const CultureCode26 = () => (
     <section className="sw-section">
       <div className="max-w-3xl mx-auto text-center sw-card-feature">
         <p className="sw-eyebrow mb-3">WAS KOMMT ALS NÄCHSTES</p>
-        <h2 className="sw-headline text-2xl md:text-3xl mb-6">das war der anfang</h2>
+        <h2 className="sw-headline text-2xl md:text-3xl mb-6">Das war der Anfang</h2>
         <p className="leading-relaxed mb-8" style={textStyle}>
           Culture & Code war kein einmaliges Ding. Die nächste Ausgabe ist für Ende September 2027 geplant.
         </p>

@@ -8,7 +8,7 @@ const CultureCode27 = () => (
   <PageLayout
     title="Culture & Code 27"
     eyebrow="SAVE THE DATE"
-    headline="culture & code 27"
+    headline="Culture & Code 27"
     lead="Das nächste Smiling Data Club Event kommt. Wieder persönlich, ehrlich, ohne Bühnennebel."
   >
     <section className="sw-section" style={{ paddingTop: 0 }}>

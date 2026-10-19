@@ -5,7 +5,7 @@ const Impressum = () => {
     <PageLayout
       title="Impressum"
       eyebrow="RECHTLICHES"
-      headline="impressum"
+      headline="Impressum"
       lead="Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)"
     >
       <section className="sw-section" style={{ paddingTop: 0 }}>

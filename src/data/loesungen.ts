@@ -1,7 +1,3 @@
-import pixelGlobe from "@/assets/pixel-globe.png";
-import pixelBot from "@/assets/pixel-bot.png";
-import pixelDocument from "@/assets/pixel-document.png";
-
 export interface Testimonial {
   quote: string;
   person: string;
@@ -24,9 +20,10 @@ export interface Weiterlesen {
 
 export interface Loesung {
   slug: string;
-  icon: string;
   title: string;
   description: string;
+  /** Zwei, drei Sätze für die Kachel auf der Startseite */
+  teaser: string;
   details: string;
   cardClass: "sw-card" | "sw-card-pink" | "sw-card-purple";
   /** „Kennst du das?“ – typische Ausgangslagen */
@@ -76,9 +73,10 @@ const DOCUWARE_TESTIMONIALS: Testimonial[] = [
 export const LOESUNGEN: Loesung[] = [
   {
     slug: "zoho",
-    icon: pixelGlobe,
     title: "Zoho One",
     description: "Betriebssystem für dein Business",
+    teaser:
+      "Ein Login für CRM, Buchhaltung, Projekte und Support statt fünf Tools, die nichts voneinander wissen. Wir richten Zoho One so ein, wie wir es selbst seit Jahren nutzen.",
     details:
       "Ein Login für CRM, Buchhaltung, Projekte, Support und Marketing, statt fünf Tools, die nichts voneinander wissen. Wir nutzen Zoho One selbst als Betriebsplattform: Was wir dir einrichten, läuft bei uns seit Jahren im Alltag.",
     cardClass: "sw-card",
@@ -109,9 +107,10 @@ export const LOESUNGEN: Loesung[] = [
   },
   {
     slug: "docuware",
-    icon: pixelDocument,
     title: "DocuWare",
     description: "Dokumentenmanagement, das mitwächst",
+    teaser:
+      "Jedes Dokument in Sekunden gefunden und revisionssicher archiviert. Belege liest DocuWare automatisch aus, abtippen muss niemand mehr.",
     details:
       "Jede Rechnung in fünf Sekunden gefunden, und die Prüfung akzeptiert sie. DocuWare archiviert revisionssicher, IDP (Intelligent Document Processing) liest Belege automatisch aus, ohne dass jemand abtippt.",
     cardClass: "sw-card-purple",
@@ -166,9 +165,10 @@ export const LOESUNGEN: Loesung[] = [
   },
   {
     slug: "ai",
-    icon: pixelBot,
     title: "AI",
     description: "App Building nach Maß",
+    teaser:
+      "Wenn es die passende Software nicht gibt, bauen wir sie. Schlanke Apps und KI-Werkzeuge, angebunden an die Systeme, die ihr schon habt.",
     details:
       "Wenn es die passende Software nicht gibt, bauen wir sie: schlanke Web-Apps und KI-Werkzeuge, genau für euren Ablauf – und angebunden an die Systeme, die ihr schon habt.",
     cardClass: "sw-card-pink",
@@ -212,5 +212,6 @@ export const USE_CASES_KACHEL = {
   to: "/loesungen/use-cases",
   title: "Use Cases",
   description: "Was unsere Kunden sagen",
+  teaser: "Kunden erzählen auf Video, was sich bei ihnen verändert hat. Echte Projekte, echte Stimmen.",
   cardClass: "sw-card" as const,
 };
