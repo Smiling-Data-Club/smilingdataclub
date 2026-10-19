@@ -82,7 +82,6 @@ const Loesung = () => {
     >
       <section className="sw-section" style={{ paddingTop: 0 }}>
         <div className={`${loesung.cardClass} max-w-3xl mx-auto sw-animate-up`}>
-          <img src={loesung.icon} alt="" className="w-10 h-10 mb-5" style={{ imageRendering: "pixelated" }} />
           <p className="text-lg leading-relaxed" style={{ color: "var(--sw-text-2)" }}>
             {loesung.details}
           </p>
