@@ -26,6 +26,7 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Platzhalter „Coming soon“ | `src/components/ComingSoon.tsx` |
 | Startseite | `src/pages/Index.tsx` |
 | Angebots-Check | `public/check/` – eigenständige HTML-Seite, **nicht** Teil der React-App (wegen eigener Vorschau für LinkedIn). Kopf, Fuß, Farben und Schriften sind dort von Hand nachgebaut – bei Änderungen am Menü mitziehen |
+| Webinar-Nachlese E-Rechnung (versteckt, noindex) | `public/webinare/e-rechnung/` – eigenständige HTML-Seite wie der Angebots-Check; PDF unter `public/downloads/e-rechnung-zusammenfassung.pdf` (Link steht in Newslettern, **nicht umbenennen**) |
 | Schriften (selbst gehostet, keine Google Fonts) | `public/fonts/` mit `fonts.css`, eingebunden in `index.html` und `public/check/` |
 | Seitenkopf (kleine Zeile, Überschrift, Untertitel) | `src/components/PageHead.tsx` (auch im Krisen-Simulator) |
 | Krisen-Simulator | `src/pages/Game.tsx`, Auswertung `src/pages/Auswertung.tsx` |
@@ -43,7 +44,8 @@ Umleitungen alter Adressen stehen in `public/_redirects` (vor der SPA-Regel).
 
 **Adressen, die nicht geändert werden dürfen** (stehen in Mails, auf LinkedIn,
 in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
-`/events/culture-and-code-26` (Ziel der Umleitung von sirius-gmbh.de).
+`/events/culture-and-code-26` (Ziel der Umleitung von sirius-gmbh.de),
+`/webinare/e-rechnung`, `/downloads/e-rechnung-zusammenfassung.pdf`.
 
 ## Formulare und Zoho – verbindlich
 

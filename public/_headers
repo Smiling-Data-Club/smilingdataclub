@@ -2,3 +2,7 @@
   X-Robots-Tag: noindex, nofollow
 /check/*
   X-Robots-Tag: noindex, nofollow
+/webinare/*
+  X-Robots-Tag: noindex, nofollow
+/downloads/*
+  X-Robots-Tag: noindex, nofollow

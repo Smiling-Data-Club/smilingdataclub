@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Webinar-Nachlese: E-Rechnungseingang auf Autopilot – Smiling Data Club</title>
+<meta name="description" content="Das Webinar vom 29.10.2026 zum Nachschauen – mit Zusammenfassung und den Antworten auf eure Fragen aus dem Chat.">
+<link rel="icon" href="/favicon.ico">
+<!--
+  Webinar-Nachlese E-Rechnung (versteckte Unterseite /webinare/e-rechnung)
+  - Nicht in Menü, Startseite oder Sitemap. noindex per Meta-Tag und public/_headers.
+  - Kein Formular, kein Tracking, keine Cookies, keine externen Ressourcen.
+  - Bauweise wie der Angebots-Check (public/check/): eigenständige HTML-Seite,
+    Kopf, Fuß, Farben und Schriften von Hand nachgebaut.
+  - PDF liegt unter /downloads/e-rechnung-zusammenfassung.pdf (Link steht in Newslettern – nicht umbenennen).
+-->
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* Farben, Schriften, Kopf und Fuß wie im Angebots-Check (public/check/) und auf der Website (--sw-*) */
+:root{
+  --bg-deep:#050510; --bg-mid:#0c0820; --bg-top:#1a0b2e;
+  --cyan:#00E6C7; --pink:#F25A94; --purple:#b79cff;
+  --ink:#eafffb; --text-2:#b9c6e8; --muted:#7d8bbf; --text-4:#5b6795;
+  --neon-cyan:172 100% 45%; --neon-pink:336 85% 66%; --neon-purple:256 45% 45%;
+  --font-pixel:"Press Start 2P",monospace; --font-body:"Inter",system-ui,sans-serif; --font-mono:"Space Mono",ui-monospace,monospace;
+  color-scheme:dark;
+  box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0}
+body{
+  min-height:100vh; display:flex; flex-direction:column; color:var(--ink); font-family:var(--font-body); font-size:1.0625rem; line-height:1.6;
+  background:radial-gradient(ellipse 140% 90% at 50% 30%,var(--bg-top) 0%,var(--bg-mid) 45%,var(--bg-deep) 100%) fixed,var(--bg-deep);
+}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+[hidden]{display:none!important}
+
+/* Kopfzeile wie auf der Website */
+.site{position:sticky;top:0;z-index:10;background:rgba(5,5,16,.88);backdrop-filter:blur(8px);border-bottom:1px solid hsl(var(--neon-cyan)/.18)}
+.site .in{max-width:72rem;margin:0 auto;padding:0 1rem;height:4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.brand img{width:36px;height:36px;filter:drop-shadow(0 0 10px hsl(172 100% 45%/.5))}
+.label{font-family:var(--font-pixel);font-size:10px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.brand .label{color:var(--ink)}
+.site nav{display:flex;gap:.25rem}
+.site nav a{padding:.5rem .75rem;color:var(--text-2);text-decoration:none}
+.site nav a:hover,.site nav a[aria-current]{color:var(--cyan);text-shadow:0 0 12px hsl(var(--neon-cyan)/.7)}
+.site .member{color:var(--ink);text-decoration:none;padding:.6rem .9rem;border:2px solid hsl(var(--neon-pink)/.85);border-radius:8px;box-shadow:0 0 14px hsl(var(--neon-pink)/.35)}
+.site .member:hover{background:hsl(var(--neon-pink)/.12)}
+.site .mobil{display:none;color:var(--cyan);text-decoration:none}
+@media (max-width:1023px){.site nav,.site .member{display:none}.site .mobil{display:inline}}
+@media (max-width:639px),(min-width:1024px) and (max-width:1279px){.brand .label{display:none}}
+
+/* Seitenkopf */
+.head{text-align:center;padding:4.5rem 1.25rem 2.5rem;max-width:48rem;margin:0 auto}
+.eyebrow{font-family:var(--font-pixel);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);text-shadow:0 0 12px hsl(var(--neon-cyan)/.7);margin:0 0 1.1rem}
+.headline{font-weight:300;letter-spacing:-.02em;color:var(--ink);text-shadow:0 0 28px hsl(var(--neon-cyan)/.5),4px 4px 0 hsl(var(--neon-pink)/.35);font-size:clamp(2.25rem,7vw,3.75rem);line-height:1.1;margin:0 0 1.5rem}
+.lead{font-family:var(--font-mono);color:var(--cyan);text-shadow:0 0 16px hsl(var(--neon-cyan)/.4);font-size:clamp(1rem,2.4vw,1.125rem);margin:0 auto;max-width:40rem}
+.file{display:inline-block;margin-top:1.5rem;font-family:var(--font-mono);font-size:.8rem;color:var(--muted);border:1px solid hsl(var(--neon-cyan)/.25);border-radius:8px;padding:.3rem .7rem}
+
+
+main{max-width:58rem;width:100%;margin:0 auto;padding:0 1.25rem 4rem;flex:1;display:grid;gap:1.5rem}
+.card{border:1px solid hsl(var(--neon-cyan)/.45);border-radius:10px;background:hsl(var(--neon-cyan)/.05);box-shadow:0 0 22px hsl(var(--neon-cyan)/.14),inset 0 0 18px hsl(var(--neon-cyan)/.05);padding:clamp(1.25rem,4vw,2rem)}
+.card.feature{border:2px solid hsl(var(--neon-cyan)/.75);border-radius:14px;background:linear-gradient(160deg,hsl(var(--neon-cyan)/.14),hsl(var(--neon-pink)/.08));box-shadow:0 0 34px hsl(var(--neon-cyan)/.3),inset 0 0 22px hsl(var(--neon-cyan)/.06);text-align:center;padding:clamp(1.5rem,5vw,2.5rem)}
+.card.pink{border-color:hsl(var(--neon-pink)/.45);background:hsl(var(--neon-pink)/.05);box-shadow:0 0 22px hsl(var(--neon-pink)/.14),inset 0 0 18px hsl(var(--neon-pink)/.05)}
+.card-title{font-family:var(--font-pixel);font-size:12px;letter-spacing:.12em;text-transform:uppercase;line-height:1.7;color:var(--cyan);text-shadow:0 0 12px hsl(var(--neon-cyan)/.6);margin:0 0 1rem}
+.card.pink .card-title{color:var(--pink);text-shadow:0 0 12px hsl(var(--neon-pink)/.6)}
+.card h2{font-size:clamp(1.3rem,3.6vw,1.6rem);line-height:1.3;font-weight:400;margin:0 0 .5rem}
+.meta{font-family:var(--font-mono);font-size:.9rem;color:var(--pink);margin:0 0 1.25rem}
+p{margin:0 0 1rem;max-width:62ch}
+.text{color:var(--text-2)}
+.small{font-size:.85rem;color:var(--muted);margin:1rem auto 0}
+.btns{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.btn{appearance:none;border:0;border-radius:10px;padding:14px 22px;min-height:48px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center;
+  font-family:var(--font-pixel);font-size:11px;letter-spacing:.05em;text-transform:uppercase;line-height:1.6;
+  background:linear-gradient(135deg,hsl(var(--neon-cyan)),hsl(var(--neon-pink)));color:var(--bg-deep);transition:all .3s}
+.btn:hover{box-shadow:0 0 20px hsl(var(--neon-cyan)/.6),0 0 40px hsl(var(--neon-pink)/.4);transform:translateY(-2px)}
+.btn.sec{background:transparent;border:1px solid hsl(var(--neon-cyan)/.75);color:var(--cyan)}
+.btn.sec:hover{background:hsl(var(--neon-cyan)/.08)}
+.btns .btn{font-size:10px}
+@media (max-width:639px){.btns{flex-direction:column}.btns .btn{width:100%;font-size:11px}}
+/* Fußzeile wie auf der Website */
+.legal{background:var(--bg-deep);border-top:1px solid hsl(var(--neon-cyan)/.15);padding:2.5rem 1.5rem;text-align:center;font-size:.75rem;line-height:1rem;color:var(--text-4)}
+.legal .brand-line{margin:0 auto .75rem;max-width:none;color:var(--muted)}
+.legal .links{margin-top:.75rem}
+.legal .brand-line strong{color:var(--text-2);font-weight:400}
+.legal .links{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.legal a{color:var(--text-4);text-decoration:none}
+.legal a:hover{color:var(--cyan)}
+.legal .copy{font-family:var(--font-mono);font-size:11px;margin:.75rem auto 0;max-width:none}
+@media (prefers-reduced-motion:reduce){.pin{transition:none}.blink{animation:none}.btn:hover{transform:none}}
+
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="in">
+    <a class="brand" href="/" aria-label="Smiling Data Club – Startseite"><img src="/check/sdc-logo.png" alt=""><span class="label">Smiling Data Club</span></a>
+    <nav aria-label="Hauptmenü">
+      <a class="label" href="/loesungen/zoho">Lösungen</a>
+      <a class="label" href="/success-stories">Success Stories</a>
+      <a class="label" href="/game">Tools</a>
+      <a class="label" href="/events/termine" aria-current="true">Events</a>
+      <a class="label" href="/ueber-uns">Über uns</a>
+    </nav>
+    <a class="label member" href="/member">Member-Login</a>
+    <a class="label mobil" href="/">Zur Website</a>
+  </div>
+</header>
+
+<div class="head">
+  <p class="eyebrow">Webinar-Nachlese</p>
+  <h1 class="headline">E-Rechnungseingang auf Autopilot</h1>
+  <p class="lead">Das Webinar vom 29.10.2026 zum Nachschauen – mit Zusammenfassung und den Antworten auf eure Fragen aus dem Chat.</p>
+</div>
+
+<main>
+  <section class="card feature" aria-label="Aufzeichnung und Zusammenfassung">
+    <div class="btns">
+      <a class="btn" href="[AUFZEICHNUNG-LINK]" target="_blank" rel="noopener">Aufzeichnung ansehen</a>
+      <a class="btn sec" href="/downloads/e-rechnung-zusammenfassung.pdf" download>Zusammenfassung &amp; FAQ herunterladen (PDF)</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <p class="card-title">Wie sieht das bei euch aus?</p>
+    <p class="text">In 30 Minuten schauen wir gemeinsam auf euren Rechnungseingang. Online, unverbindlich und kostenfrei.</p>
+    <a class="btn" href="https://sirius-gmbh.zohobookings.eu/240927000001421002" target="_blank" rel="noopener">Termin wählen</a>
+  </section>
+
+  <section class="card pink">
+    <p class="card-title">Nächstes Live-Webinar</p>
+    <h2>Die Entgeltakte, die sich selbst sortiert</h2>
+    <p class="meta">Do, 12.11.2026, 14:00 Uhr · online und kostenfrei</p>
+    <a class="btn" href="https://webinar.sirius-gmbh.de/meeting/register?sessionId=1221915522" target="_blank" rel="noopener">Jetzt anmelden</a>
+  </section>
+</main>
+
+<footer class="legal">
+  <p class="brand-line">A <strong>SIRIUS GmbH</strong> brand</p>
+  <div class="links"><a href="/impressum">Impressum</a><span aria-hidden="true">|</span><a href="/datenschutz">Datenschutz</a></div>
+  <p class="copy">© 2026 Smiling Data Club. All rights reserved.</p>
+</footer>
+</body>
+</html>
