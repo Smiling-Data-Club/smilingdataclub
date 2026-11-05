@@ -14,7 +14,7 @@
   - Bauweise wie der Angebots-Check (public/check/): eigenständige HTML-Seite,
     Kopf, Fuß, Farben und Schriften von Hand nachgebaut.
   - PDFs unter /downloads/: e-rechnung-zusammenfassung.pdf (Link steht in Newslettern – nicht umbenennen)
-    und e-rechnung-praesentation.pdf (Folien, Metadaten bereinigt).
+    und e-rechnung-praesentation.pdf (Folien, Metadaten bereinigt), revisionssicherheit.pdf (Wissen kompakt).
 -->
 <link rel="stylesheet" href="/fonts/fonts.css">
 <style>
@@ -80,8 +80,15 @@ p{margin:0 0 1rem;max-width:62ch}
 .btn:hover{box-shadow:0 0 20px hsl(var(--neon-cyan)/.6),0 0 40px hsl(var(--neon-pink)/.4);transform:translateY(-2px)}
 .btn.sec{background:transparent;border:1px solid hsl(var(--neon-cyan)/.75);color:var(--cyan)}
 .btn.sec:hover{background:hsl(var(--neon-cyan)/.08)}
+/* Downloads farblich unterscheiden: Zusammenfassung Cyan, Präsentation Lila, Wissen kompakt Pink */
+.btn.sec.cyan{background:hsl(var(--neon-cyan)/.06)}
+.btn.sec.lila{border-color:hsl(256 60% 75%/.8);color:var(--purple);background:hsl(var(--neon-purple)/.12)}
+.btn.sec.lila:hover{background:hsl(var(--neon-purple)/.22);box-shadow:0 0 20px hsl(var(--neon-purple)/.5)}
+.btn.sec.pink{border-color:hsl(var(--neon-pink)/.8);color:var(--pink);background:hsl(var(--neon-pink)/.08)}
+.btn.sec.pink:hover{background:hsl(var(--neon-pink)/.16);box-shadow:0 0 20px hsl(var(--neon-pink)/.45)}
 .btns .btn{font-size:10px}
 .hinweis{max-width:40rem;margin:1rem auto 0}
+.btns.downloads.extra{grid-template-columns:1fr;max-width:calc(20rem - .5rem)}
 .btns.downloads{margin:1rem auto 0;max-width:40rem;display:grid;grid-template-columns:1fr 1fr}
 @media (max-width:639px){.btns{flex-direction:column}.btns.downloads{grid-template-columns:1fr}.btns .btn{width:100%;font-size:11px}}
 /* Fußzeile wie auf der Website */
@@ -125,10 +132,13 @@ p{margin:0 0 1rem;max-width:62ch}
       <a class="btn" href="https://webinar.sirius-gmbh.de/meeting/videoprv?recordingId=53f570f431610829077afd787fb8366bb94df8ca8e52d8ce8529881e10a8338d&amp;x-meeting-org=20105754922" target="_blank" rel="noopener">Aufzeichnung ansehen</a>
     </div>
     <div class="btns downloads">
-      <a class="btn sec" href="/downloads/e-rechnung-zusammenfassung.pdf" download>Zusammenfassung &amp; FAQ herunterladen (PDF)</a>
-      <a class="btn sec" href="/downloads/e-rechnung-praesentation.pdf" download>Präsentation herunterladen (PDF)</a>
+      <a class="btn sec cyan" href="/downloads/e-rechnung-zusammenfassung.pdf" download>Zusammenfassung &amp; FAQ herunterladen (PDF)</a>
+      <a class="btn sec lila" href="/downloads/e-rechnung-praesentation.pdf" download>Präsentation herunterladen (PDF)</a>
     </div>
     <p class="small hinweis">Hinweis: Die Folien zeigen den Stand des Webinars. Ob Validieren Pflicht ist, haben wir danach noch einmal genau geprüft – die Antwort mit Quelle findest du in der Zusammenfassung (Frage 1).</p>
+    <div class="btns downloads extra">
+      <a class="btn sec pink" href="/downloads/revisionssicherheit.pdf" download>Revisionssicher? Was das wirklich heißt (PDF)</a>
+    </div>
   </section>
 
   <section class="card">
