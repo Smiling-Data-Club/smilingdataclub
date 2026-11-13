@@ -27,6 +27,7 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Startseite | `src/pages/Index.tsx` |
 | Angebots-Check | `public/check/` – eigenständige HTML-Seite, **nicht** Teil der React-App (wegen eigener Vorschau für LinkedIn). Kopf, Fuß, Farben und Schriften sind dort von Hand nachgebaut – bei Änderungen am Menü mitziehen |
 | Webinar-Nachlese E-Rechnung (versteckt, noindex) | `public/webinare/e-rechnung/` – eigenständige HTML-Seite wie der Angebots-Check; PDFs unter `public/downloads/`: `e-rechnung-zusammenfassung.pdf` (Link steht in Newslettern, **nicht umbenennen**) `e-rechnung-praesentation.pdf` und `revisionssicherheit.pdf` |
+| Übersicht Webinar-Nachlesen (versteckt, noindex, Sammellink für Mails) | `public/webinare/index.html` – neues Webinar = neue Karte oben |
 | Webinar-Nachlese Entgeltakte (versteckt, noindex) | `public/webinare/entgeltakte/` – Kopie der E-Rechnungs-Nachlese; PDFs `public/downloads/entgeltakte-zusammenfassung.pdf` und `entgeltakte-praesentation.pdf`, dazu `revisionssicherheit.pdf` (gemeinsam genutzt) |
 | Schriften (selbst gehostet, keine Google Fonts) | `public/fonts/` mit `fonts.css`, eingebunden in `index.html` und `public/check/` |
 | Seitenkopf (kleine Zeile, Überschrift, Untertitel) | `src/components/PageHead.tsx` (auch im Krisen-Simulator) |
@@ -47,7 +48,7 @@ Umleitungen alter Adressen stehen in `public/_redirects` (vor der SPA-Regel).
 in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
 `/events/culture-and-code-26` (Ziel der Umleitung von sirius-gmbh.de),
 `/webinare/e-rechnung`, `/downloads/e-rechnung-zusammenfassung.pdf`,
-`/webinare/entgeltakte`, `/downloads/entgeltakte-zusammenfassung.pdf`.
+`/webinare`, `/webinare/entgeltakte`, `/downloads/entgeltakte-zusammenfassung.pdf`.
 
 ## Formulare und Zoho – verbindlich
 
