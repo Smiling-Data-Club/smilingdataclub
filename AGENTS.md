@@ -23,6 +23,7 @@ Das Repo ist **öffentlich** und an **Lovable** angebunden.
 | Culture & Code 27 – Datum | `src/pages/events/CultureCode27.tsx`, Konstante `DATUM` |
 | Rahmen jeder Unterseite (Header, Hintergrund, Seitenkopf, Footer) | `src/components/PageLayout.tsx` |
 | Header mit Dropdowns und Handy-Menü | `src/components/SiteHeader.tsx` |
+| Cookie-Banner / Einwilligung (React-App) | `src/lib/consent.ts`, `src/components/CookieBanner.tsx`; für HTML-Seiten `public/consent/consent.js` |
 | Platzhalter „Coming soon“ | `src/components/ComingSoon.tsx` |
 | Startseite | `src/pages/Index.tsx` |
 | Angebots-Check | `public/check/` – eigenständige HTML-Seite, **nicht** Teil der React-App (wegen eigener Vorschau für LinkedIn). Kopf, Fuß, Farben und Schriften sind dort von Hand nachgebaut – bei Änderungen am Menü mitziehen |
@@ -76,9 +77,16 @@ in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
 - Neue Formulare, Tracking oder externe Dienste: vorher klären, ob die
   Datenschutzerklärung (`src/pages/Datenschutz.tsx`) das abdeckt.
 - Netlify-Functions-Region: Frankfurt (eu-central-1).
-- Analyse (Zoho PageSense) lädt **nur nach Einwilligung** über den Cookie-Banner
-  (`src/lib/consent.ts`, `src/components/CookieBanner.tsx`). Tracking-Scripts nie
-  direkt in `index.html` einbauen.
+- Analyse (Zoho PageSense, Projekt „sdc-website“) lädt **nur nach Einwilligung**
+  in „Statistik & Marketing“ über den Cookie-Banner (`src/lib/consent.ts`,
+  `src/components/CookieBanner.tsx`). Die eigenständigen HTML-Seiten (`/check`,
+  `/webinare/…`) nutzen dieselbe Logik als reines JS: `public/consent/consent.js`
+  (Konstanten in beiden Dateien gleich halten; neue HTML-Seite = Script + Footer-Link
+  `data-cookie-einstellungen` einbauen). Tracking-Scripts nie direkt in `index.html`
+  oder eine HTML-Seite einbauen.
+- Nur **ein** Zoho-PageSense-Script pro Seite – ein zweites desselben Portals bleibt
+  wirkungslos („Duplicate script installed“). Routenwechsel der SPA zählt das Script
+  selbst (hängt sich an `history.pushState`), keine eigenen Aufrufe nötig.
 
 ## Schreibweise
 
