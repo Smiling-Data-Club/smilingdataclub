@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <!--
   Angebots-Check (versteckte Unterseite, z. B. /check)
-  - Keine Formulare, keine Datenübertragung, kein Tracking, keine externen Ressourcen.
+  - Keine Formulare, keine Datenübertragung. Tracking (Zoho PageSense) nur nach Einwilligung über /consent/consent.js.
   - Look wie die übrige Website: Farben --sw-*, Schriften selbst gehostet unter /fonts.
     Bitte KEINE Google-Fonts-Einbindung (DSGVO).
   - PDF: jsPDF (MIT) liegt lokal unter /check/jspdf.umd.min.js und wird erst beim Klick geladen.
@@ -211,7 +211,7 @@ details[open] summary::before{transform:rotate(45deg)}
 
 <footer class="legal">
   <p class="brand-line">A <strong>SIRIUS GmbH</strong> brand</p>
-  <div class="links"><a href="/impressum">Impressum</a><span aria-hidden="true">|</span><a href="/datenschutz">Datenschutz</a></div>
+  <div class="links"><a href="/impressum">Impressum</a><span aria-hidden="true">|</span><a href="/datenschutz">Datenschutz</a><span aria-hidden="true">|</span><a href="#cookie-einstellungen" data-cookie-einstellungen>Cookie-Einstellungen</a></div>
   <p class="copy">© 2026 Smiling Data Club. All rights reserved.</p>
 </footer>
 
@@ -436,5 +436,6 @@ $("pdf").onclick=async()=>{
 function pdfError(){ alert("Das PDF konnte leider nicht erstellt werden. Bitte versuchen Sie es noch einmal."); }
 $("restart").onclick=()=>{answers=Array(Q.length).fill(null);step=0;last=null;setFile(0);show("s-start");};
 </script>
+<script src="/consent/consent.js" data-anrede="sie" defer></script>
 </body>
 </html>

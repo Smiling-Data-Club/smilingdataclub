@@ -1,10 +1,28 @@
-// Einwilligung für Analyse (Zoho PageSense). Ohne „Akzeptieren“ wird das Script
-// nicht geladen. Die Entscheidung liegt nur im Browser (localStorage).
+// Einwilligung für „Statistik & Marketing“ (Zoho PageSense, Projekt „sdc-website“).
+// Ohne Zustimmung wird kein Tracking-Script geladen und kein Zoho-Cookie gesetzt.
+// Die Entscheidung liegt nur im Browser (localStorage).
+//
+// WICHTIG: Dieselbe Logik gibt es als reines JavaScript für die eigenständigen
+// HTML-Seiten (/check, /webinare …) in public/consent/consent.js. Schlüssel,
+// Werte und Script-Adressen müssen in beiden Dateien gleich sein.
+//
+// Seitenwechsel in der React-App (ohne Neuladen) muss man nicht von Hand melden:
+// Das PageSense-Script hängt sich selbst an history.pushState/replaceState und
+// popstate und zählt jeden Routenwechsel als Seitenaufruf.
 
 export type Einwilligung = "alle" | "notwendig";
 
 const KEY = "sdc-einwilligung";
-const PAGESENSE_SRC = "https://cdn-eu.pagesense.io/js/siriusgmbh/dd9ded435c224065ac800ede647a6d11.js";
+
+// Nur EIN PageSense-Script pro Seite: Zoho-Scripte desselben Portals erkennen sich
+// gegenseitig („Duplicate script installed“) und das zweite bleibt wirkungslos.
+// Das ZMA-Projekt (dd9ded…) wird deshalb bewusst nicht geladen.
+const PAGESENSE_PROJEKT = "3e1093b169a248f6b2d78660282a3010"; // Projekt „sdc-website“
+const TRACKING_SCRIPTS = [`https://cdn-eu.pagesense.io/js/siriusgmbh/${PAGESENSE_PROJEKT}.js`];
+
+// Zoho-eigene Speicher-Einträge (Cookies, Local/Session Storage), die beim Widerruf gelöscht werden
+const ZOHO_PREFIXE = ["zab", "zps", "zpc", "zsc", "zft", "z_user_info"];
+
 export const OEFFNEN_EVENT = "sdc:cookie-einstellungen";
 
 export const leseEinwilligung = (): Einwilligung | null => {
@@ -23,17 +41,53 @@ export const speichereEinwilligung = (wert: Einwilligung) => {
   } catch {
     // ohne Speicher fragt der Banner beim nächsten Besuch erneut
   }
-  if (wert === "alle") ladeAnalyse();
+  if (wert === "alle") ladeTracking();
   // Widerruf: ein bereits geladenes Script lässt sich nur per Neuladen entfernen
-  if (wert === "notwendig" && vorher === "alle") window.location.reload();
+  if (wert === "notwendig" && vorher === "alle") {
+    entferneZohoSpuren();
+    window.location.reload();
+  }
 };
 
-export const ladeAnalyse = () => {
-  if (document.querySelector(`script[src="${PAGESENSE_SRC}"]`)) return;
-  const s = document.createElement("script");
-  s.src = PAGESENSE_SRC;
-  s.async = true;
-  document.head.appendChild(s);
+/** Lädt die Tracking-Scripte – nur aufrufen, wenn „Statistik & Marketing“ erlaubt ist. */
+export const ladeTracking = () => {
+  // PageSense ist im Zoho-Projekt auf „Banner mit Opt-out“ gestellt und würde sonst
+  // einen ZWEITEN, eigenen Cookie-Banner zeigen. Die Einwilligung holen wir selbst ein
+  // und geben sie über Zohos Consent-Cookie weiter (Wert 2 = angenommen).
+  setzeCookie(`zpc${PAGESENSE_PROJEKT}`, "2", 365);
+  for (const src of TRACKING_SCRIPTS) {
+    if (document.querySelector(`script[src="${src}"]`)) continue;
+    const s = document.createElement("script");
+    s.src = src;
+    s.async = true;
+    document.head.appendChild(s);
+  }
+};
+
+const setzeCookie = (name: string, wert: string, tage: number) => {
+  const secure = location.protocol === "https:" ? "; Secure" : "";
+  document.cookie = `${name}=${wert}; path=/; max-age=${tage * 86400}; SameSite=Lax${secure}`;
+};
+
+/** Löscht von Zoho gesetzte Cookies und Speicher-Einträge (beim Widerruf). */
+const entferneZohoSpuren = () => {
+  const istZoho = (name: string) => ZOHO_PREFIXE.some((p) => name.startsWith(p));
+  // Cookies können am Host oder an einer übergeordneten Domain hängen
+  const teile = location.hostname.split(".");
+  const domains = [""];
+  for (let i = 0; i < teile.length - 1; i++) domains.push(`; domain=.${teile.slice(i).join(".")}`);
+  for (const c of document.cookie.split(";")) {
+    const name = c.split("=")[0].trim();
+    if (!istZoho(name)) continue;
+    for (const d of domains) document.cookie = `${name}=; path=/; max-age=0${d}`;
+  }
+  for (const speicher of [localStorage, sessionStorage]) {
+    try {
+      Object.keys(speicher).filter(istZoho).forEach((k) => speicher.removeItem(k));
+    } catch {
+      // Speicher nicht verfügbar – nichts zu löschen
+    }
+  }
 };
 
 /** Banner erneut öffnen (Link „Cookie-Einstellungen“ im Footer) */

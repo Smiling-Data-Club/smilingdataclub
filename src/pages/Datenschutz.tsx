@@ -187,8 +187,8 @@ const Datenschutz = () => {
               <p className="mt-2">Die Daten werden bei der Zoho Corporation B.V. in der EU verarbeitet.</p>
               <p className="mt-2">
                 Zusätzlich nutzen wir Zoho PageSense, um die Nutzung der Website auszuwerten (z. B. Seitenaufrufe,
-                Klick- und Scrollverhalten). Das PageSense-Script wird erst geladen, nachdem Sie im Cookie-Banner auf
-                „Akzeptieren“ geklickt haben. Ihre Entscheidung können Sie jederzeit über den Link
+                Klick- und Scrollverhalten). Das PageSense-Script wird erst geladen, nachdem Sie im Cookie-Banner der Kategorie
+                „Statistik &amp; Marketing“ zugestimmt haben. Ihre Entscheidung können Sie jederzeit über den Link
                 „Cookie-Einstellungen“ unten auf jeder Seite ändern.
               </p>
             </Section>

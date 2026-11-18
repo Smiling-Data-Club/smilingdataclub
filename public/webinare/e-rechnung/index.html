@@ -10,7 +10,7 @@
 <!--
   Webinar-Nachlese E-Rechnung (versteckte Unterseite /webinare/e-rechnung)
   - Nicht in Menü, Startseite oder Sitemap. noindex per Meta-Tag und public/_headers.
-  - Kein Formular, kein Tracking, keine Cookies, keine externen Ressourcen.
+  - Kein Formular. Tracking (Zoho PageSense) nur nach Einwilligung über /consent/consent.js.
   - Bauweise wie der Angebots-Check (public/check/): eigenständige HTML-Seite,
     Kopf, Fuß, Farben und Schriften von Hand nachgebaut.
   - PDFs unter /downloads/: e-rechnung-zusammenfassung.pdf (Link steht in Newslettern – nicht umbenennen)
@@ -157,8 +157,9 @@ p{margin:0 0 1rem;max-width:62ch}
 
 <footer class="legal">
   <p class="brand-line">A <strong>SIRIUS GmbH</strong> brand</p>
-  <div class="links"><a href="/impressum">Impressum</a><span aria-hidden="true">|</span><a href="/datenschutz">Datenschutz</a></div>
+  <div class="links"><a href="/impressum">Impressum</a><span aria-hidden="true">|</span><a href="/datenschutz">Datenschutz</a><span aria-hidden="true">|</span><a href="#cookie-einstellungen" data-cookie-einstellungen>Cookie-Einstellungen</a></div>
   <p class="copy">© 2026 Smiling Data Club. All rights reserved.</p>
 </footer>
+<script src="/consent/consent.js" defer></script>
 </body>
 </html>
