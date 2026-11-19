@@ -84,6 +84,9 @@ in Auswertungslinks): `/game`, `/game/auswertung`, `/check`,
   (Konstanten in beiden Dateien gleich halten; neue HTML-Seite = Script + Footer-Link
   `data-cookie-einstellungen` einbauen). Tracking-Scripts nie direkt in `index.html`
   oder eine HTML-Seite einbauen.
+- Ändert sich der Tracking-Umfang (Datenschutzerklärung Abschnitt 7/8), `VERSION`
+  in `src/lib/consent.ts` **und** `public/consent/consent.js` hochzählen – frühere
+  Zustimmungen werden dann einmal neu abgefragt.
 - Nur **ein** Zoho-PageSense-Script pro Seite – ein zweites desselben Portals bleibt
   wirkungslos („Duplicate script installed“). Routenwechsel der SPA zählt das Script
   selbst (hängt sich an `history.pushState`), keine eigenen Aufrufe nötig.

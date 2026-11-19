@@ -167,46 +167,97 @@ const Datenschutz = () => {
               </p>
             </Section>
 
-            <Section title="7. Webanalyse">
+            <Section title="7. Webanalyse mit Zoho PageSense">
               <p>
-                Zur Analyse des Nutzungsverhaltens setzen wir Zoho Marketing Automation (Websitetracking) ein. Dabei
-                können folgende Daten erhoben werden:
+                Mit Ihrer Einwilligung nutzen wir Zoho PageSense, um zu verstehen, wie unsere Website genutzt wird, und
+                sie zu verbessern. Anbieter ist die Zoho Corporation B.V., Beneluxlaan 4B, 3527 HS Utrecht, Niederlande.
+                Die Daten werden in Rechenzentren von Zoho in der EU verarbeitet. Dabei können folgende Daten erhoben
+                werden:
               </p>
               <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground">
-                <li>Seitenaufrufe und Verweildauer</li>
-                <li>Gerätetyp, Bildschirmauflösung</li>
-                <li>Ungefährer Standort (auf Basis der IP-Adresse)</li>
-                <li>Referrer (verweisende Seite)</li>
-                <li>Interaktionen mit E-Mails (Öffnungen, Klicks)</li>
+                <li>Seitenaufrufe, Verweildauer und Weg durch die Website</li>
+                <li>
+                  Klicks, Mausbewegungen und Scrollverhalten – daraus entstehen zusammengefasste Heatmaps (Darstellungen,
+                  welche Bereiche einer Seite besonders beachtet werden)
+                </li>
+                <li>
+                  Sitzungsaufzeichnungen: Ihr Besuch wird als Ablauf aus Seitenaufrufen, Klicks und Scrollbewegungen
+                  aufgezeichnet. Eingaben in Formularfeldern (z. B. Name oder E-Mail-Adresse) werden dabei unkenntlich
+                  gemacht und nicht aufgezeichnet.
+                </li>
+                <li>Gerätetyp, Betriebssystem, Browser und Bildschirmauflösung</li>
+                <li>Ungefährer Standort auf Basis der IP-Adresse; die IP-Adresse wird dabei gekürzt</li>
+                <li>Verweisende Seite (Referrer)</li>
               </ul>
               <p className="mt-2">
-                Die Verarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie über
-                unser Cookie-Banner erteilen können. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft
-                widerrufen.
+                Melden Sie sich bei uns an (z. B. über das Formular „Join the Club“), können wir Ihre Besuche auf unserer
+                Website Ihrem Kontakt in Zoho Marketing Automation zuordnen, um Ihnen passende Informationen zu senden.
+                Auch das geschieht nur, wenn Sie der Kategorie „Statistik &amp; Marketing“ zugestimmt haben.
               </p>
-              <p className="mt-2">Die Daten werden bei der Zoho Corporation B.V. in der EU verarbeitet.</p>
               <p className="mt-2">
-                Zusätzlich nutzen wir Zoho PageSense, um die Nutzung der Website auszuwerten (z. B. Seitenaufrufe,
-                Klick- und Scrollverhalten). Das PageSense-Script wird erst geladen, nachdem Sie im Cookie-Banner der Kategorie
-                „Statistik &amp; Marketing“ zugestimmt haben. Ihre Entscheidung können Sie jederzeit über den Link
-                „Cookie-Einstellungen“ unten auf jeder Seite ändern.
+                Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Das
+                PageSense-Script wird erst geladen, wenn Sie im Cookie-Banner der Kategorie „Statistik &amp; Marketing“
+                zugestimmt haben – ohne Zustimmung findet keine Analyse statt. Sie können Ihre Einwilligung jederzeit mit
+                Wirkung für die Zukunft über den Link „Cookie-Einstellungen“ unten auf jeder Seite widerrufen. Beim
+                Widerruf löschen wir die PageSense-Cookies in Ihrem Browser.
+              </p>
+              <p className="mt-2">
+                Die erhobenen Daten werden nach [X Monaten] gelöscht. Für technischen Support kann Zoho im Einzelfall auch
+                von Indien aus (Zoho Corporation Pvt. Ltd.) auf die in der EU gespeicherten Daten zugreifen. Grundlage
+                dafür sind die Standardvertragsklauseln der EU-Kommission.
+              </p>
+              <p className="mt-2">
+                Weitere Informationen:{" "}
+                <a
+                  href="https://www.zoho.com/de/privacy.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  https://www.zoho.com/de/privacy.html
+                </a>
               </p>
             </Section>
 
-            <Section title="8. Cookies">
-              <p>
-                Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1
-                lit. f DSGVO gesetzt. Für das Websitetracking setzt Zoho Marketing Automation ein Cookie (zsiq), das
-                Besucher sitzungsübergreifend identifiziert — dieses Cookie wird nur mit Ihrer Einwilligung gesetzt
-                (Art. 6 Abs. 1 lit. a DSGVO) und kann über das Cookie-Banner verwaltet werden. Ihre Entscheidung im
-                Cookie-Banner speichern wir lokal in Ihrem Browser (Local Storage), damit wir nicht bei jedem Besuch
-                erneut fragen müssen.
+            <Section title="8. Cookies und lokale Speicherung">
+              <p>Diese Website speichert Informationen in Ihrem Browser (Cookies und Local Storage).</p>
+              <p className="mt-3 font-semibold">
+                Technisch notwendig (§ 25 Abs. 2 Nr. 2 TDDDG, Art. 6 Abs. 1 lit. f DSGVO)
               </p>
-              <p className="mt-2">
-                Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und
-                Cookies nur im Einzelfall erlauben, das Annehmen von Cookies für bestimmte Fälle oder generell
-                ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browsers aktivieren. Bei der
-                Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.
+              <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground">
+                <li>
+                  <code>sdc-einwilligung</code>, <code>sdc-einwilligung-version</code> (Local Storage): speichern Ihre
+                  Auswahl im Cookie-Banner – bis Sie sie ändern oder den Browserspeicher löschen
+                </li>
+              </ul>
+              <p className="mt-3 font-semibold">
+                Statistik &amp; Marketing – nur mit Ihrer Einwilligung (§ 25 Abs. 1 TDDDG, Art. 6 Abs. 1 lit. a DSGVO)
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1 text-muted-foreground">
+                <li>
+                  <code>zpc…</code> (Zoho PageSense): merkt sich, dass Sie zugestimmt haben – 1 Jahr
+                </li>
+                <li>
+                  <code>zsc…</code> (Zoho PageSense): erkennt zusammengehörige Seitenaufrufe (Sitzung) – 30 Minuten
+                </li>
+                <li>
+                  <code>zft-sdc</code> (Zoho PageSense): erkennt Erstbesuch und Herkunft des Besuchs – 12 Stunden
+                </li>
+                <li>
+                  <code>zps-tgr-dts</code> (Zoho PageSense): Zeitstempel für die Auswertung – 1 Jahr
+                </li>
+                <li>
+                  <code>zpsCookieMeta</code> (Zoho PageSense): Verwaltung der PageSense-Cookies – 400 Tage
+                </li>
+                <li>
+                  <code>zps-ft-details</code>, <code>zps-ft-pghitType-details</code> (Local Storage, Zoho PageSense):
+                  Herkunft des Besuchs – bis zum Widerruf oder Löschen des Browserspeichers
+                </li>
+              </ul>
+              <p className="mt-3">
+                Sie können Ihre Auswahl jederzeit über „Cookie-Einstellungen“ unten auf jeder Seite ändern. Außerdem
+                können Sie Ihren Browser so einstellen, dass er Cookies nur im Einzelfall erlaubt, generell ablehnt oder
+                beim Schließen automatisch löscht. Ohne Cookies kann die Funktion dieser Website eingeschränkt sein.
               </p>
             </Section>
 
@@ -276,7 +327,7 @@ const Datenschutz = () => {
                 Anforderungen entspricht oder um Änderungen unserer Leistungen umzusetzen. Für Ihren erneuten Besuch
                 gilt dann die neue Datenschutzerklärung.
               </p>
-              <p className="mt-2 text-muted-foreground">Stand: Oktober 2026</p>
+              <p className="mt-2 text-muted-foreground">Stand: November 2026</p>
             </Section>
           </div>
         </div>
