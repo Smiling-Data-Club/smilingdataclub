@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
-import { OEFFNEN_EVENT, ladeTracking, leseEinwilligung, speichereEinwilligung, type Einwilligung } from "@/lib/consent";
+import {
+  OEFFNEN_EVENT,
+  ladeTracking,
+  leseEinwilligung,
+  raeumeVeralteteEinwilligungAuf,
+  speichereEinwilligung,
+  type Einwilligung,
+} from "@/lib/consent";
 
 // Einwilligungs-Banner mit zwei Kategorien: „Notwendig“ (immer an) und
 // „Statistik & Marketing“ (Zoho PageSense, lädt erst nach Zustimmung).
@@ -103,6 +110,7 @@ const CookieBanner = () => {
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    raeumeVeralteteEinwilligungAuf();
     const wert = leseEinwilligung();
     if (wert === "alle") ladeTracking();
     if (!wert) setOffen(true);
