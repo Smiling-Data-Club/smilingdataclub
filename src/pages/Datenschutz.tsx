@@ -186,7 +186,7 @@ const Datenschutz = () => {
                   gemacht und nicht aufgezeichnet.
                 </li>
                 <li>Gerätetyp, Betriebssystem, Browser und Bildschirmauflösung</li>
-                <li>Ungefährer Standort auf Basis der IP-Adresse; die IP-Adresse wird dabei gekürzt</li>
+                <li>Ungefährer Standort auf Basis der IP-Adresse</li>
                 <li>Verweisende Seite (Referrer)</li>
               </ul>
               <p className="mt-2">
@@ -202,7 +202,9 @@ const Datenschutz = () => {
                 Widerruf löschen wir die PageSense-Cookies in Ihrem Browser.
               </p>
               <p className="mt-2">
-                Die erhobenen Daten werden nach [X Monaten] gelöscht. Für technischen Support kann Zoho im Einzelfall auch
+                Die erhobenen Daten löschen wir, sobald sie für die Auswertung nicht mehr benötigt werden. Zoho
+                PageSense löscht sie zudem automatisch nach Ablauf der Aufbewahrungsfrist, die für unseren Tarif gilt.
+                Für technischen Support kann Zoho im Einzelfall auch
                 von Indien aus (Zoho Corporation Pvt. Ltd.) auf die in der EU gespeicherten Daten zugreifen. Grundlage
                 dafür sind die Standardvertragsklauseln der EU-Kommission.
               </p>
