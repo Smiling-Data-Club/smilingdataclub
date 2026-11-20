@@ -72,7 +72,7 @@ const WaitlistSection = ({
         )}
 
 
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center" zps-mask="true">
           {/* Honeypot gegen Bots – für Menschen unsichtbar */}
           <input
             type="text"
