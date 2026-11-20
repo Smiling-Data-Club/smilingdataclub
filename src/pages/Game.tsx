@@ -642,7 +642,7 @@ const Game = () => {
                   Detailanalyse mit konkreten Maßnahmen pro Abteilung — individuell auf euer Ergebnis abgestimmt. Kostenlos.
                 </p>
 
-                <form onSubmit={handleFormSubmit} className="space-y-4">
+                <form onSubmit={handleFormSubmit} className="space-y-4" zps-mask="true">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input required placeholder="Vorname *" value={formData.vorname}
                       onChange={e => setFormData(p => ({ ...p, vorname: e.target.value }))}
