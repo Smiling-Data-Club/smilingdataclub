@@ -15,6 +15,9 @@
   "use strict";
 
   var KEY = "sdc-einwilligung"; // Werte: "alle" | "notwendig"
+  // Version wie in src/lib/consent.ts – hochzählen, wenn sich der Tracking-Umfang ändert
+  var VERSION_KEY = "sdc-einwilligung-version";
+  var VERSION = "2";
   // Nur EIN PageSense-Script pro Seite (Zoho erkennt Duplikate, das zweite bleibt wirkungslos)
   var PAGESENSE_PROJEKT = "3e1093b169a248f6b2d78660282a3010"; // Projekt „sdc-website“
   var TRACKING_SCRIPTS = ["https://cdn-eu.pagesense.io/js/siriusgmbh/" + PAGESENSE_PROJEKT + ".js"];
@@ -37,10 +40,21 @@
   var STATISTIK_TEXT =
     "Zoho PageSense und Zoho Marketing Automation (Websitetracking): Seitenaufrufe, Klick- und Scrollverhalten, Heatmaps und Sitzungsaufzeichnungen. Hilft uns, die Seite zu verbessern.";
 
-  function lese() {
+  function leseGespeichert() {
     try {
       var v = localStorage.getItem(KEY);
       return v === "alle" || v === "notwendig" ? v : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Gültige Entscheidung – eine Zustimmung aus einer älteren Version zählt nicht mehr
+  function lese() {
+    var v = leseGespeichert();
+    if (v !== "alle") return v;
+    try {
+      return localStorage.getItem(VERSION_KEY) === VERSION ? v : null;
     } catch (e) {
       return null;
     }
@@ -93,15 +107,18 @@
 
   function speichere(wert) {
     var vorher = lese();
+    var vorherGespeichert = leseGespeichert();
     try {
       localStorage.setItem(KEY, wert);
+      localStorage.setItem(VERSION_KEY, VERSION);
     } catch (e) {
       /* ohne Speicher fragt der Banner beim nächsten Besuch erneut */
     }
     if (wert === "alle") ladeTracking();
-    if (wert === "notwendig" && vorher === "alle") {
+    if (wert === "notwendig" && vorherGespeichert === "alle") {
       entferneZohoSpuren();
-      location.reload();
+      // Widerruf: ein bereits geladenes Script lässt sich nur per Neuladen entfernen
+      if (vorher === "alle") location.reload();
     }
   }
 
@@ -218,6 +235,8 @@
   }
 
   // ---------- Start ----------
+  // Zoho-Reste einer veralteten Zustimmung entfernen
+  if (leseGespeichert() === "alle" && lese() === null) entferneZohoSpuren();
   var wert = lese();
   if (wert === "alle") ladeTracking();
   if (!wert) zeige(false);

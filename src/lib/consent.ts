@@ -13,6 +13,11 @@
 export type Einwilligung = "alle" | "notwendig";
 
 const KEY = "sdc-einwilligung";
+// Version der Einwilligung. Hochzählen, wenn sich der Umfang des Trackings ändert
+// (Datenschutzerklärung Abschnitt 7/8): Wer früher zugestimmt hat, wird dann
+// einmal neu gefragt. Ablehnungen bleiben gültig.
+const VERSION_KEY = "sdc-einwilligung-version";
+const VERSION = "2";
 
 // Nur EIN PageSense-Script pro Seite: Zoho-Scripte desselben Portals erkennen sich
 // gegenseitig („Duplicate script installed“) und das zweite bleibt wirkungslos.
@@ -25,7 +30,7 @@ const ZOHO_PREFIXE = ["zab", "zps", "zpc", "zsc", "zft", "z_user_info"];
 
 export const OEFFNEN_EVENT = "sdc:cookie-einstellungen";
 
-export const leseEinwilligung = (): Einwilligung | null => {
+const leseGespeichert = (): Einwilligung | null => {
   try {
     const v = localStorage.getItem(KEY);
     return v === "alle" || v === "notwendig" ? v : null;
@@ -34,19 +39,37 @@ export const leseEinwilligung = (): Einwilligung | null => {
   }
 };
 
+/** Gültige Entscheidung – eine Zustimmung aus einer älteren Version zählt nicht mehr. */
+export const leseEinwilligung = (): Einwilligung | null => {
+  const v = leseGespeichert();
+  if (v !== "alle") return v;
+  try {
+    return localStorage.getItem(VERSION_KEY) === VERSION ? v : null;
+  } catch {
+    return null;
+  }
+};
+
 export const speichereEinwilligung = (wert: Einwilligung) => {
   const vorher = leseEinwilligung();
+  const vorherGespeichert = leseGespeichert();
   try {
     localStorage.setItem(KEY, wert);
+    localStorage.setItem(VERSION_KEY, VERSION);
   } catch {
     // ohne Speicher fragt der Banner beim nächsten Besuch erneut
   }
   if (wert === "alle") ladeTracking();
-  // Widerruf: ein bereits geladenes Script lässt sich nur per Neuladen entfernen
-  if (wert === "notwendig" && vorher === "alle") {
+  if (wert === "notwendig" && vorherGespeichert === "alle") {
     entferneZohoSpuren();
-    window.location.reload();
+    // Widerruf: ein bereits geladenes Script lässt sich nur per Neuladen entfernen
+    if (vorher === "alle") window.location.reload();
   }
+};
+
+/** Beim Start: Zoho-Reste einer veralteten Zustimmung entfernen (ohne gültige Einwilligung keine Zoho-Cookies). */
+export const raeumeVeralteteEinwilligungAuf = () => {
+  if (leseGespeichert() === "alle" && leseEinwilligung() === null) entferneZohoSpuren();
 };
 
 /** Lädt die Tracking-Scripte – nur aufrufen, wenn „Statistik & Marketing“ erlaubt ist. */
